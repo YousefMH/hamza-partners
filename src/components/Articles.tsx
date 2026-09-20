@@ -32,13 +32,13 @@ export function Articles() {
           <motion.h2 id="articles-heading" variants={fadeUp} className="section-title">
             المقالات والرؤى القانونية
           </motion.h2>
-          <motion.div variants={fadeUp} className="mt-5 max-w-[7rem]">
+          <motion.div variants={fadeUp} className="section-rule">
             <DoubleLine />
           </motion.div>
         </motion.div>
 
         <motion.ul
-          className="mt-14 grid gap-10 lg:grid-cols-3"
+          className="section-body grid gap-8 lg:grid-cols-3 lg:gap-10"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"

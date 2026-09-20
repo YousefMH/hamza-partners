@@ -82,15 +82,15 @@ export function Contact() {
             <motion.h2 id="contact-heading" variants={fadeUp} className="section-title">
               تواصل معنا
             </motion.h2>
-            <motion.div variants={fadeUp} className="mt-5 max-w-[7rem]">
+            <motion.div variants={fadeUp} className="section-rule">
               <DoubleLine />
             </motion.div>
-            <motion.p variants={fadeUp} className="lede mt-6">
+            <motion.p variants={fadeUp} className="lede">
               أرسل طلبك وسنتواصل معك لمناقشة احتياجاتك القانونية. بيانات التواصل أدناه توضيحية
               وقابلة للاستبدال.
             </motion.p>
 
-            <motion.ul variants={fadeUp} className="mt-10 space-y-5 text-base">
+            <motion.ul variants={fadeUp} className="mt-8 space-y-4 text-base md:mt-10 md:space-y-5">
               <li className="flex items-start gap-3">
                 <Phone className="mt-0.5 size-4 text-gold" strokeWidth={1.5} aria-hidden="true" />
                 <div>
@@ -142,7 +142,7 @@ export function Contact() {
               </li>
             </motion.ul>
 
-            <motion.div variants={fadeUp} className="mt-10 aspect-[16/10] overflow-hidden border border-border bg-ivory">
+            <motion.div variants={fadeUp} className="mt-8 aspect-[16/10] overflow-hidden border border-border bg-ivory md:mt-10">
               <iframe
                 title="موقع المكتب على الخريطة"
                 src={siteConfig.contact.mapEmbedUrl}

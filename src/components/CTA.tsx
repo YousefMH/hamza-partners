@@ -15,7 +15,7 @@ export function CTA() {
           whileInView="visible"
           viewport={{ once: true, margin: '-10% 0px' }}
         >
-          <motion.div variants={fadeUp} className="mx-auto mb-8 max-w-xs">
+          <motion.div variants={fadeUp} className="mx-auto mb-6 max-w-xs md:mb-8">
             <Meander tone="champagne" />
           </motion.div>
           <motion.h2
@@ -25,10 +25,10 @@ export function CTA() {
           >
             هل تحتاج إلى شريك قانوني يفهم أعمالك؟
           </motion.h2>
-          <motion.p variants={fadeUp} className="mt-6 text-lg leading-[1.9] text-ivory/90 md:text-xl">
+          <motion.p variants={fadeUp} className="mt-5 text-lg leading-[1.9] text-ivory/90 md:mt-6 md:text-xl">
             تحدث مع فريقنا لمناقشة احتياجاتك القانونية والحصول على التوجيه المناسب.
           </motion.p>
-          <motion.div variants={fadeUp} className="mt-10 flex flex-wrap justify-center gap-4">
+          <motion.div variants={fadeUp} className="mt-8 flex flex-wrap justify-center gap-4 md:mt-10">
             <Button href="#contact" variant="inverse" size="lg">
               {siteConfig.cta.bookFull}
             </Button>

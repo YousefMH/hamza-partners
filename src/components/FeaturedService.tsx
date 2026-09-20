@@ -40,9 +40,9 @@ export function FeaturedService() {
             </SectionLabel>
           </motion.div>
           <motion.div variants={fadeUp}>
-            <Meander className="mb-8 max-w-sm" tone="champagne" />
+            <Meander className="mb-6 max-w-sm" tone="champagne" />
           </motion.div>
-          <motion.p variants={fadeUp} className="mb-4 font-display text-base font-bold text-gold">
+          <motion.p variants={fadeUp} className="mb-3 font-display text-base font-bold text-gold">
             {featuredService.number}
           </motion.p>
           <motion.h2
@@ -54,11 +54,11 @@ export function FeaturedService() {
           </motion.h2>
           <motion.p
             variants={fadeUp}
-            className="mt-7 max-w-2xl text-lg leading-[1.9] text-ivory/90 md:text-xl"
+            className="mt-6 max-w-2xl text-lg leading-[1.9] text-ivory/90 md:mt-7 md:text-xl"
           >
             {featuredService.description}
           </motion.p>
-          <motion.div variants={fadeUp} className="mt-10 flex flex-wrap gap-4">
+          <motion.div variants={fadeUp} className="mt-8 flex flex-wrap gap-4 md:mt-10">
             <Button href="#contact" variant="inverse" size="lg">
               {siteConfig.cta.book}
             </Button>

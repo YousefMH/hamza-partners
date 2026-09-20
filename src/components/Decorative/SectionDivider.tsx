@@ -24,7 +24,7 @@ export function SectionDivider({ surface = 'ivory', className }: SectionDividerP
   return (
     <div
       className={cn(
-        'relative select-none py-7 md:py-9',
+        'relative select-none py-3.5 md:py-4',
         surface === 'white' && 'bg-white',
         surface === 'ivory' && 'bg-ivory',
         surface === 'charcoal' && 'bg-charcoal',
@@ -45,7 +45,7 @@ export function SectionDivider({ surface = 'ivory', className }: SectionDividerP
           <span className={cn('hidden h-px w-8 sm:block', dark ? 'bg-gold-champagne/35' : 'bg-gold/35')} />
           <span className={cn('h-px flex-1', line)} />
         </div>
-        <div className="mx-auto mt-2.5 flex max-w-xs items-center justify-center gap-2 opacity-70 md:mt-3">
+        <div className="mx-auto mt-1.5 flex max-w-xs items-center justify-center gap-2 opacity-70">
           <span className={cn('h-px w-10', dark ? 'bg-gold-champagne/25' : 'bg-gold/25')} />
           <span className={cn('size-1 rotate-45', dark ? 'bg-gold-champagne/50' : 'bg-gold/45')} />
           <span className={cn('h-px w-10', dark ? 'bg-gold-champagne/25' : 'bg-gold/25')} />

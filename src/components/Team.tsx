@@ -34,16 +34,16 @@ export function Team() {
           <motion.h2 id="team-heading" variants={fadeUp} className="section-title">
             فريق العمل
           </motion.h2>
-          <motion.div variants={fadeUp} className="mt-5 max-w-[7rem]">
+          <motion.div variants={fadeUp} className="section-rule">
             <DoubleLine />
           </motion.div>
-          <motion.p variants={fadeUp} className="lede mt-5">
+          <motion.p variants={fadeUp} className="lede">
             بيانات توضيحية قابلة للاستبدال — ليست ملفات محامين حقيقية.
           </motion.p>
         </motion.div>
 
         <motion.ul
-          className="mt-14 grid gap-10 md:grid-cols-3"
+          className="section-body grid gap-8 md:grid-cols-3 md:gap-10"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"

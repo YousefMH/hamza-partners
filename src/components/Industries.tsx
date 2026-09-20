@@ -12,7 +12,7 @@ export function Industries() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-10% 0px' }}
-          className="mb-12"
+          className="mb-0"
         >
           <motion.div variants={fadeUp}>
             <SectionLabel>القطاعات</SectionLabel>
@@ -20,13 +20,13 @@ export function Industries() {
           <motion.h2 id="industries-heading" variants={fadeUp} className="section-title">
             نخدم قطاعات متعددة
           </motion.h2>
-          <motion.div variants={fadeUp} className="mt-5 max-w-[7rem]">
+          <motion.div variants={fadeUp} className="section-rule">
             <DoubleLine />
           </motion.div>
         </motion.div>
 
         <motion.ul
-          className="flex flex-wrap gap-x-2 gap-y-3 md:gap-x-3"
+          className="section-body flex flex-wrap gap-x-2.5 gap-y-3 md:gap-x-3"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"

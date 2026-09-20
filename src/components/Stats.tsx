@@ -6,9 +6,9 @@ import { fadeUp, staggerContainer } from '@/lib/motion'
 
 export function Stats() {
   return (
-    <section className="bg-charcoal py-16 text-ivory md:py-20" aria-labelledby="stats-heading">
+    <section className="section-pad bg-charcoal text-ivory" aria-labelledby="stats-heading">
       <div className="container-editorial">
-        <div className="mb-10 flex flex-col items-start gap-4 md:flex-row md:items-end md:justify-between">
+        <div className="mb-8 flex flex-col items-start gap-3 md:mb-10 md:flex-row md:items-end md:justify-between">
           <div>
             <h2 id="stats-heading" className="sr-only">
               أرقام توضيحية
@@ -21,7 +21,7 @@ export function Stats() {
         </div>
 
         <motion.ul
-          className="grid grid-cols-2 gap-8 border-t border-ivory/10 pt-10 lg:grid-cols-4 lg:gap-6"
+          className="grid grid-cols-2 gap-8 border-t border-ivory/10 pt-8 lg:grid-cols-4 lg:gap-6 lg:pt-10"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"

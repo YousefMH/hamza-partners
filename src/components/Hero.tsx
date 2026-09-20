@@ -27,7 +27,7 @@ export function Hero() {
         <div className="marble-texture absolute inset-0 opacity-25 mix-blend-soft-light" />
       </div>
 
-      <div className="relative container-editorial flex min-h-[100svh] flex-col justify-end pb-16 pt-32 md:justify-center md:pb-24 md:pt-28">
+      <div className="relative container-editorial flex min-h-[100svh] flex-col justify-end pb-14 pt-28 md:justify-center md:pb-20 md:pt-28">
         <motion.div
           className="max-w-3xl"
           variants={staggerContainer}
@@ -35,12 +35,12 @@ export function Hero() {
           animate="visible"
         >
           <motion.div variants={fadeUp}>
-            <Meander className="mb-8 max-w-xs opacity-80" tone="champagne" />
+            <Meander className="mb-6 max-w-xs opacity-80 md:mb-8" tone="champagne" />
           </motion.div>
 
           <motion.p
             variants={fadeUp}
-            className="mb-5 font-display text-base font-bold text-gold-champagne"
+            className="mb-4 font-display text-base font-bold text-gold-champagne md:mb-5"
           >
             {siteConfig.firmNameAr}
           </motion.p>
@@ -57,12 +57,12 @@ export function Hero() {
 
           <motion.p
             variants={fadeUp}
-            className="mt-7 max-w-xl text-lg leading-[1.9] text-ivory/92 md:text-xl"
+            className="mt-6 max-w-xl text-lg leading-[1.9] text-ivory/92 md:mt-7 md:text-xl"
           >
             {siteConfig.description}
           </motion.p>
 
-          <motion.div variants={fadeUp} className="mt-10 flex flex-wrap gap-4">
+          <motion.div variants={fadeUp} className="mt-8 flex flex-wrap gap-4 md:mt-10">
             <Button href="/#contact" variant="inverse" size="lg">
               {siteConfig.cta.book}
             </Button>

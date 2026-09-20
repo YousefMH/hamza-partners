@@ -96,7 +96,7 @@
   }
 
   .section-pad {
-    padding-block: clamp(4.75rem, 9vw, 8rem);
+    padding-block: clamp(3.5rem, 6.5vw, 5.75rem);
   }
 
   .container-editorial {
@@ -119,6 +119,7 @@
   /* Comfortable Arabic reading measure */
   .lede {
     max-width: 38rem;
+    margin-top: 1.5rem;
     font-size: 1.125rem;
     line-height: 1.9;
     color: var(--color-muted);
@@ -130,6 +131,15 @@
     color: var(--color-charcoal);
   }
 
+  .section-rule {
+    margin-top: 1.25rem;
+    max-width: 7rem;
+  }
+
+  .section-body {
+    margin-top: clamp(2.5rem, 4.5vw, 3.25rem);
+  }
+
   .body-copy {
     font-size: 1.0625rem;
     line-height: 1.9;
@@ -137,7 +147,7 @@
   }
 
   .label-eyebrow {
-    margin-bottom: 0.85rem;
+    margin-bottom: 0.75rem;
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -145,5 +155,9 @@
     font-weight: 700;
     letter-spacing: 0;
     color: var(--color-gold-dark);
+  }
+
+  section[id] {
+    scroll-margin-top: 5.25rem;
   }
 }

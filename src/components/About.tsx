@@ -34,10 +34,10 @@ export function About() {
             >
               شراكة قانونية تتجاوز حدود الاستشارة
             </motion.h2>
-            <motion.div variants={fadeUp} className="mt-6 max-w-[8rem]">
+            <motion.div variants={fadeUp} className="section-rule">
               <DoubleLine />
             </motion.div>
-            <motion.p variants={fadeUp} className="lede mt-8">
+            <motion.p variants={fadeUp} className="lede">
               في {siteConfig.firmNameAr} نقدّم خدمات قانونية رفيعة المستوى للشركات والمستثمرين
               والمؤسسات والأفراد. نجمع بين العمق القانوني والمنظور التجاري لنصوغ حلولًا دقيقة
               تحمي المصالح وتفتح آفاق النمو في أسواق متغيرة.
@@ -54,9 +54,9 @@ export function About() {
                 <motion.li
                   key={item.label}
                   variants={fadeUp}
-                  className="border-b border-border px-0 py-7 sm:px-6 sm:odd:border-e"
+                  className="border-b border-border px-0 py-6 sm:px-5 sm:odd:border-e md:py-7"
                 >
-                  <span className="mb-4 inline-flex size-11 items-center justify-center border border-gold/35 text-gold-dark">
+                  <span className="mb-3.5 inline-flex size-10 items-center justify-center border border-gold/35 text-gold-dark">
                     <Icon className="size-5" strokeWidth={1.5} aria-hidden="true" />
                   </span>
                   <p className="font-display text-xl leading-relaxed text-charcoal">{item.label}</p>

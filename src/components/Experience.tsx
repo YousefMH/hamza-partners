@@ -19,16 +19,16 @@ export function Experience() {
           <motion.h2 id="experience-heading" variants={fadeUp} className="section-title">
             خبراتنا
           </motion.h2>
-          <motion.div variants={fadeUp} className="mt-5 max-w-[7rem]">
+          <motion.div variants={fadeUp} className="section-rule">
             <DoubleLine />
           </motion.div>
-          <motion.p variants={fadeUp} className="lede mt-5">
+          <motion.p variants={fadeUp} className="lede">
             موضوعات خبرة مجهولة الهوية — دون ذكر عملاء أو نتائج محددة.
           </motion.p>
         </motion.div>
 
         <motion.ul
-          className="mt-14 grid gap-0 border-t border-border md:grid-cols-2"
+          className="section-body grid gap-0 border-t border-border md:grid-cols-2"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
@@ -38,7 +38,7 @@ export function Experience() {
             <motion.li
               key={item.id}
               variants={fadeUp}
-              className="border-b border-border p-7 transition-colors hover:bg-ivory md:odd:border-e md:p-9"
+              className="border-b border-border p-6 transition-colors hover:bg-ivory md:odd:border-e md:p-8"
             >
               <span className="font-display text-base font-bold text-gold">0{index + 1}</span>
               <h3 className="mt-4 font-display text-2xl leading-relaxed text-charcoal">

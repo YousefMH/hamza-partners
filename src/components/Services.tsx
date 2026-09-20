@@ -24,16 +24,16 @@ export function Services() {
           <motion.h2 id="services-heading" variants={fadeUp} className="section-title">
             مجالات عملنا
           </motion.h2>
-          <motion.div variants={fadeUp} className="mt-5 max-w-[7rem]">
+          <motion.div variants={fadeUp} className="section-rule">
             <DoubleLine />
           </motion.div>
-          <motion.p variants={fadeUp} className="lede mt-6">
+          <motion.p variants={fadeUp} className="lede">
             خبرات قانونية متخصصة تغطي احتياجات الأعمال والاستثمار والتقاضي.
           </motion.p>
         </motion.div>
 
         <motion.ul
-          className="mt-14 grid border-t border-border md:grid-cols-2 xl:grid-cols-3"
+          className="section-body grid border-t border-border md:grid-cols-2 xl:grid-cols-3"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"

@@ -19,13 +19,13 @@ export function WhyUs() {
           <motion.h2 id="why-us-heading" variants={fadeUp} className="section-title">
             لماذا نحن؟
           </motion.h2>
-          <motion.div variants={fadeUp} className="mt-5 max-w-[7rem]">
+          <motion.div variants={fadeUp} className="section-rule">
             <DoubleLine />
           </motion.div>
         </motion.div>
 
         <motion.ol
-          className="mt-14 divide-y divide-border border-y border-border"
+          className="section-body divide-y divide-border border-y border-border"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
@@ -35,7 +35,7 @@ export function WhyUs() {
             <motion.li
               key={item.id}
               variants={fadeUp}
-              className="grid gap-3 py-9 md:grid-cols-[4.5rem_minmax(0,1fr)_minmax(0,1.35fr)] md:items-start md:gap-10 md:py-11"
+              className="grid gap-3 py-8 md:grid-cols-[4.5rem_minmax(0,1fr)_minmax(0,1.35fr)] md:items-start md:gap-8 md:py-9"
             >
               <span className="font-display text-base font-bold text-gold">
                 0{index + 1}
