@@ -61,8 +61,8 @@ export function Team() {
                     className="h-full w-full object-cover will-change-[filter] transition-transform duration-700 group-hover:scale-[1.03]"
                     loading="lazy"
                     initial={reduce ? false : { filter: 'grayscale(1)' }}
-                    whileInView={{ filter: 'grayscale(0)' }}
-                    viewport={{ once: true, amount: 0.4, margin: '0px 0px -8% 0px' }}
+                    whileInView={reduce ? undefined : { filter: 'grayscale(0)' }}
+                    viewport={{ once: false, amount: 0.45, margin: '0px 0px -6% 0px' }}
                     transition={{
                       duration: reduce ? 0 : 1.15,
                       delay: reduce ? 0 : index * 0.08,
