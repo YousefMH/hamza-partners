@@ -47,9 +47,9 @@ export function Services() {
             >
               <Link
                 to={`/services/${service.slug}`}
-                className="flex h-full flex-col gap-4 p-6 text-center transition-colors duration-300 hover:bg-ivory md:gap-5 md:p-8 md:text-start"
+                className="flex h-full flex-col gap-5 p-6 text-center transition-colors duration-300 hover:bg-ivory md:gap-5 md:p-8 md:text-start"
               >
-                <div className="flex w-full items-center justify-between gap-6 px-1 sm:gap-8">
+                <div className="mb-1 flex w-full items-center justify-between gap-8 px-0.5">
                   <span className="font-display text-base font-bold tracking-wide text-gold">
                     {service.number}
                   </span>
@@ -62,7 +62,7 @@ export function Services() {
                   {service.title}
                 </h3>
                 <p className="body-copy text-base">{service.shortDescription}</p>
-                <span className="mt-auto inline-flex items-center justify-center gap-3 pt-1 text-base font-bold text-gold-dark transition-colors group-hover:text-charcoal md:justify-start">
+                <span className="mt-auto inline-flex items-center justify-center gap-3 pt-2 text-base font-bold text-gold-dark transition-colors group-hover:text-charcoal md:justify-start">
                   {siteConfig.cta.discoverMore}
                   <ArrowLeft size={16} strokeWidth={1.5} aria-hidden="true" />
                 </span>
