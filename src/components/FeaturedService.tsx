@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { featuredService } from '@/data/services'
 import { siteConfig } from '@/data/siteConfig'
+import { appUrl } from '@/lib/paths'
 import { Button } from '@/components/ui/Button'
 import { Meander, SectionLabel } from '@/components/Decorative/Ornaments'
 import { clipReveal, fadeUp, staggerContainer } from '@/lib/motion'
@@ -59,7 +60,7 @@ export function FeaturedService() {
             {featuredService.description}
           </motion.p>
           <motion.div variants={fadeUp} className="mt-8 flex flex-wrap justify-center gap-4 md:mt-10 md:justify-start">
-            <Button href="/#contact" variant="inverse" size="lg">
+            <Button href={appUrl("/#contact")} variant="inverse" size="lg">
               {siteConfig.cta.book}
             </Button>
             <Link

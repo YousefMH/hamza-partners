@@ -5,6 +5,7 @@ import { siteConfig } from '@/data/siteConfig'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Button } from '@/components/ui/Button'
+import { appUrl } from '@/lib/paths'
 import { DoubleLine, Meander, SectionLabel } from '@/components/Decorative/Ornaments'
 
 function LinkedInIcon({ className }: { className?: string }) {
@@ -26,9 +27,9 @@ export function LawyerProfilePage() {
         <main className="container-editorial flex min-h-[70vh] flex-col items-center justify-center py-32 text-center">
           <h1 className="font-display text-3xl text-charcoal">الملف غير موجود</h1>
           <p className="mt-4 text-muted">تعذر العثور على ملف المحامي المطلوب.</p>
-          <Link to="/#team" className="mt-8 text-gold-dark hover:text-charcoal">
+          <a href={appUrl("/#team")} className="mt-8 text-gold-dark hover:text-charcoal">
             العودة إلى فريق العمل
-          </Link>
+          </a>
         </main>
         <Footer />
       </>
@@ -43,13 +44,12 @@ export function LawyerProfilePage() {
       <main>
         <section className="bg-charcoal pt-28 pb-16 text-ivory md:pt-36 md:pb-20">
           <div className="container-editorial">
-            <Link
-              to="/#team"
+            <a href={appUrl("/#team")}
               className="mb-8 inline-flex items-center gap-2 text-base text-ivory/85 transition-colors hover:text-gold-champagne"
             >
               <ArrowRight size={16} strokeWidth={1.5} aria-hidden="true" />
               فريق العمل
-            </Link>
+            </a>
             <Meander className="mb-8 w-full max-w-xs" tone="champagne" />
             <p className="text-sm text-ivory/65">ملف شخصي توضيحي — بيانات قابلة للاستبدال</p>
             <h1 className="mt-3 max-w-3xl text-[clamp(1.75rem,4vw,3rem)] font-extrabold leading-[1.4]">
@@ -82,7 +82,7 @@ export function LawyerProfilePage() {
                   LinkedIn
                 </a>
                 <div className="mt-6">
-                  <Button href="/#contact" size="lg" className="w-full">
+                  <Button href={appUrl("/#contact")} size="lg" className="w-full">
                     {siteConfig.cta.book}
                   </Button>
                 </div>

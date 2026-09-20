@@ -4,7 +4,7 @@ export const siteConfig = {
   tagline: 'شراكة قانونية تتجاوز حدود الاستشارة',
   description:
     'نقدم حلولًا قانونية متكاملة للشركات والمستثمرين والأفراد، تجمع بين الخبرة القانونية العميقة والفهم الدقيق للأعمال والأسواق.',
-  url: 'https://hamza-partners.example',
+  url: 'https://yousefmh.github.io/hamza-partners',
   // PLACEHOLDER — replace with real contact details
   contact: {
     phone: '+20 2 0000 0000',

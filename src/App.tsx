@@ -5,9 +5,11 @@ import { LawyerProfilePage } from '@/pages/LawyerProfilePage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { ScrollToTop } from '@/components/ScrollToTop'
 
+const routerBasename = import.meta.env.BASE_URL.replace(/\/$/, '') || undefined
+
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={routerBasename}>
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage />} />

@@ -4,8 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "VITE_BASE_PATH=/ vite",
+    "build": "tsc -b && vite build && cp dist/index.html dist/404.html",
+    "build:local": "tsc -b && VITE_BASE_PATH=/ vite build && cp dist/index.html dist/404.html",
     "lint": "oxlint",
     "preview": "vite preview --port 4321"
   },

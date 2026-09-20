@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { services } from '@/data/services'
 import { siteConfig } from '@/data/siteConfig'
+import { appUrl } from '@/lib/paths'
 import { Meander } from '@/components/Decorative/Ornaments'
 
 export function Footer() {
@@ -23,7 +24,7 @@ export function Footer() {
             <ul className="space-y-2 text-sm text-ivory/85 sm:space-y-2.5 sm:text-base">
               {siteConfig.nav.map((item) => (
                 <li key={item.href}>
-                  <a href={item.href} className="transition-colors hover:text-gold-champagne">
+                  <a href={appUrl(item.href)} className="transition-colors hover:text-gold-champagne">
                     {item.label}
                   </a>
                 </li>

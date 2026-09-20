@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { siteConfig } from '@/data/siteConfig'
+import { appUrl } from '@/lib/paths'
 import { Button } from '@/components/ui/Button'
 import { Meander } from '@/components/Decorative/Ornaments'
 import { fadeUp, staggerContainer } from '@/lib/motion'
@@ -76,7 +77,7 @@ export function Hero() {
               className="mt-5 flex flex-col items-center justify-center gap-2.5 sm:mt-6 sm:flex-row sm:gap-3 md:mt-10 md:justify-start"
             >
               <Button
-                href="/#contact"
+                href={appUrl("/#contact")}
                 variant="inverse"
                 size="md"
                 className="w-full max-w-[16.5rem] sm:w-auto sm:max-w-none sm:px-8 sm:py-3.5"
@@ -84,7 +85,7 @@ export function Hero() {
                 {siteConfig.cta.book}
               </Button>
               <Button
-                href="/#services"
+                href={appUrl("/#services")}
                 variant="ghost"
                 size="md"
                 className="w-full max-w-[16.5rem] sm:w-auto sm:max-w-none sm:px-8 sm:py-3.5"

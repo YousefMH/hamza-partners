@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { siteConfig } from '@/data/siteConfig'
+import { appUrl } from '@/lib/paths'
 import { cn } from '@/lib/cn'
 import { Button } from '@/components/ui/Button'
 
@@ -61,7 +62,7 @@ export function Header({ forceSolid = false }: HeaderProps) {
       >
         <div className="container-editorial flex h-12 items-center gap-2 sm:h-14 sm:gap-3 md:h-16 lg:h-[4.5rem] lg:gap-6">
           <a
-            href="/#home"
+            href={appUrl("/#home")}
             onClick={closeMenu}
             className="group min-w-0 flex-1"
             aria-label={siteConfig.firmNameAr}
@@ -95,7 +96,7 @@ export function Header({ forceSolid = false }: HeaderProps) {
             {siteConfig.nav.map((item) => (
               <a
                 key={item.href}
-                href={item.href}
+                href={appUrl(item.href)}
                 className={cn(
                   'relative whitespace-nowrap text-[0.95rem] transition-colors after:absolute after:inset-x-0 after:-bottom-1 after:h-px after:origin-right after:scale-x-0 after:bg-gold after:transition-transform after:duration-300 hover:after:origin-left hover:after:scale-x-100',
                   solidDesktop
@@ -110,7 +111,7 @@ export function Header({ forceSolid = false }: HeaderProps) {
 
           <div className="flex shrink-0 items-center gap-1.5 sm:gap-2.5">
             <a
-              href="/#contact"
+              href={appUrl("/#contact")}
               className={cn(
                 'inline-flex h-9 items-center justify-center whitespace-nowrap rounded-sm px-3 font-display text-[0.8125rem] font-bold transition-colors sm:h-10 sm:px-4 sm:text-sm lg:hidden',
                 'border border-gold bg-gold text-charcoal hover:bg-gold-champagne',
@@ -121,7 +122,7 @@ export function Header({ forceSolid = false }: HeaderProps) {
 
             <span className="hidden lg:inline-flex">
               <Button
-                href="/#contact"
+                href={appUrl("/#contact")}
                 size="md"
                 variant={solidDesktop ? 'primary' : 'inverse'}
               >
@@ -177,7 +178,7 @@ export function Header({ forceSolid = false }: HeaderProps) {
               {siteConfig.nav.map((item, index) => (
                 <motion.a
                   key={item.href}
-                  href={item.href}
+                  href={appUrl(item.href)}
                   onClick={closeMenu}
                   className="border-b border-border py-3.5 font-display text-lg font-bold text-charcoal transition-colors hover:text-gold-dark sm:py-4 sm:text-xl"
                   initial={reduce ? false : { opacity: 0, y: 8 }}
@@ -190,7 +191,7 @@ export function Header({ forceSolid = false }: HeaderProps) {
             </nav>
 
             <div className="container-editorial shrink-0 border-t border-border py-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
-              <Button href="/#contact" onClick={closeMenu} size="lg" className="w-full">
+              <Button href={appUrl("/#contact")} onClick={closeMenu} size="lg" className="w-full">
                 {siteConfig.cta.book}
               </Button>
             </div>

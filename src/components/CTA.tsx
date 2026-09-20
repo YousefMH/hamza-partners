@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { siteConfig } from '@/data/siteConfig'
+import { appUrl } from '@/lib/paths'
 import { Button } from '@/components/ui/Button'
 import { Meander } from '@/components/Decorative/Ornaments'
 import { fadeUp, staggerContainer } from '@/lib/motion'
@@ -29,10 +30,10 @@ export function CTA() {
             تحدث مع فريقنا لمناقشة احتياجاتك القانونية والحصول على التوجيه المناسب.
           </motion.p>
           <motion.div variants={fadeUp} className="mt-8 flex flex-wrap justify-center gap-4 md:mt-10">
-            <Button href="/#contact" variant="inverse" size="lg">
+            <Button href={appUrl("/#contact")} variant="inverse" size="lg">
               {siteConfig.cta.bookFull}
             </Button>
-            <Button href="/#contact" variant="ghost" size="lg">
+            <Button href={appUrl("/#contact")} variant="ghost" size="lg">
               {siteConfig.cta.contact}
             </Button>
           </motion.div>

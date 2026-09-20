@@ -5,6 +5,7 @@ import { siteConfig } from '@/data/siteConfig'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Button } from '@/components/ui/Button'
+import { appUrl } from '@/lib/paths'
 import { ServiceIcon } from '@/components/ui/ServiceIcon'
 import { DoubleLine, Meander, SectionLabel } from '@/components/Decorative/Ornaments'
 
@@ -38,13 +39,12 @@ export function ServiceDetailPage() {
       <main>
         <section className="bg-charcoal pt-28 pb-16 text-ivory md:pt-36 md:pb-20">
           <div className="container-editorial">
-            <Link
-              to="/#services"
+            <a href={appUrl("/#services")}
               className="mb-8 inline-flex items-center gap-2 text-base text-ivory/85 transition-colors hover:text-gold-champagne"
             >
               <ArrowRight size={16} strokeWidth={1.5} aria-hidden="true" />
               مجالات العمل
-            </Link>
+            </a>
             <Meander className="mb-8 w-full max-w-xs" tone="champagne" />
             <p className="font-display text-base font-bold text-gold">{service.number}</p>
             <div className="mt-4 flex items-start gap-4">
@@ -84,10 +84,10 @@ export function ServiceDetailPage() {
               </div>
 
               <div className="mt-12 flex flex-wrap gap-4">
-                <Button href="/#contact" size="lg">
+                <Button href={appUrl("/#contact")} size="lg">
                   {siteConfig.cta.book}
                 </Button>
-                <Button href="/#services" variant="secondary" size="lg">
+                <Button href={appUrl("/#services")} variant="secondary" size="lg">
                   كل مجالات العمل
                 </Button>
               </div>
@@ -98,7 +98,7 @@ export function ServiceDetailPage() {
                 <p className="font-display text-base font-bold text-gold-dark">ملخص سريع</p>
                 <p className="body-copy mt-4">{service.shortDescription}</p>
                 <div className="mt-6 border-t border-border pt-5">
-                  <Button href="/#contact" className="w-full" size="lg">
+                  <Button href={appUrl("/#contact")} className="w-full" size="lg">
                     {siteConfig.cta.contact}
                   </Button>
                 </div>

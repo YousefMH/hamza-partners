@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { Button } from '@/components/ui/Button'
+import { appUrl } from '@/lib/paths'
 
 export function NotFoundPage() {
   return (
@@ -14,12 +14,12 @@ export function NotFoundPage() {
           الرابط الذي حاولت فتحه غير متاح. يمكنك العودة إلى الصفحة الرئيسية ومتابعة التصفح.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Button href="/#home" size="lg">
+          <Button href={appUrl("/#home")} size="lg">
             الصفحة الرئيسية
           </Button>
-          <Link to="/#contact" className="inline-flex items-center px-4 text-gold-dark hover:text-charcoal">
+          <a href={appUrl("/#contact")} className="inline-flex items-center px-4 text-gold-dark hover:text-charcoal">
             تواصل معنا
-          </Link>
+          </a>
         </div>
       </main>
       <Footer />
