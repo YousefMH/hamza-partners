@@ -60,16 +60,16 @@ export function Header({ forceSolid = false }: HeaderProps) {
             : 'lg:border-transparent lg:bg-transparent lg:shadow-none lg:backdrop-blur-none',
         )}
       >
-        <div className="container-editorial flex min-h-12 items-center gap-2 py-2.5 sm:min-h-14 sm:gap-3 md:h-16 md:py-0 lg:h-[4.5rem] lg:gap-6">
+        <div className="container-editorial flex min-h-14 items-center gap-2 py-3 sm:min-h-14 sm:gap-3 sm:py-2.5 md:h-16 md:py-0 lg:h-[4.5rem] lg:gap-6">
           <a
             href={appUrl("/#home")}
             onClick={closeMenu}
-            className="group shrink-0"
+            className="group shrink-0 py-0.5"
             aria-label={siteConfig.firmNameAr}
           >
             <span
               className={cn(
-                'block whitespace-nowrap font-display text-[0.9375rem] font-bold leading-snug transition-colors sm:text-base md:text-lg lg:text-xl',
+                'block whitespace-nowrap font-display text-[0.9375rem] font-bold leading-normal transition-colors sm:text-base md:text-lg lg:text-xl',
                 'text-charcoal',
                 solidDesktop ? 'lg:text-charcoal' : 'lg:text-ivory',
               )}
