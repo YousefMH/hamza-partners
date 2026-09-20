@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { HomePage } from '@/pages/HomePage'
 import { ServiceDetailPage } from '@/pages/ServiceDetailPage'
+import { LawyerProfilePage } from '@/pages/LawyerProfilePage'
 import { ScrollToTop } from '@/components/ScrollToTop'
 
 export default function App() {
@@ -10,6 +11,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/services/:slug" element={<ServiceDetailPage />} />
+        <Route path="/team/:slug" element={<LawyerProfilePage />} />
       </Routes>
     </BrowserRouter>
   )

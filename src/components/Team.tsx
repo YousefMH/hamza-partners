@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { team } from '@/data/team'
 import { siteConfig } from '@/data/siteConfig'
@@ -50,19 +51,23 @@ export function Team() {
         >
           {team.map((member) => (
             <motion.li key={member.id} variants={fadeUp} className="group">
-              <div className="relative aspect-[3/4] overflow-hidden bg-border">
-                <img
-                  src={member.image}
-                  alt=""
-                  className="h-full w-full object-cover grayscale transition duration-700 group-hover:scale-[1.03] group-hover:grayscale-0"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/50 to-transparent opacity-60" />
-              </div>
+              <Link to={`/team/${member.slug}`} className="block">
+                <div className="relative aspect-[3/4] overflow-hidden bg-border">
+                  <img
+                    src={member.image}
+                    alt=""
+                    className="h-full w-full object-cover grayscale transition duration-700 group-hover:scale-[1.03] group-hover:grayscale-0"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal/50 to-transparent opacity-60" />
+                </div>
+              </Link>
               <div className="mt-5 flex items-start justify-between gap-3">
                 <div>
                   <h3 className="font-display text-xl leading-relaxed text-charcoal">
-                    {member.name}
+                    <Link to={`/team/${member.slug}`} className="transition-colors hover:text-gold-dark">
+                      {member.name}
+                    </Link>
                   </h3>
                   <p className="mt-1.5 text-base text-gold-dark">{member.position}</p>
                   <p className="body-copy mt-2 text-base">{member.expertise}</p>
@@ -72,17 +77,17 @@ export function Team() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-1 text-muted transition-colors hover:text-gold"
-                  aria-label="LinkedIn"
+                  aria-label={`LinkedIn — ${member.name}`}
                 >
                   <LinkedInIcon className="size-[18px]" />
                 </a>
               </div>
-              <a
-                href="#contact"
+              <Link
+                to={`/team/${member.slug}`}
                 className="mt-4 inline-flex border-b border-gold/40 pb-0.5 text-base font-bold text-gold-dark transition-colors hover:border-gold hover:text-charcoal"
               >
                 {siteConfig.cta.viewProfile}
-              </a>
+              </Link>
             </motion.li>
           ))}
         </motion.ul>

@@ -47,7 +47,7 @@ export function Header() {
       >
         <div className="container-editorial flex h-16 items-center justify-between gap-3 md:h-[4.5rem] md:gap-4">
           <a
-            href="#home"
+            href="/#home"
             onClick={closeMenu}
             className="group min-w-0 flex-1 py-1"
             aria-label={siteConfig.firmNameAr}
@@ -94,7 +94,7 @@ export function Header() {
 
           <div className="flex shrink-0 items-center gap-2">
             <Button
-              href="#contact"
+              href="/#contact"
               className="hidden lg:inline-flex"
               size="md"
               variant={solid ? 'primary' : 'inverse'}
@@ -180,7 +180,7 @@ export function Header() {
               </nav>
 
               <div className="border-t border-border p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
-                <Button href="#contact" onClick={closeMenu} size="lg" className="w-full">
+                <Button href="/#contact" onClick={closeMenu} size="lg" className="w-full">
                   {siteConfig.cta.book}
                 </Button>
               </div>

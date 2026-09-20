@@ -26,13 +26,13 @@ export const siteConfig = {
   featuredImage:
     'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2000&q=80',
   nav: [
-    { label: 'الرئيسية', href: '#home' },
-    { label: 'من نحن', href: '#about' },
-    { label: 'مجالات العمل', href: '#services' },
-    { label: 'فريق العمل', href: '#team' },
-    { label: 'الخبرات', href: '#experience' },
-    { label: 'المقالات', href: '#articles' },
-    { label: 'تواصل معنا', href: '#contact' },
+    { label: 'الرئيسية', href: '/#home' },
+    { label: 'من نحن', href: '/#about' },
+    { label: 'مجالات العمل', href: '/#services' },
+    { label: 'فريق العمل', href: '/#team' },
+    { label: 'الخبرات', href: '/#experience' },
+    { label: 'المقالات', href: '/#articles' },
+    { label: 'تواصل معنا', href: '/#contact' },
   ],
   cta: {
     book: 'احجز استشارة',
