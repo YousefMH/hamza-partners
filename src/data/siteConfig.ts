@@ -4,10 +4,12 @@ export const siteConfig = {
   /** Year the firm was founded — used for heritage marketing copy */
   foundedYear: 1935,
   tagline: 'شراكة قانونية تتجاوز حدود الاستشارة',
-  /** Short hero line underscoring continuity since founding */
-  heritageLine: 'عراقة تمتد منذ 1935',
+  /** Hero H1 primary line — founding year as the lead claim */
+  heroHeadline: 'منذ 1935',
+  /** Hero H1 secondary line */
+  heroHeadlineAccent: 'شراكة قانونية تصنع الفارق',
   description:
-    'نقدم حلولًا قانونية متكاملة للشركات والمستثمرين والأفراد، تجمع بين الخبرة القانونية العميقة والفهم الدقيق للأعمال والأسواق.',
+    'مكتب محاماة مصري تأسس عام 1935 — نقدّم حلولًا قانونية متكاملة للشركات والمستثمرين والأفراد، بخبرة متراكمة وفهم دقيق للأعمال.',
   url: 'https://yousefmh.github.io/hamza-partners',
   // PLACEHOLDER — replace with real contact details
   contact: {

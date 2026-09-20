@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { siteConfig } from '@/data/siteConfig'
 import { whyUs } from '@/data/content'
 import { SectionLabel, DoubleLine } from '@/components/Decorative/Ornaments'
 import { fadeUp, staggerContainer } from '@/lib/motion'
@@ -14,14 +15,18 @@ export function WhyUs() {
           viewport={{ once: true, margin: '-10% 0px' }}
         >
           <motion.div variants={fadeUp}>
-            <SectionLabel>مزايانا</SectionLabel>
+            <SectionLabel>لماذا تختارنا</SectionLabel>
           </motion.div>
           <motion.h2 id="why-us-heading" variants={fadeUp} className="section-title">
-            لماذا نحن؟
+            ثقة قانونية منذ {siteConfig.foundedYear}
           </motion.h2>
           <motion.div variants={fadeUp} className="section-rule">
             <DoubleLine />
           </motion.div>
+          <motion.p variants={fadeUp} className="lede">
+            نختار أن نبدأ من الجذور — مكتب تأسس عام {siteConfig.foundedYear}، وما زال يقدّم
+            استشارة قانونية دقيقة للشركات والأفراد بمعايير المهنة ذاتها.
+          </motion.p>
         </motion.div>
 
         <motion.ol
