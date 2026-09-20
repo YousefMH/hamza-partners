@@ -40,7 +40,7 @@ export function FeaturedService() {
             </SectionLabel>
           </motion.div>
           <motion.div variants={fadeUp}>
-            <Meander className="mb-6 max-w-sm" tone="champagne" />
+            <Meander className="mb-6 w-full max-w-sm" tone="champagne" />
           </motion.div>
           <motion.p variants={fadeUp} className="mb-3 font-display text-base font-bold text-gold">
             {featuredService.number}

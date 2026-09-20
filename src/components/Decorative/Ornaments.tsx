@@ -12,7 +12,7 @@ export function Meander({ className, tone = 'gold' }: MeanderProps) {
 
   return (
     <svg
-      className={cn('h-3 w-full', className)}
+      className={cn('h-3 max-w-full', className)}
       viewBox="0 0 480 12"
       preserveAspectRatio="none"
       aria-hidden="true"

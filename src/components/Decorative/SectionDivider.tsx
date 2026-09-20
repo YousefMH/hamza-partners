@@ -24,7 +24,7 @@ export function SectionDivider({ surface = 'ivory', className }: SectionDividerP
   return (
     <div
       className={cn(
-        'relative select-none py-3.5 md:py-4',
+        'relative select-none overflow-x-hidden py-3.5 md:py-4',
         surface === 'white' && 'bg-white',
         surface === 'ivory' && 'bg-ivory',
         surface === 'charcoal' && 'bg-charcoal',
@@ -34,16 +34,24 @@ export function SectionDivider({ surface = 'ivory', className }: SectionDividerP
       role="presentation"
     >
       <div className="container-editorial">
-        <div className="flex items-center gap-3 md:gap-5">
-          <span className={cn('h-px flex-1', line)} />
-          <span className={cn('hidden h-px w-8 sm:block', dark ? 'bg-gold-champagne/35' : 'bg-gold/35')} />
-          <Meander className="w-[4.5rem] shrink-0 opacity-90 sm:w-24 md:w-36" tone={meanderTone} />
+        <div className="flex min-w-0 items-center gap-3 md:gap-5">
+          <span className={cn('h-px min-w-0 flex-1', line)} />
           <span
-            className={cn('size-2 shrink-0 rotate-45 border', diamond)}
+            className={cn(
+              'hidden h-px w-8 shrink-0 sm:block',
+              dark ? 'bg-gold-champagne/35' : 'bg-gold/35',
+            )}
           />
-          <Meander className="w-[4.5rem] shrink-0 opacity-90 sm:w-24 md:w-36" tone={meanderTone} />
-          <span className={cn('hidden h-px w-8 sm:block', dark ? 'bg-gold-champagne/35' : 'bg-gold/35')} />
-          <span className={cn('h-px flex-1', line)} />
+          <Meander className="w-16 shrink-0 opacity-90 sm:w-24 md:w-36" tone={meanderTone} />
+          <span className={cn('size-2 shrink-0 rotate-45 border', diamond)} />
+          <Meander className="w-16 shrink-0 opacity-90 sm:w-24 md:w-36" tone={meanderTone} />
+          <span
+            className={cn(
+              'hidden h-px w-8 shrink-0 sm:block',
+              dark ? 'bg-gold-champagne/35' : 'bg-gold/35',
+            )}
+          />
+          <span className={cn('h-px min-w-0 flex-1', line)} />
         </div>
         <div className="mx-auto mt-1.5 flex max-w-xs items-center justify-center gap-2 opacity-70">
           <span className={cn('h-px w-10', dark ? 'bg-gold-champagne/25' : 'bg-gold/25')} />

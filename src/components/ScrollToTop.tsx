@@ -5,6 +5,12 @@ export function ScrollToTop() {
   const { pathname, hash } = useLocation()
 
   useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
+    }
+  }, [])
+
+  useEffect(() => {
     if (!hash) {
       window.scrollTo(0, 0)
       return

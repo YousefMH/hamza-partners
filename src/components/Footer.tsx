@@ -7,7 +7,7 @@ export function Footer() {
   return (
     <footer className="bg-charcoal text-ivory" role="contentinfo">
       <div className="container-editorial pt-14 pb-9 md:pt-16 md:pb-10">
-        <Meander className="mb-10 opacity-70 md:mb-12" tone="champagne" />
+        <Meander className="mb-10 w-full opacity-70 md:mb-12" tone="champagne" />
 
         <div className="grid gap-10 md:grid-cols-2 md:gap-12 lg:grid-cols-4">
           <div className="lg:col-span-1">

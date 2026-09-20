@@ -50,7 +50,7 @@ export function LawyerProfilePage() {
               <ArrowRight size={16} strokeWidth={1.5} aria-hidden="true" />
               فريق العمل
             </Link>
-            <Meander className="mb-8 max-w-xs" tone="champagne" />
+            <Meander className="mb-8 w-full max-w-xs" tone="champagne" />
             <p className="text-sm text-ivory/65">ملف شخصي توضيحي — بيانات قابلة للاستبدال</p>
             <h1 className="mt-3 max-w-3xl text-[clamp(1.75rem,4vw,3rem)] font-extrabold leading-[1.4]">
               {member.name}

@@ -16,7 +16,7 @@ export function CTA() {
           viewport={{ once: true, margin: '-10% 0px' }}
         >
           <motion.div variants={fadeUp} className="mx-auto mb-6 max-w-xs md:mb-8">
-            <Meander tone="champagne" />
+            <Meander className="w-full" tone="champagne" />
           </motion.div>
           <motion.h2
             id="cta-heading"

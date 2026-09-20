@@ -45,7 +45,7 @@ export function ServiceDetailPage() {
               <ArrowRight size={16} strokeWidth={1.5} aria-hidden="true" />
               مجالات العمل
             </Link>
-            <Meander className="mb-8 max-w-xs" tone="champagne" />
+            <Meander className="mb-8 w-full max-w-xs" tone="champagne" />
             <p className="font-display text-base font-bold text-gold">{service.number}</p>
             <div className="mt-4 flex items-start gap-4">
               <ServiceIcon name={service.icon} className="mt-1 size-6 shrink-0 text-gold-champagne" />

@@ -13,7 +13,7 @@ export function Stats() {
             <h2 id="stats-heading" className="sr-only">
               أرقام توضيحية
             </h2>
-            <Meander className="mb-4 max-w-xs" tone="champagne" />
+            <Meander className="mb-4 w-full max-w-xs" tone="champagne" />
             <p className="text-base leading-relaxed text-ivory/80">
               أرقام توضيحية قابلة للاستبدال — ليست إحصاءات موثقة.
             </p>

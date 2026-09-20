@@ -18,9 +18,9 @@ export function Hero() {
           src={siteConfig.heroImage}
           alt=""
           className="h-full w-full object-cover opacity-45"
-          initial={reduce ? false : { scale: 1.08 }}
+          initial={reduce ? false : { scale: 1.04 }}
           animate={{ scale: 1 }}
-          transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
         />
         <div className="absolute inset-0 bg-gradient-to-l from-charcoal/95 via-charcoal/85 to-charcoal/55" />
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-transparent to-charcoal/45" />
@@ -35,7 +35,7 @@ export function Hero() {
           animate="visible"
         >
           <motion.div variants={fadeUp}>
-            <Meander className="mb-6 max-w-xs opacity-80 md:mb-8" tone="champagne" />
+            <Meander className="mb-6 w-full max-w-xs opacity-80 md:mb-8" tone="champagne" />
           </motion.div>
 
           <motion.p
