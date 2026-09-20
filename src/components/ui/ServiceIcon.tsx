@@ -1,5 +1,6 @@
 import {
   Briefcase,
+  Building,
   Building2,
   Copyright,
   FilePen,
@@ -12,7 +13,6 @@ import {
   Receipt,
   RefreshCw,
   Scale,
-  ShieldCheck,
   Users,
   type LucideIcon,
 } from 'lucide-react'
@@ -21,11 +21,10 @@ const iconMap: Record<string, LucideIcon> = {
   'building-2': Building2,
   'file-pen': FilePen,
   users: Users,
-  'shield-check': ShieldCheck,
   'git-merge': GitMerge,
   handshake: Handshake,
-  'refresh-cw': RefreshCw,
   globe: Globe,
+  'refresh-cw': RefreshCw,
   gavel: Gavel,
   scale: Scale,
   copyright: Copyright,
@@ -33,6 +32,7 @@ const iconMap: Record<string, LucideIcon> = {
   'line-chart': LineChart,
   receipt: Receipt,
   briefcase: Briefcase,
+  building: Building,
 }
 
 export function ServiceIcon({
