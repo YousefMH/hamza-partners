@@ -1,23 +1,12 @@
 import { motion } from 'framer-motion'
 import { siteConfig } from '@/data/siteConfig'
 import { Button } from '@/components/ui/Button'
-import { ColumnRule, Meander } from '@/components/Decorative/Ornaments'
+import { Meander } from '@/components/Decorative/Ornaments'
 import { fadeUp, staggerContainer } from '@/lib/motion'
 
 export function CTA() {
   return (
     <section className="relative overflow-hidden bg-charcoal text-ivory" aria-labelledby="cta-heading">
-      <div
-        className="pointer-events-none absolute inset-0 opacity-30"
-        style={{
-          backgroundImage:
-            'linear-gradient(90deg, transparent 0, transparent calc(25% - 1px), rgba(198,161,91,0.25) 25%, transparent calc(25% + 1px)), linear-gradient(90deg, transparent 0, transparent calc(75% - 1px), rgba(198,161,91,0.2) 75%, transparent calc(75% + 1px))',
-        }}
-        aria-hidden="true"
-      />
-      <ColumnRule className="start-[8%]" />
-      <ColumnRule className="end-[8%]" />
-
       <div className="relative container-editorial section-pad text-center">
         <motion.div
           className="mx-auto max-w-2xl"

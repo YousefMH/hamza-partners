@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { featuredService } from '@/data/services'
 import { siteConfig } from '@/data/siteConfig'
 import { Button } from '@/components/ui/Button'
-import { ColumnRule, Meander, SectionLabel } from '@/components/Decorative/Ornaments'
+import { Meander, SectionLabel } from '@/components/Decorative/Ornaments'
 import { clipReveal, fadeUp, staggerContainer } from '@/lib/motion'
 
 export function FeaturedService() {
@@ -25,9 +25,6 @@ export function FeaturedService() {
         <div className="absolute inset-0 bg-charcoal/80" />
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-charcoal/50" />
       </div>
-
-      <ColumnRule className="start-1/4 hidden lg:block" />
-      <ColumnRule className="start-3/4 hidden lg:block" />
 
       <div className="relative container-editorial section-pad">
         <motion.div
