@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { team } from '@/data/team'
 import { siteConfig } from '@/data/siteConfig'
 import { SectionLabel, DoubleLine } from '@/components/Decorative/Ornaments'
-import { fadeUp, staggerContainer } from '@/lib/motion'
+import { easeOut, fadeUp, staggerContainer } from '@/lib/motion'
 
 function LinkedInIcon({ className }: { className?: string }) {
   return (
@@ -19,6 +19,8 @@ function LinkedInIcon({ className }: { className?: string }) {
 }
 
 export function Team() {
+  const reduce = useReducedMotion()
+
   return (
     <section id="team" className="section-pad bg-ivory marble-texture" aria-labelledby="team-heading">
       <div className="container-editorial">
@@ -49,17 +51,25 @@ export function Team() {
           whileInView="visible"
           viewport={{ once: true, margin: '-8% 0px' }}
         >
-          {team.map((member) => (
+          {team.map((member, index) => (
             <motion.li key={member.id} variants={fadeUp} className="group">
               <Link to={`/team/${member.slug}`} className="block">
                 <div className="relative aspect-[3/4] overflow-hidden bg-border">
-                  <img
+                  <motion.img
                     src={member.image}
                     alt=""
-                    className="h-full w-full object-cover grayscale transition duration-700 group-hover:scale-[1.03] group-hover:grayscale-0"
+                    className="h-full w-full object-cover will-change-[filter] transition-transform duration-700 group-hover:scale-[1.03]"
                     loading="lazy"
+                    initial={reduce ? false : { filter: 'grayscale(1)' }}
+                    whileInView={{ filter: 'grayscale(0)' }}
+                    viewport={{ once: true, amount: 0.4, margin: '0px 0px -8% 0px' }}
+                    transition={{
+                      duration: reduce ? 0 : 1.15,
+                      delay: reduce ? 0 : index * 0.08,
+                      ease: easeOut,
+                    }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal/50 to-transparent opacity-60" />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-charcoal/50 to-transparent opacity-60" />
                 </div>
               </Link>
               <div className="mt-5 flex flex-col items-center gap-3 text-center md:flex-row md:items-start md:justify-between md:text-start">
