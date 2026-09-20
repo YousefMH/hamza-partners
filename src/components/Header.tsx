@@ -17,7 +17,6 @@ export function Header({ forceSolid = false }: HeaderProps) {
   const [open, setOpen] = useState(false)
   const reduce = useReducedMotion()
   const onHome = pathname === '/'
-  // Desktop-only transparency over the home hero; mobile is always solid via CSS
   const solidDesktop = forceSolid || !onHome || scrolled || open
 
   useEffect(() => {
@@ -54,24 +53,22 @@ export function Header({ forceSolid = false }: HeaderProps) {
       <header
         className={cn(
           'fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top,0px)] transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300',
-          // Phones/tablets: always solid so chrome never vanishes over ivory sections
-          'border-b border-gold/25 bg-ivory/95 shadow-[0_1px_0_rgba(198,161,91,0.1)] backdrop-blur-md',
-          // Large screens: optional transparent hero overlay
+          'border-b border-gold/20 bg-ivory/95 shadow-[0_1px_0_rgba(198,161,91,0.08)] backdrop-blur-md',
           solidDesktop
             ? 'lg:border-gold/25 lg:bg-ivory/95 lg:shadow-[0_1px_0_rgba(198,161,91,0.1)] lg:backdrop-blur-md'
             : 'lg:border-transparent lg:bg-transparent lg:shadow-none lg:backdrop-blur-none',
         )}
       >
-        <div className="container-editorial flex h-14 items-center justify-between gap-3 sm:h-16 md:h-[4.5rem] md:gap-4">
+        <div className="container-editorial flex h-12 items-center gap-2 sm:h-14 sm:gap-3 md:h-16 lg:h-[4.5rem] lg:gap-6">
           <a
             href="/#home"
             onClick={closeMenu}
-            className="group min-w-0 flex-1 py-1"
+            className="group min-w-0 flex-1"
             aria-label={siteConfig.firmNameAr}
           >
             <span
               className={cn(
-                'block truncate font-display text-[0.95rem] font-bold leading-tight transition-colors sm:text-lg md:text-xl',
+                'block truncate font-display text-sm font-bold leading-none transition-colors sm:text-base md:text-lg lg:text-xl',
                 'text-charcoal',
                 solidDesktop ? 'lg:text-charcoal' : 'lg:text-ivory',
               )}
@@ -80,7 +77,7 @@ export function Header({ forceSolid = false }: HeaderProps) {
             </span>
             <span
               className={cn(
-                'mt-0.5 hidden truncate text-[0.7rem] leading-none transition-colors sm:block',
+                'mt-1 hidden truncate text-[0.65rem] leading-none transition-colors sm:block sm:text-[0.7rem]',
                 'text-muted group-hover:text-gold-dark',
                 solidDesktop
                   ? 'lg:text-muted lg:group-hover:text-gold-dark'
@@ -111,31 +108,41 @@ export function Header({ forceSolid = false }: HeaderProps) {
             ))}
           </nav>
 
-          <div className="flex shrink-0 items-center gap-2">
-            <Button
+          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2.5">
+            <a
               href="/#contact"
-              size="md"
-              variant={solidDesktop ? 'primary' : 'inverse'}
-              className="px-3 py-2 text-sm sm:px-5 sm:py-2.5 sm:text-base lg:px-6"
+              className={cn(
+                'inline-flex h-9 items-center justify-center whitespace-nowrap rounded-sm px-3 font-display text-[0.8125rem] font-bold transition-colors sm:h-10 sm:px-4 sm:text-sm lg:hidden',
+                'border border-gold bg-gold text-charcoal hover:bg-gold-champagne',
+              )}
             >
               {siteConfig.cta.book}
-            </Button>
+            </a>
+
+            <span className="hidden lg:inline-flex">
+              <Button
+                href="/#contact"
+                size="md"
+                variant={solidDesktop ? 'primary' : 'inverse'}
+              >
+                {siteConfig.cta.book}
+              </Button>
+            </span>
 
             <button
               type="button"
-              className="inline-flex size-10 items-center justify-center rounded-sm border border-charcoal/15 bg-white text-charcoal transition-colors hover:border-gold sm:size-11 lg:hidden"
+              className="inline-flex size-9 shrink-0 items-center justify-center rounded-sm border border-charcoal/12 bg-white text-charcoal transition-colors hover:border-gold sm:size-10 lg:hidden"
               aria-expanded={open}
               aria-controls="mobile-nav"
               aria-label={open ? 'إغلاق القائمة' : 'فتح القائمة'}
               onClick={() => setOpen((value) => !value)}
             >
-              {open ? <X size={22} strokeWidth={1.6} /> : <Menu size={22} strokeWidth={1.6} />}
+              {open ? <X size={20} strokeWidth={1.6} /> : <Menu size={20} strokeWidth={1.6} />}
             </button>
           </div>
         </div>
       </header>
 
-      {/* Full-screen mobile menu — avoids RTL side-sheet transform bugs and white side panels */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -149,22 +156,22 @@ export function Header({ forceSolid = false }: HeaderProps) {
             aria-modal="true"
             aria-label="قائمة التنقل"
           >
-            <div className="container-editorial flex h-14 shrink-0 items-center justify-between border-b border-border sm:h-16">
-              <p className="min-w-0 truncate font-display text-base font-bold text-charcoal">
+            <div className="container-editorial flex h-12 shrink-0 items-center justify-between border-b border-border sm:h-14">
+              <p className="min-w-0 truncate font-display text-sm font-bold text-charcoal sm:text-base">
                 {siteConfig.firmNameAr}
               </p>
               <button
                 type="button"
-                className="inline-flex size-11 shrink-0 items-center justify-center border border-charcoal/15 text-charcoal"
+                className="inline-flex size-9 shrink-0 items-center justify-center border border-charcoal/15 text-charcoal sm:size-10"
                 aria-label="إغلاق القائمة"
                 onClick={closeMenu}
               >
-                <X size={22} strokeWidth={1.6} />
+                <X size={20} strokeWidth={1.6} />
               </button>
             </div>
 
             <nav
-              className="container-editorial flex flex-1 flex-col overflow-y-auto overscroll-contain py-4"
+              className="container-editorial flex flex-1 flex-col overflow-y-auto overscroll-contain py-3"
               aria-label="قائمة الجوال"
             >
               {siteConfig.nav.map((item, index) => (
@@ -172,7 +179,7 @@ export function Header({ forceSolid = false }: HeaderProps) {
                   key={item.href}
                   href={item.href}
                   onClick={closeMenu}
-                  className="border-b border-border py-4 font-display text-xl font-bold text-charcoal transition-colors hover:text-gold-dark"
+                  className="border-b border-border py-3.5 font-display text-lg font-bold text-charcoal transition-colors hover:text-gold-dark sm:py-4 sm:text-xl"
                   initial={reduce ? false : { opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.03, duration: 0.25 }}
@@ -182,7 +189,7 @@ export function Header({ forceSolid = false }: HeaderProps) {
               ))}
             </nav>
 
-            <div className="container-editorial shrink-0 border-t border-border py-5 pb-[max(1.25rem,env(safe-area-inset-bottom,0px))]">
+            <div className="container-editorial shrink-0 border-t border-border py-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
               <Button href="/#contact" onClick={closeMenu} size="lg" className="w-full">
                 {siteConfig.cta.book}
               </Button>

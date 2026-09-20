@@ -13,7 +13,6 @@ export function Hero() {
       className="relative flex min-h-[100svh] flex-col bg-charcoal text-ivory"
       aria-labelledby="hero-heading"
     >
-      {/* Clip image zoom here only — never clip the hero copy/CTAs */}
       <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
         <motion.img
           src={siteConfig.heroImage}
@@ -28,57 +27,77 @@ export function Hero() {
         <div className="marble-texture absolute inset-0 opacity-25 mix-blend-soft-light" />
       </div>
 
-      <div className="relative z-10 container-editorial flex flex-1 flex-col justify-start pt-[4.75rem] pb-8 sm:justify-center sm:pb-10 sm:pt-24 md:pb-20 md:pt-28">
-        <motion.div
-          className="mx-auto w-full max-w-3xl text-center md:mx-0 md:max-w-3xl md:text-start"
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-        >
-          <motion.div variants={fadeUp} className="flex justify-center md:justify-start">
-            <Meander className="mb-4 w-40 opacity-80 sm:mb-5 sm:w-52 md:mb-8 md:w-full md:max-w-xs" tone="champagne" />
-          </motion.div>
-
-          <motion.p
-            variants={fadeUp}
-            className="mb-3 font-display text-sm font-bold text-gold-champagne sm:text-[0.95rem] md:mb-5 md:text-base"
-          >
-            {siteConfig.firmNameAr}
-          </motion.p>
-
-          <motion.h1
-            id="hero-heading"
-            variants={fadeUp}
-            className="text-[clamp(1.65rem,6.2vw,4.1rem)] font-extrabold leading-[1.35] text-ivory"
-          >
-            خبرة قانونية راسخة
-            <br />
-            <span className="text-gold-champagne">ورؤية تصنع الفارق</span>
-          </motion.h1>
-
-          <motion.p
-            variants={fadeUp}
-            className="mx-auto mt-4 max-w-lg text-[0.95rem] leading-[1.8] text-ivory/92 sm:mt-5 sm:text-base md:mx-0 md:mt-7 md:max-w-xl md:text-xl md:leading-[1.9]"
-          >
-            {siteConfig.description}
-          </motion.p>
-
+      {/*
+        Spacer matches the fixed mobile header so justify-center lands in the
+        visible band (horizontal + vertical middle of the screen below chrome).
+      */}
+      <div className="relative z-10 flex min-h-[100svh] flex-1 flex-col">
+        <div className="h-12 shrink-0 sm:h-14 md:h-16 lg:h-[4.5rem]" aria-hidden="true" />
+        <div className="container-editorial flex flex-1 flex-col items-center justify-center py-6 md:items-start md:justify-center md:py-10">
           <motion.div
-            variants={fadeUp}
-            className="mt-6 flex flex-col items-center justify-center gap-3 sm:mt-7 sm:flex-row sm:flex-wrap md:mt-10 md:justify-start"
+            className="w-full max-w-xl text-center md:max-w-3xl md:text-start"
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
           >
-            <Button href="/#contact" variant="inverse" size="md" className="w-full max-w-xs sm:w-auto sm:px-8 sm:py-3.5">
-              {siteConfig.cta.book}
-            </Button>
-            <Button href="/#services" variant="ghost" size="md" className="w-full max-w-xs sm:w-auto sm:px-8 sm:py-3.5">
-              {siteConfig.cta.discoverServices}
-            </Button>
+            <motion.div variants={fadeUp} className="flex justify-center md:justify-start">
+              <Meander
+                className="mb-3 w-36 opacity-80 sm:mb-4 sm:w-44 md:mb-8 md:w-full md:max-w-xs"
+                tone="champagne"
+              />
+            </motion.div>
+
+            <motion.p
+              variants={fadeUp}
+              className="mb-2.5 font-display text-sm font-bold text-gold-champagne md:mb-5 md:text-base"
+            >
+              {siteConfig.firmNameAr}
+            </motion.p>
+
+            <motion.h1
+              id="hero-heading"
+              variants={fadeUp}
+              className="text-[clamp(1.55rem,5.8vw,4.1rem)] font-extrabold leading-[1.35] text-ivory"
+            >
+              خبرة قانونية راسخة
+              <br />
+              <span className="text-gold-champagne">ورؤية تصنع الفارق</span>
+            </motion.h1>
+
+            <motion.p
+              variants={fadeUp}
+              className="mx-auto mt-3.5 max-w-md text-[0.9375rem] leading-[1.75] text-ivory/92 sm:mt-4 sm:text-base md:mx-0 md:mt-7 md:max-w-xl md:text-xl md:leading-[1.9]"
+            >
+              {siteConfig.description}
+            </motion.p>
+
+            <motion.div
+              variants={fadeUp}
+              className="mt-5 flex flex-col items-center justify-center gap-2.5 sm:mt-6 sm:flex-row sm:gap-3 md:mt-10 md:justify-start"
+            >
+              <Button
+                href="/#contact"
+                variant="inverse"
+                size="md"
+                className="w-full max-w-[16.5rem] sm:w-auto sm:max-w-none sm:px-8 sm:py-3.5"
+              >
+                {siteConfig.cta.book}
+              </Button>
+              <Button
+                href="/#services"
+                variant="ghost"
+                size="md"
+                className="w-full max-w-[16.5rem] sm:w-auto sm:max-w-none sm:px-8 sm:py-3.5"
+              >
+                {siteConfig.cta.discoverServices}
+              </Button>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
 
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-10 bg-gradient-to-t from-ivory to-transparent sm:h-14 md:h-20"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-8 bg-gradient-to-t from-ivory to-transparent sm:h-12 md:h-20"
         aria-hidden="true"
       />
     </section>
