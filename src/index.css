@@ -254,3 +254,8 @@
   .bg-warm-gray .label-eyebrow-rule {
     background: var(--color-gold-champagne);
   }
+
+  section[id] {
+    scroll-margin-top: 5.25rem;
+  }
+}
