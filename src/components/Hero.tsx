@@ -28,9 +28,9 @@ export function Hero() {
         <div className="marble-texture absolute inset-0 opacity-25 mix-blend-soft-light" />
       </div>
 
-      <div className="relative z-10 container-editorial flex flex-1 flex-col justify-center pb-8 pt-[4.25rem] sm:pb-10 sm:pt-[5rem] md:pb-20 md:pt-28">
+      <div className="relative z-10 container-editorial flex flex-1 flex-col justify-start pt-[4.75rem] pb-8 sm:justify-center sm:pb-10 sm:pt-24 md:pb-20 md:pt-28">
         <motion.div
-          className="mx-auto w-full max-w-3xl -translate-y-2 text-center sm:-translate-y-3 md:mx-0 md:max-w-3xl md:translate-y-0 md:text-start"
+          className="mx-auto w-full max-w-3xl text-center md:mx-0 md:max-w-3xl md:text-start"
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
