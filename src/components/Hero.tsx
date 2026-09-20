@@ -28,20 +28,20 @@ export function Hero() {
         <div className="marble-texture absolute inset-0 opacity-25 mix-blend-soft-light" />
       </div>
 
-      <div className="relative z-10 container-editorial flex flex-1 flex-col justify-end pb-8 pt-[calc(3.75rem+env(safe-area-inset-top,0px))] sm:pb-10 sm:pt-28 md:justify-center md:pb-20 md:pt-28">
+      <div className="relative z-10 container-editorial flex flex-1 flex-col justify-center py-20 sm:py-24 md:py-28">
         <motion.div
-          className="max-w-3xl pb-2 sm:pb-0"
+          className="mx-auto w-full max-w-3xl text-center md:mx-0 md:max-w-3xl md:text-start"
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
         >
-          <motion.div variants={fadeUp}>
-            <Meander className="mb-4 w-full max-w-[12rem] opacity-80 sm:mb-6 sm:max-w-xs md:mb-8" tone="champagne" />
+          <motion.div variants={fadeUp} className="flex justify-center md:justify-start">
+            <Meander className="mb-4 w-40 opacity-80 sm:mb-5 sm:w-52 md:mb-8 md:w-full md:max-w-xs" tone="champagne" />
           </motion.div>
 
           <motion.p
             variants={fadeUp}
-            className="mb-3 font-display text-sm font-bold text-gold-champagne sm:mb-4 sm:text-base md:mb-5"
+            className="mb-3 font-display text-sm font-bold text-gold-champagne sm:text-[0.95rem] md:mb-5 md:text-base"
           >
             {siteConfig.firmNameAr}
           </motion.p>
@@ -49,7 +49,7 @@ export function Hero() {
           <motion.h1
             id="hero-heading"
             variants={fadeUp}
-            className="text-[clamp(1.85rem,7.2vw,4.1rem)] font-extrabold leading-[1.3] text-ivory sm:leading-[1.35]"
+            className="text-[clamp(1.65rem,6.2vw,4.1rem)] font-extrabold leading-[1.35] text-ivory"
           >
             خبرة قانونية راسخة
             <br />
@@ -58,26 +58,25 @@ export function Hero() {
 
           <motion.p
             variants={fadeUp}
-            className="mt-4 max-w-xl text-base leading-[1.75] text-ivory/92 sm:mt-6 sm:text-lg sm:leading-[1.9] md:mt-7 md:text-xl"
+            className="mx-auto mt-4 max-w-lg text-[0.95rem] leading-[1.8] text-ivory/92 sm:mt-5 sm:text-base md:mx-0 md:mt-7 md:max-w-xl md:text-xl md:leading-[1.9]"
           >
             {siteConfig.description}
           </motion.p>
 
           <motion.div
             variants={fadeUp}
-            className="mt-6 flex flex-row flex-wrap gap-3 sm:mt-8 sm:gap-4 md:mt-10"
+            className="mt-6 flex flex-col items-center justify-center gap-3 sm:mt-7 sm:flex-row sm:flex-wrap md:mt-10 md:justify-start"
           >
-            <Button href="/#contact" variant="inverse" size="md" className="sm:px-8 sm:py-3.5">
+            <Button href="/#contact" variant="inverse" size="md" className="w-full max-w-xs sm:w-auto sm:px-8 sm:py-3.5">
               {siteConfig.cta.book}
             </Button>
-            <Button href="/#services" variant="ghost" size="md" className="sm:px-8 sm:py-3.5">
+            <Button href="/#services" variant="ghost" size="md" className="w-full max-w-xs sm:w-auto sm:px-8 sm:py-3.5">
               {siteConfig.cta.discoverServices}
             </Button>
           </motion.div>
         </motion.div>
       </div>
 
-      {/* Short fade into the next section — kept below the CTA band */}
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-10 bg-gradient-to-t from-ivory to-transparent sm:h-14 md:h-20"
         aria-hidden="true"

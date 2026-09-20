@@ -112,19 +112,18 @@ export function Header({ forceSolid = false }: HeaderProps) {
           </nav>
 
           <div className="flex shrink-0 items-center gap-2">
-            <span className="hidden lg:inline-flex">
-              <Button
-                href="/#contact"
-                size="md"
-                variant={solidDesktop ? 'primary' : 'inverse'}
-              >
-                {siteConfig.cta.book}
-              </Button>
-            </span>
+            <Button
+              href="/#contact"
+              size="md"
+              variant={solidDesktop ? 'primary' : 'inverse'}
+              className="px-3 py-2 text-sm sm:px-5 sm:py-2.5 sm:text-base lg:px-6"
+            >
+              {siteConfig.cta.book}
+            </Button>
 
             <button
               type="button"
-              className="inline-flex size-11 items-center justify-center rounded-sm border border-charcoal/15 bg-white text-charcoal transition-colors hover:border-gold lg:hidden"
+              className="inline-flex size-10 items-center justify-center rounded-sm border border-charcoal/15 bg-white text-charcoal transition-colors hover:border-gold sm:size-11 lg:hidden"
               aria-expanded={open}
               aria-controls="mobile-nav"
               aria-label={open ? 'إغلاق القائمة' : 'فتح القائمة'}
