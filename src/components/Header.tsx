@@ -25,21 +25,36 @@ export function Header() {
     }
   }, [open])
 
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
+  const closeMenu = () => setOpen(false)
+
   return (
     <>
       <header
         className={cn(
-          'fixed inset-x-0 top-0 z-50 transition-[background,border-color,color,box-shadow] duration-500',
+          'fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300',
           solid
-            ? 'border-b border-gold/30 bg-ivory shadow-[0_1px_0_rgba(198,161,91,0.12)]'
+            ? 'border-b border-gold/25 bg-ivory/95 shadow-[0_1px_0_rgba(198,161,91,0.1)] backdrop-blur-md'
             : 'border-b border-transparent bg-transparent',
         )}
       >
-        <div className="container-editorial flex h-[4.5rem] items-center justify-between gap-4 md:h-20">
-          <a href="#home" className="group flex flex-col items-start">
+        <div className="container-editorial flex h-16 items-center justify-between gap-3 md:h-[4.5rem] md:gap-4">
+          <a
+            href="#home"
+            onClick={closeMenu}
+            className="group min-w-0 flex-1 py-1"
+            aria-label={siteConfig.firmNameAr}
+          >
             <span
               className={cn(
-                'font-display text-lg font-bold transition-colors md:text-xl',
+                'block truncate font-display text-[1.05rem] font-bold leading-tight transition-colors sm:text-lg md:text-xl',
                 solid ? 'text-charcoal' : 'text-ivory',
               )}
             >
@@ -47,7 +62,7 @@ export function Header() {
             </span>
             <span
               className={cn(
-                'text-xs transition-colors',
+                'mt-0.5 hidden truncate text-[0.7rem] leading-none transition-colors sm:block',
                 solid
                   ? 'text-muted group-hover:text-gold-dark'
                   : 'text-gold-champagne/90 group-hover:text-gold-champagne',
@@ -58,7 +73,7 @@ export function Header() {
           </a>
 
           <nav
-            className="hidden items-center gap-7 lg:flex"
+            className="hidden items-center gap-6 lg:flex lg:gap-7"
             aria-label="القائمة الرئيسية"
           >
             {siteConfig.nav.map((item) => (
@@ -66,7 +81,7 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'relative text-base transition-colors after:absolute after:inset-x-0 after:-bottom-1 after:h-px after:origin-right after:scale-x-0 after:bg-gold after:transition-transform after:duration-300 hover:after:origin-left hover:after:scale-x-100',
+                  'relative whitespace-nowrap text-[0.95rem] transition-colors after:absolute after:inset-x-0 after:-bottom-1 after:h-px after:origin-right after:scale-x-0 after:bg-gold after:transition-transform after:duration-300 hover:after:origin-left hover:after:scale-x-100',
                   solid
                     ? 'text-charcoal/80 hover:text-charcoal'
                     : 'text-ivory/90 hover:text-ivory',
@@ -77,73 +92,99 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex shrink-0 items-center gap-2">
             <Button
               href="#contact"
-              className="hidden sm:inline-flex"
+              className="hidden lg:inline-flex"
               size="md"
               variant={solid ? 'primary' : 'inverse'}
             >
               {siteConfig.cta.book}
             </Button>
+
             <button
               type="button"
               className={cn(
-                'inline-flex h-11 w-11 items-center justify-center border transition-colors lg:hidden',
+                'inline-flex size-11 items-center justify-center rounded-sm border transition-colors lg:hidden',
                 solid
-                  ? 'border-charcoal/15 text-charcoal hover:border-gold'
-                  : 'border-ivory/35 text-ivory hover:border-gold-champagne',
+                  ? 'border-charcoal/15 bg-white/60 text-charcoal hover:border-gold'
+                  : 'border-ivory/40 bg-charcoal/20 text-ivory backdrop-blur-sm hover:border-gold-champagne',
               )}
               aria-expanded={open}
               aria-controls="mobile-nav"
               aria-label={open ? 'إغلاق القائمة' : 'فتح القائمة'}
-              onClick={() => setOpen((v) => !v)}
+              onClick={() => setOpen((value) => !value)}
             >
-              {open ? <X size={20} strokeWidth={1.5} /> : <Menu size={20} strokeWidth={1.5} />}
+              {open ? <X size={22} strokeWidth={1.6} /> : <Menu size={22} strokeWidth={1.6} />}
             </button>
           </div>
         </div>
       </header>
 
-      {/* Overlay is a sibling of header so `position:fixed` is not trapped by header styles */}
       <AnimatePresence>
         {open && (
           <motion.div
             id="mobile-nav"
-            className="fixed inset-0 z-40 bg-ivory lg:hidden"
+            className="fixed inset-0 z-40 lg:hidden"
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.28 }}
+            transition={{ duration: 0.22 }}
           >
-            <nav
-              className="container-editorial flex h-full flex-col gap-1 pb-10 pt-28"
-              aria-label="قائمة الجوال"
+            <button
+              type="button"
+              className="absolute inset-0 bg-charcoal/45 backdrop-blur-[2px]"
+              aria-label="إغلاق القائمة"
+              onClick={closeMenu}
+            />
+
+            <motion.div
+              className="absolute inset-y-0 end-0 flex w-[min(100%,22rem)] flex-col bg-ivory shadow-[-12px_0_40px_rgba(21,21,21,0.18)]"
+              initial={reduce ? false : { x: '100%' }}
+              animate={{ x: 0 }}
+              exit={reduce ? undefined : { x: '100%' }}
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+              role="dialog"
+              aria-modal="true"
+              aria-label="قائمة التنقل"
             >
-              {siteConfig.nav.map((item, index) => (
-                <motion.a
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className="border-b border-border py-4 font-display text-2xl text-charcoal"
-                  initial={reduce ? false : { opacity: 0, x: 16 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05, duration: 0.35 }}
+              <div className="flex h-16 items-center justify-between border-b border-border px-5">
+                <p className="font-display text-base font-bold text-charcoal">القائمة</p>
+                <button
+                  type="button"
+                  className="inline-flex size-10 items-center justify-center border border-charcoal/15 text-charcoal"
+                  aria-label="إغلاق القائمة"
+                  onClick={closeMenu}
                 >
-                  {item.label}
-                </motion.a>
-              ))}
-              <div className="mt-8">
-                <Button
-                  href="#contact"
-                  onClick={() => setOpen(false)}
-                  size="lg"
-                  className="w-full"
-                >
+                  <X size={20} strokeWidth={1.6} />
+                </button>
+              </div>
+
+              <nav
+                className="flex flex-1 flex-col overflow-y-auto px-5 py-4"
+                aria-label="قائمة الجوال"
+              >
+                {siteConfig.nav.map((item, index) => (
+                  <motion.a
+                    key={item.href}
+                    href={item.href}
+                    onClick={closeMenu}
+                    className="border-b border-border py-3.5 font-display text-lg font-bold text-charcoal transition-colors hover:text-gold-dark"
+                    initial={reduce ? false : { opacity: 0, x: 12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.035, duration: 0.28 }}
+                  >
+                    {item.label}
+                  </motion.a>
+                ))}
+              </nav>
+
+              <div className="border-t border-border p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+                <Button href="#contact" onClick={closeMenu} size="lg" className="w-full">
                   {siteConfig.cta.book}
                 </Button>
               </div>
-            </nav>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

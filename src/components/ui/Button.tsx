@@ -1,14 +1,26 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { cn } from '@/lib/cn'
 import { easeOut } from '@/lib/motion'
-import type { ButtonHTMLAttributes, ReactNode } from 'react'
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react'
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+type SharedProps = {
   variant?: 'primary' | 'secondary' | 'ghost' | 'inverse'
   size?: 'md' | 'lg'
   children: ReactNode
-  href?: string
+  className?: string
 }
+
+type ButtonAsButton = SharedProps &
+  ButtonHTMLAttributes<HTMLButtonElement> & {
+    href?: undefined
+  }
+
+type ButtonAsLink = SharedProps &
+  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'type'> & {
+    href: string
+  }
+
+type ButtonProps = ButtonAsButton | ButtonAsLink
 
 const variants = {
   primary:
@@ -25,8 +37,6 @@ export function Button({
   size = 'md',
   className,
   children,
-  href,
-  type = 'button',
   ...props
 }: ButtonProps) {
   const reduce = useReducedMotion()
@@ -47,16 +57,18 @@ export function Button({
     </motion.span>
   )
 
-  if (href) {
+  if ('href' in props && props.href) {
+    const { href, ...anchorProps } = props
     return (
-      <a href={href} className={classes}>
+      <a href={href} className={classes} {...anchorProps}>
         {content}
       </a>
     )
   }
 
+  const { type = 'button', ...buttonProps } = props as ButtonAsButton
   return (
-    <button type={type} className={classes} {...props}>
+    <button type={type} className={classes} {...buttonProps}>
       {content}
     </button>
   )
