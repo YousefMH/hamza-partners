@@ -71,7 +71,7 @@ export function Header({ forceSolid = false }: HeaderProps) {
           >
             <span
               className={cn(
-                'block truncate font-display text-base font-bold leading-tight transition-colors sm:text-lg md:text-xl',
+                'block truncate font-display text-[0.95rem] font-bold leading-tight transition-colors sm:text-lg md:text-xl',
                 'text-charcoal',
                 solidDesktop ? 'lg:text-charcoal' : 'lg:text-ivory',
               )}
