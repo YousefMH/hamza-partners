@@ -59,7 +59,7 @@ export function FeaturedService() {
             {featuredService.description}
           </motion.p>
           <motion.div variants={fadeUp} className="mt-8 flex flex-wrap gap-4 md:mt-10">
-            <Button href="#contact" variant="inverse" size="lg">
+            <Button href="/#contact" variant="inverse" size="lg">
               {siteConfig.cta.book}
             </Button>
             <Link

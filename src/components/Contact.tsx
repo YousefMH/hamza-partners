@@ -42,7 +42,11 @@ export function Contact() {
     event.preventDefault()
     const nextErrors = validateContactForm(values)
     setErrors(nextErrors)
-    if (Object.keys(nextErrors).length > 0) return
+    if (Object.keys(nextErrors).length > 0) {
+      setStatus('idle')
+      setServerMessage('')
+      return
+    }
 
     setStatus('submitting')
     setServerMessage('')

@@ -29,10 +29,10 @@ export function CTA() {
             تحدث مع فريقنا لمناقشة احتياجاتك القانونية والحصول على التوجيه المناسب.
           </motion.p>
           <motion.div variants={fadeUp} className="mt-8 flex flex-wrap justify-center gap-4 md:mt-10">
-            <Button href="#contact" variant="inverse" size="lg">
+            <Button href="/#contact" variant="inverse" size="lg">
               {siteConfig.cta.bookFull}
             </Button>
-            <Button href="#contact" variant="ghost" size="lg">
+            <Button href="/#contact" variant="ghost" size="lg">
               {siteConfig.cta.contact}
             </Button>
           </motion.div>

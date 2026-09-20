@@ -22,7 +22,7 @@ export function LawyerProfilePage() {
   if (!member) {
     return (
       <>
-        <Header />
+        <Header forceSolid />
         <main className="container-editorial flex min-h-[70vh] flex-col items-center justify-center py-32 text-center">
           <h1 className="font-display text-3xl text-charcoal">الملف غير موجود</h1>
           <p className="mt-4 text-muted">تعذر العثور على ملف المحامي المطلوب.</p>

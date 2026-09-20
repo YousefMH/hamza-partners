@@ -15,7 +15,7 @@ export function ServiceDetailPage() {
   if (!service) {
     return (
       <>
-        <Header />
+        <Header forceSolid />
         <main className="container-editorial flex min-h-[70vh] flex-col items-center justify-center py-32 text-center">
           <h1 className="font-display text-3xl text-charcoal">الخدمة غير موجودة</h1>
           <p className="mt-4 text-muted">تعذر العثور على صفحة الخدمة المطلوبة.</p>

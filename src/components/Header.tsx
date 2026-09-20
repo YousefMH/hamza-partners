@@ -1,22 +1,30 @@
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { siteConfig } from '@/data/siteConfig'
 import { cn } from '@/lib/cn'
 import { Button } from '@/components/ui/Button'
 
-export function Header() {
+type HeaderProps = {
+  /** Keep ivory solid chrome (for light pages without a dark hero) */
+  forceSolid?: boolean
+}
+
+export function Header({ forceSolid = false }: HeaderProps) {
+  const { pathname } = useLocation()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const reduce = useReducedMotion()
-  const solid = scrolled || open
+  const onHome = pathname === '/'
+  const solid = forceSolid || !onHome || scrolled || open
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  }, [pathname])
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
@@ -134,7 +142,7 @@ export function Header() {
             <button
               type="button"
               className="absolute inset-0 bg-charcoal/45 backdrop-blur-[2px]"
-              aria-label="إغلاق القائمة"
+              aria-label="إغلاق الخلفية"
               onClick={closeMenu}
             />
 
