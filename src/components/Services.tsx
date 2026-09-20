@@ -49,20 +49,20 @@ export function Services() {
                 to={`/services/${service.slug}`}
                 className="flex h-full flex-col gap-4 p-6 text-center transition-colors duration-300 hover:bg-ivory md:gap-5 md:p-8 md:text-start"
               >
-                <div className="flex items-start justify-center gap-4 md:justify-between">
-                  <span className="font-display text-base font-bold text-gold">
+                <div className="flex w-full items-center justify-between gap-6 px-1 sm:gap-8">
+                  <span className="font-display text-base font-bold tracking-wide text-gold">
                     {service.number}
                   </span>
                   <ServiceIcon
                     name={service.icon}
-                    className="size-5 text-muted transition-colors group-hover:text-gold"
+                    className="size-5 shrink-0 text-muted transition-colors group-hover:text-gold"
                   />
                 </div>
                 <h3 className="font-display text-lg leading-[1.65] text-charcoal md:text-xl">
                   {service.title}
                 </h3>
                 <p className="body-copy text-base">{service.shortDescription}</p>
-                <span className="mt-auto inline-flex items-center justify-center gap-2 pt-1 text-base font-bold text-gold-dark transition-colors group-hover:text-charcoal md:justify-start">
+                <span className="mt-auto inline-flex items-center justify-center gap-3 pt-1 text-base font-bold text-gold-dark transition-colors group-hover:text-charcoal md:justify-start">
                   {siteConfig.cta.discoverMore}
                   <ArrowLeft size={16} strokeWidth={1.5} aria-hidden="true" />
                 </span>
