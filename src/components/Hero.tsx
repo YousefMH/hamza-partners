@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { siteConfig } from '@/data/siteConfig'
 import { Button } from '@/components/ui/Button'
-import { ColumnRule, Meander } from '@/components/Decorative/Ornaments'
+import { Meander } from '@/components/Decorative/Ornaments'
 import { fadeUp, staggerContainer } from '@/lib/motion'
 
 export function Hero() {
@@ -22,21 +22,10 @@ export function Hero() {
           animate={{ scale: 1 }}
           transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
         />
-        <div className="absolute inset-0 bg-gradient-to-l from-charcoal/95 via-charcoal/85 to-charcoal/60" />
-        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-transparent to-charcoal/40" />
-        <div className="marble-texture absolute inset-0 opacity-30 mix-blend-soft-light" />
+        <div className="absolute inset-0 bg-gradient-to-l from-charcoal/95 via-charcoal/85 to-charcoal/55" />
+        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-transparent to-charcoal/45" />
+        <div className="marble-texture absolute inset-0 opacity-25 mix-blend-soft-light" />
       </div>
-
-      <ColumnRule className="start-[12%] hidden md:block" />
-      <ColumnRule className="start-[88%] hidden lg:block" />
-      <div
-        className="pointer-events-none absolute inset-y-16 start-[min(6vw,4rem)] hidden w-px bg-gold/35 md:block"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-y-24 start-[calc(min(6vw,4rem)+10px)] hidden w-px bg-gold/15 md:block"
-        aria-hidden="true"
-      />
 
       <div className="relative container-editorial flex min-h-[100svh] flex-col justify-end pb-16 pt-32 md:justify-center md:pb-24 md:pt-28">
         <motion.div
@@ -68,16 +57,16 @@ export function Hero() {
 
           <motion.p
             variants={fadeUp}
-            className="mt-7 max-w-xl text-lg leading-[1.9] text-ivory/90 md:text-xl"
+            className="mt-7 max-w-xl text-lg leading-[1.9] text-ivory/92 md:text-xl"
           >
             {siteConfig.description}
           </motion.p>
 
           <motion.div variants={fadeUp} className="mt-10 flex flex-wrap gap-4">
-            <Button href="#contact" variant="inverse" size="lg">
+            <Button href="/#contact" variant="inverse" size="lg">
               {siteConfig.cta.book}
             </Button>
-            <Button href="#services" variant="ghost" size="lg">
+            <Button href="/#services" variant="ghost" size="lg">
               {siteConfig.cta.discoverServices}
             </Button>
           </motion.div>
