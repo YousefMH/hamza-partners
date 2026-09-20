@@ -17,13 +17,14 @@ export function Hero() {
         <motion.img
           src={siteConfig.heroImage}
           alt=""
-          className="h-full w-full object-cover opacity-55"
+          className="h-full w-full object-cover opacity-45"
           initial={reduce ? false : { scale: 1.08 }}
           animate={{ scale: 1 }}
           transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
         />
-        <div className="absolute inset-0 bg-gradient-to-l from-charcoal/90 via-charcoal/75 to-charcoal/45" />
-        <div className="marble-texture absolute inset-0 opacity-40 mix-blend-soft-light" />
+        <div className="absolute inset-0 bg-gradient-to-l from-charcoal/95 via-charcoal/85 to-charcoal/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-transparent to-charcoal/40" />
+        <div className="marble-texture absolute inset-0 opacity-30 mix-blend-soft-light" />
       </div>
 
       <ColumnRule className="start-[12%] hidden md:block" />

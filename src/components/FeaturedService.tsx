@@ -16,13 +16,14 @@ export function FeaturedService() {
         <motion.img
           src={siteConfig.featuredImage}
           alt=""
-          className="h-full w-full object-cover opacity-35"
+          className="h-full w-full object-cover opacity-30"
           variants={clipReveal}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-10% 0px' }}
         />
-        <div className="absolute inset-0 bg-charcoal/70" />
+        <div className="absolute inset-0 bg-charcoal/80" />
+        <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-charcoal/50" />
       </div>
 
       <ColumnRule className="start-1/4 hidden lg:block" />
