@@ -60,16 +60,16 @@ export function Header({ forceSolid = false }: HeaderProps) {
             : 'lg:border-transparent lg:bg-transparent lg:shadow-none lg:backdrop-blur-none',
         )}
       >
-        <div className="container-editorial flex h-12 items-center gap-2 sm:h-14 sm:gap-3 md:h-16 lg:h-[4.5rem] lg:gap-6">
+        <div className="container-editorial flex min-h-12 items-center gap-2 py-2.5 sm:min-h-14 sm:gap-3 md:h-16 md:py-0 lg:h-[4.5rem] lg:gap-6">
           <a
             href={appUrl("/#home")}
             onClick={closeMenu}
-            className="group min-w-0 flex-1"
+            className="group shrink-0"
             aria-label={siteConfig.firmNameAr}
           >
             <span
               className={cn(
-                'block truncate font-display text-sm font-bold leading-none transition-colors sm:text-base md:text-lg lg:text-xl',
+                'block whitespace-nowrap font-display text-[0.9375rem] font-bold leading-snug transition-colors sm:text-base md:text-lg lg:text-xl',
                 'text-charcoal',
                 solidDesktop ? 'lg:text-charcoal' : 'lg:text-ivory',
               )}
@@ -78,7 +78,7 @@ export function Header({ forceSolid = false }: HeaderProps) {
             </span>
             <span
               className={cn(
-                'mt-1 hidden truncate text-[0.65rem] leading-none transition-colors sm:block sm:text-[0.7rem]',
+                'mt-0.5 hidden whitespace-nowrap text-[0.65rem] leading-snug transition-colors sm:block sm:text-[0.7rem]',
                 'text-muted group-hover:text-gold-dark',
                 solidDesktop
                   ? 'lg:text-muted lg:group-hover:text-gold-dark'
@@ -90,7 +90,7 @@ export function Header({ forceSolid = false }: HeaderProps) {
           </a>
 
           <nav
-            className="hidden items-center gap-6 lg:flex lg:gap-7"
+            className="ms-auto hidden items-center gap-6 lg:flex lg:gap-7"
             aria-label="القائمة الرئيسية"
           >
             {siteConfig.nav.map((item) => (
@@ -109,11 +109,11 @@ export function Header({ forceSolid = false }: HeaderProps) {
             ))}
           </nav>
 
-          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2.5">
+          <div className="ms-auto flex shrink-0 items-center gap-1.5 sm:gap-2.5 lg:ms-0">
             <a
               href={appUrl("/#contact")}
               className={cn(
-                'inline-flex h-9 items-center justify-center whitespace-nowrap rounded-sm px-3 font-display text-[0.8125rem] font-bold transition-colors sm:h-10 sm:px-4 sm:text-sm lg:hidden',
+                'inline-flex h-9 max-w-[9.5rem] items-center justify-center whitespace-nowrap rounded-sm px-2.5 font-display text-[0.8125rem] font-bold transition-colors sm:h-10 sm:max-w-none sm:px-4 sm:text-sm lg:hidden',
                 'border border-gold bg-gold text-charcoal hover:bg-gold-champagne',
               )}
             >

@@ -133,7 +133,7 @@
     width: 100%;
     max-width: 70rem;
     margin-inline: auto;
-    padding-inline: 1rem;
+    padding-inline: 1.125rem;
   }
 
   @media (min-width: 768px) {
