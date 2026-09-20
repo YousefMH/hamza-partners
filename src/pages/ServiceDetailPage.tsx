@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Check } from 'lucide-react'
 import { getServiceBySlug, services } from '@/data/services'
 import { siteConfig } from '@/data/siteConfig'
 import { Header } from '@/components/Header'
@@ -28,7 +28,9 @@ export function ServiceDetailPage() {
     )
   }
 
-  const related = services.filter((s) => s.category === service.category && s.id !== service.id).slice(0, 3)
+  const related = services
+    .filter((s) => s.category === service.category && s.id !== service.id)
+    .slice(0, 3)
 
   return (
     <>
@@ -46,45 +48,80 @@ export function ServiceDetailPage() {
             <Meander className="mb-8 max-w-xs" tone="champagne" />
             <p className="font-display text-base font-bold text-gold">{service.number}</p>
             <div className="mt-4 flex items-start gap-4">
-              <ServiceIcon name={service.icon} className="mt-1 size-6 text-gold-champagne" />
-              <h1 className="max-w-3xl text-[clamp(1.65rem,3.8vw,2.75rem)] font-extrabold leading-[1.45]">
-                {service.title}
-              </h1>
+              <ServiceIcon name={service.icon} className="mt-1 size-6 shrink-0 text-gold-champagne" />
+              <div className="max-w-3xl">
+                <h1 className="text-[clamp(1.65rem,3.8vw,2.75rem)] font-extrabold leading-[1.45]">
+                  {service.title}
+                </h1>
+                <p className="mt-5 text-lg leading-[1.85] text-ivory/88">{service.shortDescription}</p>
+              </div>
             </div>
           </div>
         </section>
 
         <section className="section-pad bg-ivory">
-          <div className="container-editorial grid gap-12 lg:grid-cols-[1.4fr_0.6fr]">
+          <div className="container-editorial grid gap-12 lg:grid-cols-[1.4fr_0.6fr] lg:gap-16">
             <div>
               <SectionLabel>نظرة عامة</SectionLabel>
               <DoubleLine className="mb-8 max-w-[7rem]" />
               <p className="max-w-2xl text-lg leading-[1.9] text-muted">{service.description}</p>
-              <p className="body-copy mt-6 max-w-2xl">{service.shortDescription}</p>
-              <div className="mt-10">
+
+              <div className="mt-12">
+                <SectionLabel>ماذا تشمل الخدمة؟</SectionLabel>
+                <DoubleLine className="mb-8 max-w-[7rem]" />
+                <ul className="max-w-2xl space-y-4">
+                  {service.highlights.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-base leading-relaxed text-charcoal">
+                      <Check
+                        className="mt-1 size-5 shrink-0 text-gold"
+                        strokeWidth={1.75}
+                        aria-hidden="true"
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mt-12 flex flex-wrap gap-4">
                 <Button href="/#contact" size="lg">
                   {siteConfig.cta.book}
+                </Button>
+                <Button href="/#services" variant="secondary" size="lg">
+                  كل مجالات العمل
                 </Button>
               </div>
             </div>
 
-            {related.length > 0 && (
-              <aside className="border border-border bg-white p-6">
-                <p className="font-display text-sm text-gold-dark">خدمات ذات صلة</p>
-                <ul className="mt-5 space-y-4">
-                  {related.map((item) => (
-                    <li key={item.id} className="border-t border-border pt-4">
-                      <Link
-                        to={`/services/${item.slug}`}
-                        className="font-display text-base text-charcoal transition-colors hover:text-gold-dark"
-                      >
-                        {item.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </aside>
-            )}
+            <aside className="space-y-6">
+              <div className="border border-border bg-white p-6 md:p-7">
+                <p className="font-display text-base font-bold text-gold-dark">ملخص سريع</p>
+                <p className="body-copy mt-4">{service.shortDescription}</p>
+                <div className="mt-6 border-t border-border pt-5">
+                  <Button href="/#contact" className="w-full" size="lg">
+                    {siteConfig.cta.contact}
+                  </Button>
+                </div>
+              </div>
+
+              {related.length > 0 && (
+                <div className="border border-border bg-white p-6 md:p-7">
+                  <p className="font-display text-base font-bold text-gold-dark">خدمات ذات صلة</p>
+                  <ul className="mt-5 space-y-4">
+                    {related.map((item) => (
+                      <li key={item.id} className="border-t border-border pt-4">
+                        <Link
+                          to={`/services/${item.slug}`}
+                          className="font-display text-base leading-relaxed text-charcoal transition-colors hover:text-gold-dark"
+                        >
+                          {item.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </aside>
           </div>
         </section>
       </main>
