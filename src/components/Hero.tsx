@@ -50,6 +50,13 @@ export function Hero() {
 
             <motion.p
               variants={fadeUp}
+              className="mb-2 font-display text-[0.7rem] font-bold tracking-[0.18em] text-gold-champagne sm:text-xs md:mb-3"
+            >
+              {siteConfig.heritageLine}
+            </motion.p>
+
+            <motion.p
+              variants={fadeUp}
               className="mb-2.5 font-display text-sm font-bold text-gold-champagne md:mb-5 md:text-base"
             >
               {siteConfig.firmNameAr}

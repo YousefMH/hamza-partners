@@ -1,7 +1,11 @@
 export const siteConfig = {
   firmNameAr: 'حمزة وشركاؤه',
   firmNameEn: 'Hamza & Partners',
+  /** Year the firm was founded — used for heritage marketing copy */
+  foundedYear: 1935,
   tagline: 'شراكة قانونية تتجاوز حدود الاستشارة',
+  /** Short hero line underscoring continuity since founding */
+  heritageLine: 'عراقة تمتد منذ 1935',
   description:
     'نقدم حلولًا قانونية متكاملة للشركات والمستثمرين والأفراد، تجمع بين الخبرة القانونية العميقة والفهم الدقيق للأعمال والأسواق.',
   url: 'https://yousefmh.github.io/hamza-partners',

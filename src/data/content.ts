@@ -1,3 +1,5 @@
+import { siteConfig } from '@/data/siteConfig'
+
 export interface WhyUsItem {
   id: string
   title: string
@@ -29,7 +31,7 @@ export const whyUs: WhyUsItem[] = [
 
 export const trustIndicators = [
   {
-    label: 'خبرة متخصصة',
+    label: 'عراقة منذ 1935',
     icon: 'scale',
   },
   {
@@ -48,11 +50,12 @@ export const trustIndicators = [
 
 export type TrustIndicator = (typeof trustIndicators)[number]
 
+const yearsOfHeritage = new Date().getFullYear() - siteConfig.foundedYear
 
-// PLACEHOLDER stats — not verified claims; replace with real figures before production
+// PLACEHOLDER counts (except founding year) — replace with verified figures before production
 export const stats = [
-  { id: '1', value: 15, prefix: '+', label: 'سنوات من الخبرة' },
-  { id: '2', value: 500, prefix: '+', label: 'ملف ومعاملة قانونية' },
-  { id: '3', value: 100, prefix: '+', label: 'عميل وشركة' },
-  { id: '4', value: 15, prefix: '+', label: 'مجالًا قانونيًا' },
+  { id: '1', value: siteConfig.foundedYear, prefix: '', label: 'سنة التأسيس' },
+  { id: '2', value: yearsOfHeritage, prefix: '+', label: 'عامًا من العراقة' },
+  { id: '3', value: 500, prefix: '+', label: 'ملف ومعاملة قانونية' },
+  { id: '4', value: 100, prefix: '+', label: 'عميل وشركة' },
 ] as const

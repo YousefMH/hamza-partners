@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { stats } from '@/data/content'
+import { siteConfig } from '@/data/siteConfig'
 import { Counter } from '@/components/ui/Counter'
 import { Meander } from '@/components/Decorative/Ornaments'
 import { fadeUp, staggerContainer } from '@/lib/motion'
@@ -15,7 +16,7 @@ export function Stats() {
             </h2>
             <Meander className="mb-4 w-full max-w-xs" tone="champagne" />
             <p className="text-base leading-relaxed text-ivory/80">
-              أرقام توضيحية قابلة للاستبدال — ليست إحصاءات موثقة.
+              إرث منذ {siteConfig.foundedYear} — وبقية الأرقام توضيحية قابلة للاستبدال.
             </p>
           </div>
         </div>

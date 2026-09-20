@@ -14,6 +14,9 @@ export function Footer() {
           <div className="col-span-2 lg:col-span-1">
             <p className="font-display text-xl font-bold">{siteConfig.firmNameAr}</p>
             <p className="mt-1 text-sm text-gold-champagne">{siteConfig.firmNameEn}</p>
+            <p className="mt-3 font-display text-sm font-bold text-gold-champagne/90">
+              {siteConfig.heritageLine}
+            </p>
             <p className="mt-5 max-w-md text-base leading-[1.85] text-ivory/80">{siteConfig.tagline}</p>
           </div>
 
