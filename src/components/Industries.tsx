@@ -26,7 +26,7 @@ export function Industries() {
         </motion.div>
 
         <motion.ul
-          className="section-body flex flex-wrap gap-x-2.5 gap-y-3 md:gap-x-3"
+          className="section-body flex flex-wrap justify-center gap-x-2.5 gap-y-3 md:justify-start md:gap-x-3"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"

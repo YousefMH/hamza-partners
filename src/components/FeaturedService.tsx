@@ -28,7 +28,7 @@ export function FeaturedService() {
 
       <div className="relative container-editorial section-pad">
         <motion.div
-          className="max-w-3xl"
+          className="mx-auto max-w-3xl text-center md:mx-0 md:text-start"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
@@ -39,7 +39,7 @@ export function FeaturedService() {
               <span className="text-gold-champagne">الخدمة المميزة</span>
             </SectionLabel>
           </motion.div>
-          <motion.div variants={fadeUp}>
+          <motion.div variants={fadeUp} className="flex justify-center md:justify-start">
             <Meander className="mb-6 w-full max-w-sm" tone="champagne" />
           </motion.div>
           <motion.p variants={fadeUp} className="mb-3 font-display text-base font-bold text-gold">
@@ -58,7 +58,7 @@ export function FeaturedService() {
           >
             {featuredService.description}
           </motion.p>
-          <motion.div variants={fadeUp} className="mt-8 flex flex-wrap gap-4 md:mt-10">
+          <motion.div variants={fadeUp} className="mt-8 flex flex-wrap justify-center gap-4 md:mt-10 md:justify-start">
             <Button href="/#contact" variant="inverse" size="lg">
               {siteConfig.cta.book}
             </Button>

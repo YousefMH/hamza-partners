@@ -46,13 +46,13 @@ export function Articles() {
         >
           {articles.map((article) => (
             <motion.li key={article.id} variants={fadeUp}>
-              <article className="flex h-full flex-col border-t border-gold/50 pt-6">
+              <article className="flex h-full flex-col border-t border-gold/50 pt-6 text-center md:text-start">
                 <p className="text-sm font-bold text-gold-dark">{article.category}</p>
                 <h3 className="mt-3 font-display text-xl leading-[1.6] text-charcoal">
                   {article.title}
                 </h3>
                 <p className="body-copy mt-4 flex-1">{article.excerpt}</p>
-                <div className="mt-6 flex items-center justify-between gap-3 border-t border-border pt-4">
+                <div className="mt-6 flex items-center justify-center gap-3 border-t border-border pt-4 md:justify-between">
                   <time dateTime={article.date} className="text-sm text-muted">
                     {formatDate(article.date)}
                   </time>

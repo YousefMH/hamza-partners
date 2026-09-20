@@ -8,7 +8,7 @@ export function Stats() {
   return (
     <section className="section-pad bg-charcoal text-ivory" aria-labelledby="stats-heading">
       <div className="container-editorial">
-        <div className="mb-8 flex flex-col items-start gap-3 md:mb-10 md:flex-row md:items-end md:justify-between">
+        <div className="mb-8 flex flex-col items-center gap-3 text-center md:mb-10 md:flex-row md:items-end md:justify-between md:text-start">
           <div>
             <h2 id="stats-heading" className="sr-only">
               أرقام توضيحية

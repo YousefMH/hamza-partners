@@ -35,7 +35,7 @@ export function WhyUs() {
             <motion.li
               key={item.id}
               variants={fadeUp}
-              className="grid gap-3 py-8 md:grid-cols-[4.5rem_minmax(0,1fr)_minmax(0,1.35fr)] md:items-start md:gap-8 md:py-9"
+              className="grid gap-3 py-8 text-center md:grid-cols-[4.5rem_minmax(0,1fr)_minmax(0,1.35fr)] md:items-start md:gap-8 md:py-9 md:text-start"
             >
               <span className="font-display text-base font-bold text-gold">
                 0{index + 1}

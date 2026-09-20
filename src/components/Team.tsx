@@ -62,32 +62,34 @@ export function Team() {
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal/50 to-transparent opacity-60" />
                 </div>
               </Link>
-              <div className="mt-5 flex items-start justify-between gap-3">
-                <div>
-                  <h3 className="font-display text-xl leading-relaxed text-charcoal">
+              <div className="mt-5 flex flex-col items-center gap-3 text-center md:flex-row md:items-start md:justify-between md:text-start">
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-display text-lg leading-relaxed text-charcoal sm:text-xl">
                     <Link to={`/team/${member.slug}`} className="transition-colors hover:text-gold-dark">
                       {member.name}
                     </Link>
                   </h3>
-                  <p className="mt-1.5 text-base text-gold-dark">{member.position}</p>
-                  <p className="body-copy mt-2 text-base">{member.expertise}</p>
+                  <p className="mt-1.5 text-sm text-gold-dark sm:text-base">{member.position}</p>
+                  <p className="body-copy mt-2 text-sm sm:text-base">{member.expertise}</p>
                 </div>
                 <a
                   href={member.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-1 text-muted transition-colors hover:text-gold"
+                  className="text-muted transition-colors hover:text-gold md:mt-1"
                   aria-label={`LinkedIn — ${member.name}`}
                 >
                   <LinkedInIcon className="size-[18px]" />
                 </a>
               </div>
-              <Link
-                to={`/team/${member.slug}`}
-                className="mt-4 inline-flex border-b border-gold/40 pb-0.5 text-base font-bold text-gold-dark transition-colors hover:border-gold hover:text-charcoal"
-              >
-                {siteConfig.cta.viewProfile}
-              </Link>
+              <div className="mt-4 flex justify-center md:justify-start">
+                <Link
+                  to={`/team/${member.slug}`}
+                  className="inline-flex border-b border-gold/40 pb-0.5 text-base font-bold text-gold-dark transition-colors hover:border-gold hover:text-charcoal"
+                >
+                  {siteConfig.cta.viewProfile}
+                </Link>
+              </div>
             </motion.li>
           ))}
         </motion.ul>

@@ -38,7 +38,7 @@ export function Experience() {
             <motion.li
               key={item.id}
               variants={fadeUp}
-              className="border-b border-border p-6 transition-colors hover:bg-ivory md:odd:border-e md:p-8"
+              className="border-b border-border p-6 text-center transition-colors hover:bg-ivory md:odd:border-e md:p-8 md:text-start"
             >
               <span className="font-display text-base font-bold text-gold">0{index + 1}</span>
               <h3 className="mt-4 font-display text-2xl leading-relaxed text-charcoal">

@@ -48,8 +48,9 @@ export function ColumnRule({ className }: { className?: string }) {
 export function SectionLabel({ children }: { children: ReactNode }) {
   return (
     <p className="label-eyebrow">
-      <span className="inline-block h-px w-8 bg-gold" aria-hidden="true" />
-      <span>{children}</span>
+      <span className="label-eyebrow-rule" aria-hidden="true" />
+      <span className="label-eyebrow-text">{children}</span>
+      <span className="label-eyebrow-rule" aria-hidden="true" />
     </p>
   )
 }

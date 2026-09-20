@@ -54,7 +54,7 @@ export function About() {
                 <motion.li
                   key={item.label}
                   variants={fadeUp}
-                  className="border-b border-border px-3 py-5 odd:border-e sm:px-5 sm:py-6 md:py-7"
+                  className="border-b border-border px-3 py-5 text-center odd:border-e sm:px-5 sm:py-6 md:py-7 md:text-start"
                 >
                   <span className="mb-3 inline-flex size-9 items-center justify-center border border-gold/35 text-gold-dark sm:mb-3.5 sm:size-10">
                     <Icon className="size-4 sm:size-5" strokeWidth={1.5} aria-hidden="true" />
