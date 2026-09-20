@@ -45,19 +45,19 @@ export function FeaturedService() {
           <motion.div variants={fadeUp}>
             <Meander className="mb-8 max-w-sm" tone="champagne" />
           </motion.div>
-          <motion.p variants={fadeUp} className="mb-4 font-display text-sm tracking-[0.25em] text-gold">
+          <motion.p variants={fadeUp} className="mb-4 font-display text-base font-bold text-gold">
             {featuredService.number}
           </motion.p>
           <motion.h2
             id="featured-heading"
             variants={fadeUp}
-            className="text-[clamp(1.9rem,4vw,3.4rem)] font-semibold leading-snug text-ivory"
+            className="text-[clamp(1.75rem,3.8vw,3rem)] font-extrabold leading-[1.45] text-ivory"
           >
             {featuredService.title}
           </motion.h2>
           <motion.p
             variants={fadeUp}
-            className="mt-6 max-w-2xl text-base leading-relaxed text-ivory/75 md:text-lg"
+            className="mt-7 max-w-2xl text-lg leading-[1.9] text-ivory/90 md:text-xl"
           >
             {featuredService.description}
           </motion.p>

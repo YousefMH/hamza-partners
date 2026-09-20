@@ -32,11 +32,11 @@ export function CTA() {
           <motion.h2
             id="cta-heading"
             variants={fadeUp}
-            className="text-[clamp(1.75rem,3.5vw,2.75rem)] font-semibold leading-snug"
+            className="text-[clamp(1.65rem,3.2vw,2.5rem)] font-extrabold leading-[1.45]"
           >
             هل تحتاج إلى شريك قانوني يفهم أعمالك؟
           </motion.h2>
-          <motion.p variants={fadeUp} className="mt-5 text-ivory/75 md:text-lg">
+          <motion.p variants={fadeUp} className="mt-6 text-lg leading-[1.9] text-ivory/90 md:text-xl">
             تحدث مع فريقنا لمناقشة احتياجاتك القانونية والحصول على التوجيه المناسب.
           </motion.p>
           <motion.div variants={fadeUp} className="mt-10 flex flex-wrap justify-center gap-4">

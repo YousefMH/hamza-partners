@@ -29,11 +29,7 @@ export function Articles() {
           <motion.div variants={fadeUp}>
             <SectionLabel>المعرفة</SectionLabel>
           </motion.div>
-          <motion.h2
-            id="articles-heading"
-            variants={fadeUp}
-            className="text-[clamp(1.85rem,3.5vw,3rem)] text-charcoal"
-          >
+          <motion.h2 id="articles-heading" variants={fadeUp} className="section-title">
             المقالات والرؤى القانونية
           </motion.h2>
           <motion.div variants={fadeUp} className="mt-5 max-w-[7rem]">
@@ -42,7 +38,7 @@ export function Articles() {
         </motion.div>
 
         <motion.ul
-          className="mt-14 grid gap-8 lg:grid-cols-3"
+          className="mt-14 grid gap-10 lg:grid-cols-3"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
@@ -51,18 +47,18 @@ export function Articles() {
           {articles.map((article) => (
             <motion.li key={article.id} variants={fadeUp}>
               <article className="flex h-full flex-col border-t border-gold/50 pt-6">
-                <p className="text-xs tracking-[0.15em] text-gold-dark">{article.category}</p>
-                <h3 className="mt-3 font-display text-xl leading-snug text-charcoal">
+                <p className="text-sm font-bold text-gold-dark">{article.category}</p>
+                <h3 className="mt-3 font-display text-xl leading-[1.6] text-charcoal">
                   {article.title}
                 </h3>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">{article.excerpt}</p>
+                <p className="body-copy mt-4 flex-1">{article.excerpt}</p>
                 <div className="mt-6 flex items-center justify-between gap-3 border-t border-border pt-4">
-                  <time dateTime={article.date} className="text-xs text-muted">
+                  <time dateTime={article.date} className="text-sm text-muted">
                     {formatDate(article.date)}
                   </time>
                   <a
                     href={article.href}
-                    className="text-sm text-gold-dark transition-colors hover:text-charcoal"
+                    className="text-base font-bold text-gold-dark transition-colors hover:text-charcoal"
                   >
                     {siteConfig.cta.readArticle}
                   </a>

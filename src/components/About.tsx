@@ -22,17 +22,14 @@ export function About() {
             <motion.h2
               id="about-heading"
               variants={fadeUp}
-              className="max-w-xl text-[clamp(1.85rem,3.5vw,3rem)] text-charcoal"
+              className="section-title max-w-xl"
             >
               شراكة قانونية تتجاوز حدود الاستشارة
             </motion.h2>
             <motion.div variants={fadeUp} className="mt-6 max-w-[8rem]">
               <DoubleLine />
             </motion.div>
-            <motion.p
-              variants={fadeUp}
-              className="mt-8 max-w-xl text-base leading-relaxed text-warm-gray md:text-lg"
-            >
+            <motion.p variants={fadeUp} className="lede mt-8">
               في {siteConfig.firmNameAr} نقدّم خدمات قانونية رفيعة المستوى للشركات والمستثمرين
               والمؤسسات والأفراد. نجمع بين العمق القانوني والمنظور التجاري لنصوغ حلولًا دقيقة
               تحمي المصالح وتفتح آفاق النمو في أسواق متغيرة.
@@ -47,12 +44,12 @@ export function About() {
               <motion.li
                 key={item}
                 variants={fadeUp}
-                className="border-b border-border px-0 py-6 sm:px-5 sm:odd:border-e"
+                className="border-b border-border px-0 py-7 sm:px-6 sm:odd:border-e"
               >
                 <span className="mb-3 block font-display text-2xl text-gold/80" aria-hidden="true">
                   ‖
                 </span>
-                <p className="font-display text-lg text-charcoal">{item}</p>
+                <p className="font-display text-xl leading-relaxed text-charcoal">{item}</p>
               </motion.li>
             ))}
           </motion.ul>

@@ -14,7 +14,9 @@ export function Stats() {
               أرقام توضيحية
             </h2>
             <Meander className="mb-4 max-w-xs" tone="champagne" />
-            <p className="text-sm text-ivory/55">أرقام توضيحية قابلة للاستبدال — ليست إحصاءات موثقة.</p>
+            <p className="text-base leading-relaxed text-ivory/80">
+              أرقام توضيحية قابلة للاستبدال — ليست إحصاءات موثقة.
+            </p>
           </div>
         </div>
 
@@ -32,7 +34,7 @@ export function Stats() {
                 prefix={stat.prefix}
                 className="font-display text-4xl text-gold-champagne md:text-5xl"
               />
-              <p className="mt-3 text-sm text-ivory/70 md:text-base">{stat.label}</p>
+              <p className="mt-3 text-base leading-relaxed text-ivory/85 md:text-lg">{stat.label}</p>
             </motion.li>
           ))}
         </motion.ul>

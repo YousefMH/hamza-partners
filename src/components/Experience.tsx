@@ -16,17 +16,13 @@ export function Experience() {
           <motion.div variants={fadeUp}>
             <SectionLabel>المحفظة</SectionLabel>
           </motion.div>
-          <motion.h2
-            id="experience-heading"
-            variants={fadeUp}
-            className="text-[clamp(1.85rem,3.5vw,3rem)] text-charcoal"
-          >
+          <motion.h2 id="experience-heading" variants={fadeUp} className="section-title">
             خبراتنا
           </motion.h2>
           <motion.div variants={fadeUp} className="mt-5 max-w-[7rem]">
             <DoubleLine />
           </motion.div>
-          <motion.p variants={fadeUp} className="mt-5 max-w-xl text-sm text-muted">
+          <motion.p variants={fadeUp} className="lede mt-5">
             موضوعات خبرة مجهولة الهوية — دون ذكر عملاء أو نتائج محددة.
           </motion.p>
         </motion.div>
@@ -44,11 +40,11 @@ export function Experience() {
               variants={fadeUp}
               className="border-b border-border p-7 transition-colors hover:bg-ivory md:odd:border-e md:p-9"
             >
-              <span className="font-display text-sm tracking-[0.2em] text-gold">
-                0{index + 1}
-              </span>
-              <h3 className="mt-4 font-display text-2xl text-charcoal">{item.title}</h3>
-              <p className="mt-3 text-warm-gray">{item.summary}</p>
+              <span className="font-display text-base font-bold text-gold">0{index + 1}</span>
+              <h3 className="mt-4 font-display text-2xl leading-relaxed text-charcoal">
+                {item.title}
+              </h3>
+              <p className="body-copy mt-3">{item.summary}</p>
             </motion.li>
           ))}
         </motion.ul>

@@ -17,11 +17,7 @@ export function Industries() {
           <motion.div variants={fadeUp}>
             <SectionLabel>القطاعات</SectionLabel>
           </motion.div>
-          <motion.h2
-            id="industries-heading"
-            variants={fadeUp}
-            className="text-[clamp(1.85rem,3.5vw,3rem)] text-charcoal"
-          >
+          <motion.h2 id="industries-heading" variants={fadeUp} className="section-title">
             نخدم قطاعات متعددة
           </motion.h2>
           <motion.div variants={fadeUp} className="mt-5 max-w-[7rem]">
@@ -38,7 +34,7 @@ export function Industries() {
         >
           {industries.map((industry) => (
             <motion.li key={industry.id} variants={fadeUp}>
-              <span className="inline-block border border-border bg-ivory px-5 py-3 font-display text-base text-charcoal transition-colors duration-300 hover:border-gold hover:text-gold-dark md:px-6 md:text-lg">
+              <span className="inline-block border border-border bg-ivory px-5 py-3.5 font-display text-base leading-relaxed text-charcoal transition-colors duration-300 hover:border-gold hover:text-gold-dark md:px-6 md:text-lg">
                 {industry.name}
               </span>
             </motion.li>

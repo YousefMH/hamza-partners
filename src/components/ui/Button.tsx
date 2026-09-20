@@ -31,7 +31,7 @@ export function Button({
 }: ButtonProps) {
   const reduce = useReducedMotion()
   const classes = cn(
-    'inline-flex items-center justify-center gap-2 font-display text-sm font-medium transition-colors duration-300',
+    'inline-flex items-center justify-center gap-2 font-display text-base font-bold transition-colors duration-300',
     size === 'lg' ? 'px-8 py-3.5' : 'px-6 py-2.5',
     variants[variant],
     className,

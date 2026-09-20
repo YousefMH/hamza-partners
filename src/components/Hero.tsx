@@ -51,7 +51,7 @@ export function Hero() {
 
           <motion.p
             variants={fadeUp}
-            className="mb-5 font-display text-sm tracking-[0.25em] text-gold-champagne"
+            className="mb-5 font-display text-base font-bold text-gold-champagne"
           >
             {siteConfig.firmNameAr}
           </motion.p>
@@ -59,7 +59,7 @@ export function Hero() {
           <motion.h1
             id="hero-heading"
             variants={fadeUp}
-            className="text-[clamp(2.35rem,6vw,4.75rem)] font-semibold leading-[1.2] text-ivory"
+            className="text-[clamp(2.15rem,5.2vw,4.1rem)] font-extrabold leading-[1.35] text-ivory"
           >
             خبرة قانونية راسخة
             <br />
@@ -68,7 +68,7 @@ export function Hero() {
 
           <motion.p
             variants={fadeUp}
-            className="mt-6 max-w-xl text-base leading-relaxed text-ivory/80 md:text-lg"
+            className="mt-7 max-w-xl text-lg leading-[1.9] text-ivory/90 md:text-xl"
           >
             {siteConfig.description}
           </motion.p>

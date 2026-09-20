@@ -8,11 +8,11 @@
   --color-gold: #c6a15b;
   --color-gold-dark: #9b7738;
   --color-gold-champagne: #d8c08a;
-  --color-muted: #6b6860;
+  --color-muted: #4f4c45;
   --color-border: #e4e0d6;
 
-  --font-display: "Noto Kufi Arabic", "Segoe UI", Tahoma, sans-serif;
-  --font-body: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  --font-display: "Almarai", "Segoe UI", Tahoma, sans-serif;
+  --font-body: "Almarai", "Segoe UI", Tahoma, sans-serif;
 }
 
 @layer base {
@@ -41,8 +41,9 @@
     background: var(--color-ivory);
     color: var(--color-charcoal);
     font-family: var(--font-body);
+    font-size: 1.0625rem;
     font-weight: 400;
-    line-height: 1.75;
+    line-height: 1.85;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
@@ -52,9 +53,14 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    font-weight: 600;
-    line-height: 1.35;
-    letter-spacing: -0.01em;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: 0;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 
   a {
@@ -90,23 +96,54 @@
   }
 
   .section-pad {
-    padding-block: clamp(4.5rem, 8vw, 7.5rem);
+    padding-block: clamp(4.75rem, 9vw, 8rem);
   }
 
   .container-editorial {
-    width: min(100% - 2rem, 72rem);
+    width: min(100% - 2.25rem, 70rem);
     margin-inline: auto;
   }
 
   @media (min-width: 768px) {
     .container-editorial {
-      width: min(100% - 3rem, 72rem);
+      width: min(100% - 3.5rem, 70rem);
     }
   }
 
   @media (min-width: 1280px) {
     .container-editorial {
-      width: min(100% - 4rem, 76rem);
+      width: min(100% - 4.5rem, 72rem);
     }
+  }
+
+  /* Comfortable Arabic reading measure */
+  .lede {
+    max-width: 38rem;
+    font-size: 1.125rem;
+    line-height: 1.9;
+    color: var(--color-muted);
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 3.2vw, 2.65rem);
+    line-height: 1.45;
+    color: var(--color-charcoal);
+  }
+
+  .body-copy {
+    font-size: 1.0625rem;
+    line-height: 1.9;
+    color: var(--color-muted);
+  }
+
+  .label-eyebrow {
+    margin-bottom: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    color: var(--color-gold-dark);
   }
 }

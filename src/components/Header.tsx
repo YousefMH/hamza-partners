@@ -39,7 +39,7 @@ export function Header() {
           <a href="#home" className="group flex flex-col items-start">
             <span
               className={cn(
-                'font-display text-lg font-semibold tracking-wide transition-colors md:text-xl',
+                'font-display text-lg font-bold transition-colors md:text-xl',
                 solid ? 'text-charcoal' : 'text-ivory',
               )}
             >
@@ -47,10 +47,10 @@ export function Header() {
             </span>
             <span
               className={cn(
-                'text-[0.65rem] tracking-[0.18em] uppercase transition-colors',
+                'text-xs transition-colors',
                 solid
                   ? 'text-muted group-hover:text-gold-dark'
-                  : 'text-gold-champagne/80 group-hover:text-gold-champagne',
+                  : 'text-gold-champagne/90 group-hover:text-gold-champagne',
               )}
             >
               {siteConfig.firmNameEn}
@@ -66,10 +66,10 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'relative text-sm transition-colors after:absolute after:inset-x-0 after:-bottom-1 after:h-px after:origin-right after:scale-x-0 after:bg-gold after:transition-transform after:duration-300 hover:after:origin-left hover:after:scale-x-100',
+                  'relative text-base transition-colors after:absolute after:inset-x-0 after:-bottom-1 after:h-px after:origin-right after:scale-x-0 after:bg-gold after:transition-transform after:duration-300 hover:after:origin-left hover:after:scale-x-100',
                   solid
-                    ? 'text-warm-gray hover:text-charcoal'
-                    : 'text-ivory/80 hover:text-ivory',
+                    ? 'text-charcoal/80 hover:text-charcoal'
+                    : 'text-ivory/90 hover:text-ivory',
                 )}
               >
                 {item.label}

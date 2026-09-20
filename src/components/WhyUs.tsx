@@ -16,11 +16,7 @@ export function WhyUs() {
           <motion.div variants={fadeUp}>
             <SectionLabel>مزايانا</SectionLabel>
           </motion.div>
-          <motion.h2
-            id="why-us-heading"
-            variants={fadeUp}
-            className="text-[clamp(1.85rem,3.5vw,3rem)] text-charcoal"
-          >
+          <motion.h2 id="why-us-heading" variants={fadeUp} className="section-title">
             لماذا نحن؟
           </motion.h2>
           <motion.div variants={fadeUp} className="mt-5 max-w-[7rem]">
@@ -39,13 +35,15 @@ export function WhyUs() {
             <motion.li
               key={item.id}
               variants={fadeUp}
-              className="grid gap-4 py-8 md:grid-cols-[5rem_1fr_1.2fr] md:items-baseline md:gap-10 md:py-10"
+              className="grid gap-3 py-9 md:grid-cols-[4.5rem_minmax(0,1fr)_minmax(0,1.35fr)] md:items-start md:gap-10 md:py-11"
             >
-              <span className="font-display text-sm tracking-[0.2em] text-gold">
+              <span className="font-display text-base font-bold text-gold">
                 0{index + 1}
               </span>
-              <h3 className="font-display text-xl text-charcoal md:text-2xl">{item.title}</h3>
-              <p className="text-warm-gray md:text-base">{item.body}</p>
+              <h3 className="font-display text-xl leading-relaxed text-charcoal md:text-2xl">
+                {item.title}
+              </h3>
+              <p className="body-copy">{item.body}</p>
             </motion.li>
           ))}
         </motion.ol>

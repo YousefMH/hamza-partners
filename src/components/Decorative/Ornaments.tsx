@@ -47,7 +47,7 @@ export function ColumnRule({ className }: { className?: string }) {
 
 export function SectionLabel({ children }: { children: ReactNode }) {
   return (
-    <p className="mb-3 flex items-center gap-3 text-xs font-medium tracking-[0.2em] text-gold-dark">
+    <p className="label-eyebrow">
       <span className="inline-block h-px w-8 bg-gold" aria-hidden="true" />
       <span>{children}</span>
     </p>

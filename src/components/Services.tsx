@@ -21,17 +21,13 @@ export function Services() {
           <motion.div variants={fadeUp}>
             <SectionLabel>مجالات العمل</SectionLabel>
           </motion.div>
-          <motion.h2
-            id="services-heading"
-            variants={fadeUp}
-            className="text-[clamp(1.85rem,3.5vw,3rem)] text-charcoal"
-          >
+          <motion.h2 id="services-heading" variants={fadeUp} className="section-title">
             مجالات عملنا
           </motion.h2>
           <motion.div variants={fadeUp} className="mt-5 max-w-[7rem]">
             <DoubleLine />
           </motion.div>
-          <motion.p variants={fadeUp} className="mt-6 text-warm-gray md:text-lg">
+          <motion.p variants={fadeUp} className="lede mt-6">
             خبرات قانونية متخصصة تغطي احتياجات الأعمال والاستثمار والتقاضي.
           </motion.p>
         </motion.div>
@@ -51,10 +47,10 @@ export function Services() {
             >
               <Link
                 to={`/services/${service.slug}`}
-                className="flex h-full flex-col gap-5 p-6 transition-colors duration-300 hover:bg-ivory md:p-8"
+                className="flex h-full flex-col gap-4 p-6 transition-colors duration-300 hover:bg-ivory md:gap-5 md:p-8"
               >
                 <div className="flex items-start justify-between gap-4">
-                  <span className="font-display text-sm tracking-[0.2em] text-gold">
+                  <span className="font-display text-base font-bold text-gold">
                     {service.number}
                   </span>
                   <ServiceIcon
@@ -62,11 +58,11 @@ export function Services() {
                     className="size-5 text-muted transition-colors group-hover:text-gold"
                   />
                 </div>
-                <h3 className="font-display text-lg leading-snug text-charcoal md:text-xl">
+                <h3 className="font-display text-lg leading-[1.65] text-charcoal md:text-xl">
                   {service.title}
                 </h3>
-                <p className="text-sm leading-relaxed text-muted">{service.shortDescription}</p>
-                <span className="mt-auto inline-flex items-center gap-2 text-sm text-gold-dark opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <p className="body-copy text-base">{service.shortDescription}</p>
+                <span className="mt-auto inline-flex items-center gap-2 pt-1 text-base font-bold text-gold-dark transition-colors group-hover:text-charcoal">
                   {siteConfig.cta.discoverMore}
                   <ArrowLeft size={16} strokeWidth={1.5} aria-hidden="true" />
                 </span>

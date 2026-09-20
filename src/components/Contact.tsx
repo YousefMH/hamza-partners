@@ -63,7 +63,7 @@ export function Contact() {
   }
 
   const fieldClass =
-    'w-full border border-border bg-white px-4 py-3 text-sm text-charcoal outline-none transition-colors placeholder:text-muted/70 focus:border-gold'
+    'w-full border border-border bg-white px-4 py-3.5 text-base text-charcoal outline-none transition-colors placeholder:text-muted/70 focus:border-gold'
 
   return (
     <section id="contact" className="section-pad bg-white" aria-labelledby="contact-heading">
@@ -79,22 +79,18 @@ export function Contact() {
             <motion.div variants={fadeUp}>
               <SectionLabel>تواصل</SectionLabel>
             </motion.div>
-            <motion.h2
-              id="contact-heading"
-              variants={fadeUp}
-              className="text-[clamp(1.85rem,3.5vw,3rem)] text-charcoal"
-            >
+            <motion.h2 id="contact-heading" variants={fadeUp} className="section-title">
               تواصل معنا
             </motion.h2>
             <motion.div variants={fadeUp} className="mt-5 max-w-[7rem]">
               <DoubleLine />
             </motion.div>
-            <motion.p variants={fadeUp} className="mt-6 text-warm-gray">
+            <motion.p variants={fadeUp} className="lede mt-6">
               أرسل طلبك وسنتواصل معك لمناقشة احتياجاتك القانونية. بيانات التواصل أدناه توضيحية
               وقابلة للاستبدال.
             </motion.p>
 
-            <motion.ul variants={fadeUp} className="mt-10 space-y-5 text-sm">
+            <motion.ul variants={fadeUp} className="mt-10 space-y-5 text-base">
               <li className="flex items-start gap-3">
                 <Phone className="mt-0.5 size-4 text-gold" strokeWidth={1.5} aria-hidden="true" />
                 <div>
@@ -166,7 +162,7 @@ export function Contact() {
           >
             <div className="grid gap-5">
               <div>
-                <label htmlFor="fullName" className="mb-2 block text-sm text-charcoal">
+                <label htmlFor="fullName" className="mb-2 block text-base text-charcoal">
                   الاسم الكامل
                 </label>
                 <input
@@ -186,7 +182,7 @@ export function Contact() {
 
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
-                  <label htmlFor="email" className="mb-2 block text-sm text-charcoal">
+                  <label htmlFor="email" className="mb-2 block text-base text-charcoal">
                     البريد الإلكتروني
                   </label>
                   <input
@@ -205,7 +201,7 @@ export function Contact() {
                   )}
                 </div>
                 <div>
-                  <label htmlFor="phone" className="mb-2 block text-sm text-charcoal">
+                  <label htmlFor="phone" className="mb-2 block text-base text-charcoal">
                     رقم الهاتف
                   </label>
                   <input
@@ -226,7 +222,7 @@ export function Contact() {
               </div>
 
               <div>
-                <label htmlFor="serviceType" className="mb-2 block text-sm text-charcoal">
+                <label htmlFor="serviceType" className="mb-2 block text-base text-charcoal">
                   نوع الخدمة
                 </label>
                 <select
@@ -251,7 +247,7 @@ export function Contact() {
               </div>
 
               <div>
-                <label htmlFor="message" className="mb-2 block text-sm text-charcoal">
+                <label htmlFor="message" className="mb-2 block text-base text-charcoal">
                   رسالتك
                 </label>
                 <textarea

@@ -11,16 +11,14 @@ export function Footer() {
 
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-1">
-            <p className="font-display text-xl font-semibold">{siteConfig.firmNameAr}</p>
-            <p className="mt-1 text-xs tracking-[0.18em] text-gold-champagne uppercase">
-              {siteConfig.firmNameEn}
-            </p>
-            <p className="mt-5 text-sm leading-relaxed text-ivory/65">{siteConfig.tagline}</p>
+            <p className="font-display text-xl font-bold">{siteConfig.firmNameAr}</p>
+            <p className="mt-1 text-sm text-gold-champagne">{siteConfig.firmNameEn}</p>
+            <p className="mt-5 text-base leading-[1.85] text-ivory/80">{siteConfig.tagline}</p>
           </div>
 
           <div>
-            <p className="mb-4 font-display text-sm text-gold-champagne">التنقل</p>
-            <ul className="space-y-2 text-sm text-ivory/75">
+            <p className="mb-4 font-display text-base font-bold text-gold-champagne">التنقل</p>
+            <ul className="space-y-2.5 text-base text-ivory/85">
               {siteConfig.nav.map((item) => (
                 <li key={item.href}>
                   <a href={item.href} className="transition-colors hover:text-gold-champagne">
@@ -32,13 +30,13 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="mb-4 font-display text-sm text-gold-champagne">مجالات العمل</p>
-            <ul className="space-y-2 text-sm text-ivory/75">
+            <p className="mb-4 font-display text-base font-bold text-gold-champagne">مجالات العمل</p>
+            <ul className="space-y-2.5 text-base text-ivory/85">
               {services.slice(0, 6).map((service) => (
                 <li key={service.id}>
                   <Link
                     to={`/services/${service.slug}`}
-                    className="line-clamp-1 transition-colors hover:text-gold-champagne"
+                    className="line-clamp-2 leading-relaxed transition-colors hover:text-gold-champagne"
                   >
                     {service.title}
                   </Link>
@@ -48,8 +46,8 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="mb-4 font-display text-sm text-gold-champagne">التواصل</p>
-            <ul className="space-y-2 text-sm text-ivory/75">
+            <p className="mb-4 font-display text-base font-bold text-gold-champagne">التواصل</p>
+            <ul className="space-y-2.5 text-base text-ivory/85">
               <li>
                 <a href={siteConfig.contact.phoneHref} className="hover:text-gold-champagne">
                   {siteConfig.contact.phone}
@@ -65,12 +63,12 @@ export function Footer() {
               </li>
               <li className="leading-relaxed">{siteConfig.contact.address}</li>
             </ul>
-            <div className="mt-5 flex gap-4 text-sm">
+            <div className="mt-5 flex gap-4 text-base">
               <a
                 href={siteConfig.social.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-ivory/70 hover:text-gold-champagne"
+                className="text-ivory/80 hover:text-gold-champagne"
               >
                 LinkedIn
               </a>
@@ -78,7 +76,7 @@ export function Footer() {
                 href={siteConfig.social.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-ivory/70 hover:text-gold-champagne"
+                className="text-ivory/80 hover:text-gold-champagne"
               >
                 X
               </a>
@@ -86,7 +84,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-3 border-t border-ivory/10 pt-6 text-xs text-ivory/50 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-14 flex flex-col gap-3 border-t border-ivory/10 pt-6 text-sm text-ivory/65 sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 جميع الحقوق محفوظة.</p>
           <p>
             {siteConfig.firmNameAr} · {siteConfig.firmNameEn}

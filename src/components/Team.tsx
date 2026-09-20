@@ -30,17 +30,13 @@ export function Team() {
           <motion.div variants={fadeUp}>
             <SectionLabel>الفريق</SectionLabel>
           </motion.div>
-          <motion.h2
-            id="team-heading"
-            variants={fadeUp}
-            className="text-[clamp(1.85rem,3.5vw,3rem)] text-charcoal"
-          >
+          <motion.h2 id="team-heading" variants={fadeUp} className="section-title">
             فريق العمل
           </motion.h2>
           <motion.div variants={fadeUp} className="mt-5 max-w-[7rem]">
             <DoubleLine />
           </motion.div>
-          <motion.p variants={fadeUp} className="mt-5 text-sm text-muted">
+          <motion.p variants={fadeUp} className="lede mt-5">
             بيانات توضيحية قابلة للاستبدال — ليست ملفات محامين حقيقية.
           </motion.p>
         </motion.div>
@@ -65,9 +61,11 @@ export function Team() {
               </div>
               <div className="mt-5 flex items-start justify-between gap-3">
                 <div>
-                  <h3 className="font-display text-xl text-charcoal">{member.name}</h3>
-                  <p className="mt-1 text-sm text-gold-dark">{member.position}</p>
-                  <p className="mt-2 text-sm text-muted">{member.expertise}</p>
+                  <h3 className="font-display text-xl leading-relaxed text-charcoal">
+                    {member.name}
+                  </h3>
+                  <p className="mt-1.5 text-base text-gold-dark">{member.position}</p>
+                  <p className="body-copy mt-2 text-base">{member.expertise}</p>
                 </div>
                 <a
                   href={member.linkedin}
@@ -81,7 +79,7 @@ export function Team() {
               </div>
               <a
                 href="#contact"
-                className="mt-4 inline-flex border-b border-gold/40 pb-0.5 text-sm text-gold-dark transition-colors hover:border-gold hover:text-charcoal"
+                className="mt-4 inline-flex border-b border-gold/40 pb-0.5 text-base font-bold text-gold-dark transition-colors hover:border-gold hover:text-charcoal"
               >
                 {siteConfig.cta.viewProfile}
               </a>

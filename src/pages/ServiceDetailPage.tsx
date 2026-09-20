@@ -38,16 +38,16 @@ export function ServiceDetailPage() {
           <div className="container-editorial">
             <Link
               to="/#services"
-              className="mb-8 inline-flex items-center gap-2 text-sm text-ivory/65 transition-colors hover:text-gold-champagne"
+              className="mb-8 inline-flex items-center gap-2 text-base text-ivory/85 transition-colors hover:text-gold-champagne"
             >
               <ArrowRight size={16} strokeWidth={1.5} aria-hidden="true" />
               مجالات العمل
             </Link>
             <Meander className="mb-8 max-w-xs" tone="champagne" />
-            <p className="font-display text-sm tracking-[0.25em] text-gold">{service.number}</p>
+            <p className="font-display text-base font-bold text-gold">{service.number}</p>
             <div className="mt-4 flex items-start gap-4">
               <ServiceIcon name={service.icon} className="mt-1 size-6 text-gold-champagne" />
-              <h1 className="max-w-3xl text-[clamp(1.75rem,4vw,3rem)] font-semibold leading-snug">
+              <h1 className="max-w-3xl text-[clamp(1.65rem,3.8vw,2.75rem)] font-extrabold leading-[1.45]">
                 {service.title}
               </h1>
             </div>
@@ -59,8 +59,8 @@ export function ServiceDetailPage() {
             <div>
               <SectionLabel>نظرة عامة</SectionLabel>
               <DoubleLine className="mb-8 max-w-[7rem]" />
-              <p className="max-w-2xl text-lg leading-relaxed text-warm-gray">{service.description}</p>
-              <p className="mt-6 max-w-2xl text-warm-gray">{service.shortDescription}</p>
+              <p className="max-w-2xl text-lg leading-[1.9] text-muted">{service.description}</p>
+              <p className="body-copy mt-6 max-w-2xl">{service.shortDescription}</p>
               <div className="mt-10">
                 <Button href="/#contact" size="lg">
                   {siteConfig.cta.book}
