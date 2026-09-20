@@ -49,27 +49,31 @@ export function Header({ forceSolid = false }: HeaderProps) {
 
   const closeMenu = () => setOpen(false)
 
+  /** Locked bar height — open/closed chrome must never jump */
+  const barRowClass =
+    'container-editorial flex h-14 w-full shrink-0 items-center gap-2 overflow-hidden sm:gap-3 md:h-16 lg:h-[4.5rem] lg:gap-6'
+
   return (
     <>
       <header
         className={cn(
-          'fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top,0px)] transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300',
+          'fixed inset-x-0 top-0 z-[70] h-[calc(3.5rem+env(safe-area-inset-top,0px))] overflow-hidden pt-[env(safe-area-inset-top,0px)] transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 md:h-[calc(4rem+env(safe-area-inset-top,0px))] lg:h-[calc(4.5rem+env(safe-area-inset-top,0px))]',
           'border-b border-gold/20 bg-ivory/95 shadow-[0_1px_0_rgba(198,161,91,0.08)] backdrop-blur-md',
           solidDesktop
             ? 'lg:border-gold/25 lg:bg-ivory/95 lg:shadow-[0_1px_0_rgba(198,161,91,0.1)] lg:backdrop-blur-md'
             : 'lg:border-transparent lg:bg-transparent lg:shadow-none lg:backdrop-blur-none',
         )}
       >
-        <div className="container-editorial flex min-h-14 items-center gap-2 py-3 sm:min-h-14 sm:gap-3 sm:py-2.5 md:h-16 md:py-0 lg:h-[4.5rem] lg:gap-6">
+        <div className={barRowClass}>
           <a
             href={appUrl("/#home")}
             onClick={closeMenu}
-            className="group shrink-0 py-0.5"
+            className="group shrink-0"
             aria-label={siteConfig.firmNameAr}
           >
             <span
               className={cn(
-                'block whitespace-nowrap font-display text-[0.9375rem] font-bold leading-normal transition-colors sm:text-base md:text-lg lg:text-xl',
+                'block whitespace-nowrap font-display text-[0.9375rem] font-bold leading-none transition-colors sm:text-base md:text-lg lg:text-xl',
                 'text-charcoal',
                 solidDesktop ? 'lg:text-charcoal' : 'lg:text-ivory',
               )}
@@ -78,7 +82,7 @@ export function Header({ forceSolid = false }: HeaderProps) {
             </span>
             <span
               className={cn(
-                'mt-0.5 hidden whitespace-nowrap text-[0.65rem] leading-snug transition-colors sm:block sm:text-[0.7rem]',
+                'mt-0.5 hidden whitespace-nowrap text-[0.65rem] leading-none transition-colors sm:block sm:text-[0.7rem]',
                 'text-muted group-hover:text-gold-dark',
                 solidDesktop
                   ? 'lg:text-muted lg:group-hover:text-gold-dark'
@@ -148,7 +152,7 @@ export function Header({ forceSolid = false }: HeaderProps) {
         {open && (
           <motion.div
             id="mobile-nav"
-            className="fixed inset-0 z-[60] flex flex-col overflow-x-hidden bg-ivory pt-[env(safe-area-inset-top,0px)] lg:hidden"
+            className="fixed inset-0 z-[60] flex flex-col overflow-x-hidden bg-ivory pt-[calc(3.5rem+env(safe-area-inset-top,0px))] sm:pt-[calc(3.5rem+env(safe-area-inset-top,0px))] md:pt-[calc(4rem+env(safe-area-inset-top,0px))] lg:hidden"
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -157,20 +161,6 @@ export function Header({ forceSolid = false }: HeaderProps) {
             aria-modal="true"
             aria-label="قائمة التنقل"
           >
-            <div className="container-editorial flex h-12 shrink-0 items-center justify-between border-b border-border sm:h-14">
-              <p className="min-w-0 truncate font-display text-sm font-bold text-charcoal sm:text-base">
-                {siteConfig.firmNameAr}
-              </p>
-              <button
-                type="button"
-                className="inline-flex size-9 shrink-0 items-center justify-center border border-charcoal/15 text-charcoal sm:size-10"
-                aria-label="إغلاق القائمة"
-                onClick={closeMenu}
-              >
-                <X size={20} strokeWidth={1.6} />
-              </button>
-            </div>
-
             <nav
               className="container-editorial flex flex-1 flex-col overflow-y-auto overscroll-contain py-3"
               aria-label="قائمة الجوال"
