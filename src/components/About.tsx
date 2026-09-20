@@ -46,7 +46,7 @@ export function About() {
 
           <motion.ul
             variants={staggerContainer}
-            className="grid content-center gap-0 border-t border-border sm:grid-cols-2"
+            className="grid grid-cols-2 content-center gap-0 border-t border-border"
           >
             {trustIndicators.map((item) => {
               const Icon = trustIcons[item.icon]
@@ -54,12 +54,14 @@ export function About() {
                 <motion.li
                   key={item.label}
                   variants={fadeUp}
-                  className="border-b border-border px-0 py-6 sm:px-5 sm:odd:border-e md:py-7"
+                  className="border-b border-border px-3 py-5 odd:border-e sm:px-5 sm:py-6 md:py-7"
                 >
-                  <span className="mb-3.5 inline-flex size-10 items-center justify-center border border-gold/35 text-gold-dark">
-                    <Icon className="size-5" strokeWidth={1.5} aria-hidden="true" />
+                  <span className="mb-3 inline-flex size-9 items-center justify-center border border-gold/35 text-gold-dark sm:mb-3.5 sm:size-10">
+                    <Icon className="size-4 sm:size-5" strokeWidth={1.5} aria-hidden="true" />
                   </span>
-                  <p className="font-display text-xl leading-relaxed text-charcoal">{item.label}</p>
+                  <p className="font-display text-base leading-relaxed text-charcoal sm:text-lg md:text-xl">
+                    {item.label}
+                  </p>
                 </motion.li>
               )
             })}

@@ -103,11 +103,11 @@ export function LawyerProfilePage() {
               <div className="mt-12">
                 <SectionLabel>مجالات التركيز</SectionLabel>
                 <DoubleLine className="mb-8 max-w-[7rem]" />
-                <ul className="grid gap-3 sm:grid-cols-2">
+                <ul className="grid grid-cols-2 gap-3">
                   {member.focusAreas.map((area) => (
                     <li
                       key={area}
-                      className="border border-border bg-white px-4 py-3 text-base leading-relaxed text-charcoal"
+                      className="border border-border bg-white px-3 py-2.5 text-sm leading-relaxed text-charcoal sm:px-4 sm:py-3 sm:text-base"
                     >
                       {area}
                     </li>
@@ -115,7 +115,7 @@ export function LawyerProfilePage() {
                 </ul>
               </div>
 
-              <div className="mt-12 grid gap-10 sm:grid-cols-2">
+              <div className="mt-12 grid grid-cols-2 gap-8 sm:gap-10">
                 <div>
                   <SectionLabel>التعليم</SectionLabel>
                   <DoubleLine className="mb-6 max-w-[5rem]" />

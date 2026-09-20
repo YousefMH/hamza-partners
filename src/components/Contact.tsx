@@ -184,9 +184,9 @@ export function Contact() {
                 )}
               </div>
 
-              <div className="grid gap-5 sm:grid-cols-2">
-                <div>
-                  <label htmlFor="email" className="mb-2 block text-base text-charcoal">
+              <div className="grid grid-cols-2 gap-3 sm:gap-5">
+                <div className="min-w-0">
+                  <label htmlFor="email" className="mb-2 block text-sm text-charcoal sm:text-base">
                     البريد الإلكتروني
                   </label>
                   <input
@@ -194,7 +194,7 @@ export function Contact() {
                     name="email"
                     type="email"
                     autoComplete="email"
-                    className={cn(fieldClass, errors.email && 'border-red-700')}
+                    className={cn(fieldClass, 'px-3 sm:px-4', errors.email && 'border-red-700')}
                     value={values.email}
                     onChange={(e) => onChange('email', e.target.value)}
                   />
@@ -204,8 +204,8 @@ export function Contact() {
                     </p>
                   )}
                 </div>
-                <div>
-                  <label htmlFor="phone" className="mb-2 block text-base text-charcoal">
+                <div className="min-w-0">
+                  <label htmlFor="phone" className="mb-2 block text-sm text-charcoal sm:text-base">
                     رقم الهاتف
                   </label>
                   <input
@@ -213,7 +213,7 @@ export function Contact() {
                     name="phone"
                     type="tel"
                     autoComplete="tel"
-                    className={cn(fieldClass, errors.phone && 'border-red-700')}
+                    className={cn(fieldClass, 'px-3 sm:px-4', errors.phone && 'border-red-700')}
                     value={values.phone}
                     onChange={(e) => onChange('phone', e.target.value)}
                   />
