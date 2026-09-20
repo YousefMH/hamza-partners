@@ -1,8 +1,16 @@
 import { motion } from 'framer-motion'
+import { Briefcase, Building2, Scale, ShieldCheck, type LucideIcon } from 'lucide-react'
 import { siteConfig } from '@/data/siteConfig'
 import { trustIndicators } from '@/data/content'
 import { SectionLabel, DoubleLine } from '@/components/Decorative/Ornaments'
 import { fadeUp, staggerContainer } from '@/lib/motion'
+
+const trustIcons: Record<(typeof trustIndicators)[number]['icon'], LucideIcon> = {
+  scale: Scale,
+  briefcase: Briefcase,
+  'building-2': Building2,
+  'shield-check': ShieldCheck,
+}
 
 export function About() {
   return (
@@ -40,18 +48,21 @@ export function About() {
             variants={staggerContainer}
             className="grid content-center gap-0 border-t border-border sm:grid-cols-2"
           >
-            {trustIndicators.map((item) => (
-              <motion.li
-                key={item}
-                variants={fadeUp}
-                className="border-b border-border px-0 py-7 sm:px-6 sm:odd:border-e"
-              >
-                <span className="mb-3 block font-display text-2xl text-gold/80" aria-hidden="true">
-                  ‖
-                </span>
-                <p className="font-display text-xl leading-relaxed text-charcoal">{item}</p>
-              </motion.li>
-            ))}
+            {trustIndicators.map((item) => {
+              const Icon = trustIcons[item.icon]
+              return (
+                <motion.li
+                  key={item.label}
+                  variants={fadeUp}
+                  className="border-b border-border px-0 py-7 sm:px-6 sm:odd:border-e"
+                >
+                  <span className="mb-4 inline-flex size-11 items-center justify-center border border-gold/35 text-gold-dark">
+                    <Icon className="size-5" strokeWidth={1.5} aria-hidden="true" />
+                  </span>
+                  <p className="font-display text-xl leading-relaxed text-charcoal">{item.label}</p>
+                </motion.li>
+              )
+            })}
           </motion.ul>
         </motion.div>
       </div>

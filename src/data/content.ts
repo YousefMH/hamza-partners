@@ -28,11 +28,26 @@ export const whyUs: WhyUsItem[] = [
 ]
 
 export const trustIndicators = [
-  'خبرة متخصصة',
-  'حلول قانونية متكاملة',
-  'فهم عميق للأعمال',
-  'التزام بالسرية والدقة',
+  {
+    label: 'خبرة متخصصة',
+    icon: 'scale',
+  },
+  {
+    label: 'حلول قانونية متكاملة',
+    icon: 'briefcase',
+  },
+  {
+    label: 'فهم عميق للأعمال',
+    icon: 'building-2',
+  },
+  {
+    label: 'التزام بالسرية والدقة',
+    icon: 'shield-check',
+  },
 ] as const
+
+export type TrustIndicator = (typeof trustIndicators)[number]
+
 
 // PLACEHOLDER stats — not verified claims; replace with real figures before production
 export const stats = [
