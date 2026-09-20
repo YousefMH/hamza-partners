@@ -1,9 +1,11 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import { team } from '@/data/team'
 import { siteConfig } from '@/data/siteConfig'
 import { SectionLabel, DoubleLine } from '@/components/Decorative/Ornaments'
 import { easeOut, fadeUp, staggerContainer } from '@/lib/motion'
+import { cn } from '@/lib/cn'
 
 function LinkedInIcon({ className }: { className?: string }) {
   return (
@@ -18,8 +20,69 @@ function LinkedInIcon({ className }: { className?: string }) {
   )
 }
 
+/** True when a real mouse/trackpad hover is available (desktop). */
+function useFineHover() {
+  const [fineHover, setFineHover] = useState(false)
+
+  useEffect(() => {
+    const media = window.matchMedia('(hover: hover) and (pointer: fine)')
+    const sync = () => setFineHover(media.matches)
+    sync()
+    media.addEventListener('change', sync)
+    return () => media.removeEventListener('change', sync)
+  }, [])
+
+  return fineHover
+}
+
+type PortraitProps = {
+  src: string
+  index: number
+  reduce: boolean | null
+  fineHover: boolean
+}
+
+function TeamPortrait({ src, index, reduce, fineHover }: PortraitProps) {
+  const baseClass =
+    'h-full w-full object-cover will-change-[filter,transform] transition-[filter,transform] duration-700 group-hover:scale-[1.03]'
+
+  // Desktop: grayscale until hover — CSS only so hover works reliably
+  if (fineHover || reduce) {
+    return (
+      <img
+        src={src}
+        alt=""
+        loading="lazy"
+        className={cn(
+          baseClass,
+          reduce ? undefined : 'grayscale group-hover:grayscale-0',
+        )}
+      />
+    )
+  }
+
+  // Touch / mobile: color in view, grayscale out of frame
+  return (
+    <motion.img
+      src={src}
+      alt=""
+      loading="lazy"
+      className={baseClass}
+      initial={{ filter: 'grayscale(1)' }}
+      whileInView={{ filter: 'grayscale(0)' }}
+      viewport={{ once: false, amount: 0.45, margin: '0px 0px -6% 0px' }}
+      transition={{
+        duration: 1.15,
+        delay: index * 0.08,
+        ease: easeOut,
+      }}
+    />
+  )
+}
+
 export function Team() {
   const reduce = useReducedMotion()
+  const fineHover = useFineHover()
 
   return (
     <section id="team" className="section-pad bg-ivory marble-texture" aria-labelledby="team-heading">
@@ -55,19 +118,11 @@ export function Team() {
             <motion.li key={member.id} variants={fadeUp} className="group">
               <Link to={`/team/${member.slug}`} className="block">
                 <div className="relative aspect-[3/4] overflow-hidden bg-border">
-                  <motion.img
+                  <TeamPortrait
                     src={member.image}
-                    alt=""
-                    className="h-full w-full object-cover will-change-[filter] transition-transform duration-700 group-hover:scale-[1.03]"
-                    loading="lazy"
-                    initial={reduce ? false : { filter: 'grayscale(1)' }}
-                    whileInView={reduce ? undefined : { filter: 'grayscale(0)' }}
-                    viewport={{ once: false, amount: 0.45, margin: '0px 0px -6% 0px' }}
-                    transition={{
-                      duration: reduce ? 0 : 1.15,
-                      delay: reduce ? 0 : index * 0.08,
-                      ease: easeOut,
-                    }}
+                    index={index}
+                    reduce={reduce}
+                    fineHover={fineHover}
                   />
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-charcoal/50 to-transparent opacity-60" />
                 </div>
