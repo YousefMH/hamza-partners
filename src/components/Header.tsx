@@ -24,7 +24,7 @@ export function Header({ forceSolid = false }: HeaderProps) {
   const [activeId, setActiveId] = useState<string>('home')
   const reduce = useReducedMotion()
   const onHome = pathname === '/'
-  const solidDesktop = forceSolid || !onHome || scrolled || open
+  const solidChrome = forceSolid || !onHome || scrolled || open
 
   const sectionIds = useMemo(
     () => siteConfig.nav.map((item) => sectionIdFromHref(item.href)),
@@ -132,10 +132,9 @@ export function Header({ forceSolid = false }: HeaderProps) {
       <header
         className={cn(
           'fixed inset-x-0 top-0 z-[70] h-[calc(3.5rem+env(safe-area-inset-top,0px))] overflow-hidden pt-[env(safe-area-inset-top,0px)] transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 md:h-[calc(4rem+env(safe-area-inset-top,0px))] lg:h-[calc(4.5rem+env(safe-area-inset-top,0px))]',
-          'border-b border-gold/20 bg-ivory/95 shadow-[0_1px_0_rgba(198,161,91,0.08)] backdrop-blur-md',
-          solidDesktop
-            ? 'lg:border-gold/25 lg:bg-ivory/95 lg:shadow-[0_1px_0_rgba(198,161,91,0.1)] lg:backdrop-blur-md'
-            : 'lg:border-transparent lg:bg-transparent lg:shadow-none lg:backdrop-blur-none',
+          solidChrome
+            ? 'border-b border-gold/20 bg-ivory/95 shadow-[0_1px_0_rgba(198,161,91,0.08)] backdrop-blur-md'
+            : 'border-b border-transparent bg-transparent shadow-none',
         )}
       >
         <div className={barRowClass}>
@@ -148,8 +147,7 @@ export function Header({ forceSolid = false }: HeaderProps) {
             <span
               className={cn(
                 'block whitespace-nowrap font-display text-[0.9375rem] font-bold leading-none transition-colors sm:text-base md:text-lg lg:text-xl',
-                'text-charcoal',
-                solidDesktop ? 'lg:text-charcoal' : 'lg:text-ivory',
+                solidChrome ? 'text-charcoal' : 'text-ivory',
               )}
             >
               {siteConfig.firmNameAr}
@@ -157,10 +155,9 @@ export function Header({ forceSolid = false }: HeaderProps) {
             <span
               className={cn(
                 'mt-0.5 hidden whitespace-nowrap text-[0.65rem] leading-none transition-colors sm:block sm:text-[0.7rem]',
-                'text-muted group-hover:text-gold-dark',
-                solidDesktop
-                  ? 'lg:text-muted lg:group-hover:text-gold-dark'
-                  : 'lg:text-gold-champagne/90 lg:group-hover:text-gold-champagne',
+                solidChrome
+                  ? 'text-muted group-hover:text-gold-dark'
+                  : 'text-gold-champagne/90 group-hover:text-gold-champagne',
               )}
             >
               {siteConfig.firmNameEn}
@@ -186,7 +183,7 @@ export function Header({ forceSolid = false }: HeaderProps) {
                     isActive
                       ? 'after:origin-right after:scale-x-100'
                       : 'after:origin-right after:scale-x-0 hover:after:origin-left hover:after:scale-x-100',
-                    solidDesktop
+                    solidChrome
                       ? isActive
                         ? 'font-bold text-gold-dark'
                         : 'text-charcoal/80 hover:text-charcoal'
@@ -202,22 +199,26 @@ export function Header({ forceSolid = false }: HeaderProps) {
           </nav>
 
           <div className="ms-auto flex shrink-0 items-center gap-1.5 sm:gap-2.5 lg:ms-0">
-            <a
-              href={appUrl('/#contact')}
-              onClick={() => activateSection('/#contact')}
-              className={cn(
-                'inline-flex h-9 max-w-[9.5rem] items-center justify-center whitespace-nowrap rounded-sm px-2.5 font-display text-[0.8125rem] font-bold transition-colors sm:h-10 sm:max-w-none sm:px-4 sm:text-sm lg:hidden',
-                'border border-gold bg-gold text-charcoal hover:bg-gold-champagne',
-              )}
-            >
-              {siteConfig.cta.book}
-            </a>
+            {/* On the home hero, the primary CTA already lives in the section —
+                keep this compact header button only after scroll / off-home. */}
+            {(scrolled || !onHome) && (
+              <a
+                href={appUrl('/#contact')}
+                onClick={() => activateSection('/#contact')}
+                className={cn(
+                  'inline-flex h-9 max-w-[9.5rem] items-center justify-center whitespace-nowrap rounded-sm px-2.5 font-display text-[0.8125rem] font-bold transition-colors sm:h-10 sm:max-w-none sm:px-4 sm:text-sm lg:hidden',
+                  'border border-gold bg-gold text-charcoal hover:bg-gold-champagne',
+                )}
+              >
+                {siteConfig.cta.book}
+              </a>
+            )}
 
             <span className="hidden lg:inline-flex">
               <Button
                 href={appUrl('/#contact')}
                 size="md"
-                variant={solidDesktop ? 'primary' : 'inverse'}
+                variant={solidChrome ? 'primary' : 'inverse'}
                 onClick={() => activateSection('/#contact')}
               >
                 {siteConfig.cta.book}
@@ -226,7 +227,12 @@ export function Header({ forceSolid = false }: HeaderProps) {
 
             <button
               type="button"
-              className="inline-flex size-9 shrink-0 items-center justify-center rounded-sm border border-charcoal/12 bg-white text-charcoal transition-colors hover:border-gold sm:size-10 lg:hidden"
+              className={cn(
+                'inline-flex size-9 shrink-0 items-center justify-center rounded-sm transition-colors sm:size-10 lg:hidden',
+                solidChrome
+                  ? 'border border-charcoal/12 bg-white text-charcoal hover:border-gold'
+                  : 'border border-ivory/25 bg-charcoal/30 text-ivory hover:border-gold-champagne',
+              )}
               aria-expanded={open}
               aria-controls="mobile-nav"
               aria-label={open ? 'إغلاق القائمة' : 'فتح القائمة'}
