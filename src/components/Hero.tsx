@@ -77,12 +77,12 @@ export function Hero() {
 
             <motion.div
               variants={readingVariants(reduce, fadeUpSoft)}
-              className="mx-auto mt-7 max-w-sm md:mx-0 md:mt-8 md:max-w-xl"
+              className="mx-auto mt-7 w-full max-w-sm md:mx-0 md:mt-8 md:max-w-xl"
             >
               <p className="font-display text-[1.02rem] leading-[1.75] text-ivory/82 md:text-[1.12rem] md:leading-[1.8]">
                 نقدم حلولًا قانونية متخصصة في
               </p>
-              <div className="mt-3 flex justify-center md:justify-start">
+              <div className="mt-3 flex w-full justify-center md:justify-start">
                 <TypewriterText
                   entries={typewriterEntries}
                   typingSpeed={75}
@@ -90,7 +90,7 @@ export function Hero() {
                   pauseDuration={2100}
                   startDelay={700}
                   loop
-                  className="min-h-[1.75em] font-display text-[clamp(1.3rem,4.4vw,1.7rem)] font-bold leading-[1.65] md:text-[clamp(1.45rem,2.3vw,1.9rem)]"
+                  className="min-h-[1.75em] w-full font-display text-[clamp(1.3rem,4.4vw,1.7rem)] font-bold leading-[1.65] md:w-auto md:text-[clamp(1.45rem,2.3vw,1.9rem)]"
                   onNavigate={(entry) => {
                     trackEvent('consultation_cta_click', {
                       source: 'hero-typewriter',

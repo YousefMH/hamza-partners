@@ -174,7 +174,13 @@ export function TypewriterText({
   }
 
   return (
-    <span className={cn('typewriter-root relative inline-grid max-w-full text-start', className)}>
+    <span
+      className={cn(
+        /* Mobile: keep the live word centered on screen; desktop stays start-aligned. */
+        'typewriter-root relative inline-grid max-w-full text-center md:text-start',
+        className,
+      )}
+    >
       <span
         className="pointer-events-none invisible col-start-1 row-start-1 font-[inherit] leading-[inherit] whitespace-pre-wrap"
         aria-hidden="true"
@@ -182,7 +188,7 @@ export function TypewriterText({
         {longestWord}
       </span>
 
-      <span className="col-start-1 row-start-1 w-fit max-w-full justify-self-start">
+      <span className="col-start-1 row-start-1 w-fit max-w-full justify-self-center md:justify-self-start">
         <Link
           key={active.slug}
           to={active.href}
