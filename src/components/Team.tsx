@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { team } from '@/data/team'
 import { siteConfig } from '@/data/siteConfig'
 import { SectionLabel, DoubleLine } from '@/components/Decorative/Ornaments'
-import { easeOut, fadeUp, staggerContainer } from '@/lib/motion'
+import { easeOut, fadeUp, fadeUpSoft, readingStagger, readingVariants, staggerContainer, staggerReading, viewportReading } from '@/lib/motion'
 import { cn } from '@/lib/cn'
 
 function LinkedInIcon({ className }: { className?: string }) {
@@ -89,34 +89,34 @@ export function Team() {
     <section id="team" className="section-pad bg-ivory marble-texture" aria-labelledby="team-heading">
       <div className="container-editorial">
         <motion.div
-          variants={staggerContainer}
-          initial="hidden"
+          variants={readingStagger(reduce, staggerContainer)}
+          initial={reduce ? false : 'hidden'}
           whileInView="visible"
-          viewport={{ once: true, margin: '-10% 0px' }}
+          viewport={viewportReading}
         >
-          <motion.div variants={fadeUp}>
+          <motion.div variants={readingVariants(reduce, fadeUp)}>
             <SectionLabel>الفريق</SectionLabel>
           </motion.div>
-          <motion.h2 id="team-heading" variants={fadeUp} className="section-title">
+          <motion.h2 id="team-heading" variants={readingVariants(reduce, fadeUp)} className="section-title">
             فريق العمل
           </motion.h2>
-          <motion.div variants={fadeUp} className="section-rule">
+          <motion.div variants={readingVariants(reduce, fadeUp)} className="section-rule">
             <DoubleLine />
           </motion.div>
-          <motion.p variants={fadeUp} className="lede">
+          <motion.p variants={readingVariants(reduce, fadeUpSoft)} className="lede">
             بيانات توضيحية قابلة للاستبدال — ليست ملفات محامين حقيقية.
           </motion.p>
         </motion.div>
 
         <motion.ul
           className="section-body grid gap-8 md:grid-cols-3 md:gap-10"
-          variants={staggerContainer}
-          initial="hidden"
+          variants={readingStagger(reduce, staggerReading)}
+          initial={reduce ? false : 'hidden'}
           whileInView="visible"
-          viewport={{ once: true, margin: '-8% 0px' }}
+          viewport={viewportReading}
         >
           {team.map((member, index) => (
-            <motion.li key={member.id} variants={fadeUp} className="group">
+            <motion.li key={member.id} variants={readingVariants(reduce, fadeUp)} className="group">
               <Link to={`/team/${member.slug}`} className="block">
                 <div className="relative aspect-[3/4] overflow-hidden bg-border">
                   <TeamPortrait

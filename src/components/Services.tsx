@@ -1,49 +1,64 @@
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowLeft } from 'lucide-react'
 import { services } from '@/data/services'
 import { siteConfig } from '@/data/siteConfig'
 import { SectionLabel, DoubleLine } from '@/components/Decorative/Ornaments'
 import { ServiceIcon } from '@/components/ui/ServiceIcon'
-import { fadeUp, staggerContainer } from '@/lib/motion'
+import {
+  fadeUp,
+  fadeUpSoft,
+  readingStagger,
+  readingVariants,
+  staggerContainer,
+  staggerList,
+  viewportReading,
+  viewportReadingLoose,
+} from '@/lib/motion'
 
 export function Services() {
+  const reduce = useReducedMotion()
+
   return (
     <section id="services" className="section-pad bg-white" aria-labelledby="services-heading">
       <div className="container-editorial">
         <motion.div
           className="max-w-2xl"
-          variants={staggerContainer}
-          initial="hidden"
+          variants={readingStagger(reduce, staggerContainer)}
+          initial={reduce ? false : 'hidden'}
           whileInView="visible"
-          viewport={{ once: true, margin: '-10% 0px' }}
+          viewport={viewportReading}
         >
-          <motion.div variants={fadeUp}>
+          <motion.div variants={readingVariants(reduce, fadeUp)}>
             <SectionLabel>مجالات العمل</SectionLabel>
           </motion.div>
-          <motion.h2 id="services-heading" variants={fadeUp} className="section-title">
+          <motion.h2
+            id="services-heading"
+            variants={readingVariants(reduce, fadeUp)}
+            className="section-title"
+          >
             مجالات عملنا
           </motion.h2>
-          <motion.div variants={fadeUp} className="section-rule">
+          <motion.div variants={readingVariants(reduce, fadeUp)} className="section-rule">
             <DoubleLine />
           </motion.div>
-          <motion.p variants={fadeUp} className="lede">
+          <motion.p variants={readingVariants(reduce, fadeUpSoft)} className="lede">
             خبرات قانونية متخصصة تغطي احتياجات الأعمال والاستثمار والتقاضي.
           </motion.p>
         </motion.div>
 
         <motion.ul
           className="section-body grid border-t border-border md:grid-cols-2 xl:grid-cols-3"
-          variants={staggerContainer}
-          initial="hidden"
+          variants={readingStagger(reduce, staggerList)}
+          initial={reduce ? false : 'hidden'}
           whileInView="visible"
-          viewport={{ once: true, margin: '-8% 0px' }}
+          viewport={viewportReadingLoose}
         >
           {services.map((service) => (
             <motion.li
               key={service.id}
-              variants={fadeUp}
-              className="group border-b border-border md:odd:border-e xl:[&:nth-child(3n)]:border-e-0 xl:border-e"
+              variants={readingVariants(reduce, fadeUp)}
+              className="group border-b border-border md:odd:border-e xl:border-e xl:[&:nth-child(3n)]:border-e-0"
             >
               <Link
                 to={`/services/${service.slug}`}

@@ -1,8 +1,15 @@
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { articles } from '@/data/articles'
 import { siteConfig } from '@/data/siteConfig'
 import { SectionLabel, DoubleLine } from '@/components/Decorative/Ornaments'
-import { fadeUp, staggerContainer } from '@/lib/motion'
+import {
+  fadeUp,
+  readingStagger,
+  readingVariants,
+  staggerContainer,
+  staggerReading,
+  viewportReading,
+} from '@/lib/motion'
 
 function formatDate(iso: string) {
   try {
@@ -17,35 +24,41 @@ function formatDate(iso: string) {
 }
 
 export function Articles() {
+  const reduce = useReducedMotion()
+
   return (
     <section id="articles" className="section-pad bg-ivory" aria-labelledby="articles-heading">
       <div className="container-editorial">
         <motion.div
-          variants={staggerContainer}
-          initial="hidden"
+          variants={readingStagger(reduce, staggerContainer)}
+          initial={reduce ? false : 'hidden'}
           whileInView="visible"
-          viewport={{ once: true, margin: '-10% 0px' }}
+          viewport={viewportReading}
         >
-          <motion.div variants={fadeUp}>
+          <motion.div variants={readingVariants(reduce, fadeUp)}>
             <SectionLabel>المعرفة</SectionLabel>
           </motion.div>
-          <motion.h2 id="articles-heading" variants={fadeUp} className="section-title">
+          <motion.h2
+            id="articles-heading"
+            variants={readingVariants(reduce, fadeUp)}
+            className="section-title"
+          >
             المقالات والرؤى القانونية
           </motion.h2>
-          <motion.div variants={fadeUp} className="section-rule">
+          <motion.div variants={readingVariants(reduce, fadeUp)} className="section-rule">
             <DoubleLine />
           </motion.div>
         </motion.div>
 
         <motion.ul
           className="section-body grid gap-8 lg:grid-cols-3 lg:gap-10"
-          variants={staggerContainer}
-          initial="hidden"
+          variants={readingStagger(reduce, staggerReading)}
+          initial={reduce ? false : 'hidden'}
           whileInView="visible"
-          viewport={{ once: true, margin: '-8% 0px' }}
+          viewport={viewportReading}
         >
           {articles.map((article) => (
-            <motion.li key={article.id} variants={fadeUp}>
+            <motion.li key={article.id} variants={readingVariants(reduce, fadeUp)}>
               <article className="flex h-full flex-col border-t border-gold/50 pt-6 text-center md:text-start">
                 <p className="text-sm font-bold text-gold-dark">{article.category}</p>
                 <h3 className="mt-3 font-display text-xl leading-[1.6] text-charcoal">

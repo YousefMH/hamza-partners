@@ -1,13 +1,23 @@
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { featuredService } from '@/data/services'
 import { siteConfig } from '@/data/siteConfig'
 import { appUrl } from '@/lib/paths'
 import { Button } from '@/components/ui/Button'
 import { Meander, SectionLabel } from '@/components/Decorative/Ornaments'
-import { clipReveal, fadeUp, staggerContainer } from '@/lib/motion'
+import {
+  clipReveal,
+  fadeUp,
+  fadeUpSoft,
+  readingStagger,
+  readingVariants,
+  staggerContainer,
+  viewportReading,
+} from '@/lib/motion'
 
 export function FeaturedService() {
+  const reduce = useReducedMotion()
+
   return (
     <section
       className="relative overflow-hidden bg-warm-gray text-ivory"
@@ -18,10 +28,10 @@ export function FeaturedService() {
           src={siteConfig.featuredImage}
           alt=""
           className="h-full w-full object-cover opacity-30"
-          variants={clipReveal}
-          initial="hidden"
+          variants={readingVariants(reduce, clipReveal)}
+          initial={reduce ? false : 'hidden'}
           whileInView="visible"
-          viewport={{ once: true, margin: '-10% 0px' }}
+          viewport={viewportReading}
         />
         <div className="absolute inset-0 bg-charcoal/80" />
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-charcoal/50" />
@@ -30,37 +40,43 @@ export function FeaturedService() {
       <div className="relative container-editorial section-pad">
         <motion.div
           className="mx-auto max-w-3xl text-center md:mx-0 md:text-start"
-          variants={staggerContainer}
-          initial="hidden"
+          variants={readingStagger(reduce, staggerContainer)}
+          initial={reduce ? false : 'hidden'}
           whileInView="visible"
-          viewport={{ once: true, margin: '-10% 0px' }}
+          viewport={viewportReading}
         >
-          <motion.div variants={fadeUp}>
+          <motion.div variants={readingVariants(reduce, fadeUp)}>
             <SectionLabel>
               <span className="text-gold-champagne">الخدمة المميزة</span>
             </SectionLabel>
           </motion.div>
-          <motion.div variants={fadeUp} className="flex justify-center md:justify-start">
+          <motion.div variants={readingVariants(reduce, fadeUp)} className="flex justify-center md:justify-start">
             <Meander className="mb-6 w-full max-w-sm" tone="champagne" />
           </motion.div>
-          <motion.p variants={fadeUp} className="mb-3 font-display text-base font-bold text-gold">
+          <motion.p
+            variants={readingVariants(reduce, fadeUp)}
+            className="mb-3 font-display text-base font-bold text-gold"
+          >
             {featuredService.number}
           </motion.p>
           <motion.h2
             id="featured-heading"
-            variants={fadeUp}
+            variants={readingVariants(reduce, fadeUp)}
             className="text-[clamp(1.75rem,3.8vw,3rem)] font-extrabold leading-[1.45] text-ivory"
           >
             {featuredService.title}
           </motion.h2>
           <motion.p
-            variants={fadeUp}
+            variants={readingVariants(reduce, fadeUpSoft)}
             className="mt-6 max-w-2xl text-lg leading-[1.9] text-ivory/90 md:mt-7 md:text-xl"
           >
             {featuredService.description}
           </motion.p>
-          <motion.div variants={fadeUp} className="mt-8 flex flex-wrap justify-center gap-4 md:mt-10 md:justify-start">
-            <Button href={appUrl("/#contact")} variant="inverse" size="lg">
+          <motion.div
+            variants={readingVariants(reduce, fadeUp)}
+            className="mt-8 flex flex-wrap justify-center gap-4 md:mt-10 md:justify-start"
+          >
+            <Button href={appUrl('/#contact')} variant="inverse" size="lg">
               {siteConfig.cta.book}
             </Button>
             <Link

@@ -1,29 +1,44 @@
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { siteConfig } from '@/data/siteConfig'
 import { whyUs } from '@/data/content'
 import { SectionLabel, DoubleLine } from '@/components/Decorative/Ornaments'
-import { fadeUp, staggerContainer } from '@/lib/motion'
+import {
+  accentPop,
+  fadeStart,
+  fadeUpSoft,
+  readingStagger,
+  readingVariants,
+  staggerContainer,
+  staggerReading,
+  viewportReading,
+} from '@/lib/motion'
 
 export function WhyUs() {
+  const reduce = useReducedMotion()
+
   return (
     <section id="why-us" className="section-pad bg-ivory" aria-labelledby="why-us-heading">
       <div className="container-editorial">
         <motion.div
-          variants={staggerContainer}
-          initial="hidden"
+          variants={readingStagger(reduce, staggerContainer)}
+          initial={reduce ? false : 'hidden'}
           whileInView="visible"
-          viewport={{ once: true, margin: '-10% 0px' }}
+          viewport={viewportReading}
         >
-          <motion.div variants={fadeUp}>
+          <motion.div variants={readingVariants(reduce, fadeUpSoft)}>
             <SectionLabel>لماذا تختارنا</SectionLabel>
           </motion.div>
-          <motion.h2 id="why-us-heading" variants={fadeUp} className="section-title">
+          <motion.h2
+            id="why-us-heading"
+            variants={readingVariants(reduce, fadeUpSoft)}
+            className="section-title"
+          >
             ثقة قانونية منذ {siteConfig.foundedYear}
           </motion.h2>
-          <motion.div variants={fadeUp} className="section-rule">
+          <motion.div variants={readingVariants(reduce, fadeUpSoft)} className="section-rule">
             <DoubleLine />
           </motion.div>
-          <motion.p variants={fadeUp} className="lede">
+          <motion.p variants={readingVariants(reduce, fadeUpSoft)} className="lede">
             نختار أن نبدأ من الجذور — مكتب تأسس عام {siteConfig.foundedYear}، وما زال يقدّم
             استشارة قانونية دقيقة للشركات والأفراد بمعايير المهنة ذاتها.
           </motion.p>
@@ -31,24 +46,35 @@ export function WhyUs() {
 
         <motion.ol
           className="section-body divide-y divide-border border-y border-border"
-          variants={staggerContainer}
-          initial="hidden"
+          variants={readingStagger(reduce, staggerReading)}
+          initial={reduce ? false : 'hidden'}
           whileInView="visible"
-          viewport={{ once: true, margin: '-8% 0px' }}
+          viewport={viewportReading}
         >
           {whyUs.map((item, index) => (
             <motion.li
               key={item.id}
-              variants={fadeUp}
+              variants={readingStagger(reduce, staggerReading)}
               className="grid gap-3 py-8 text-center md:grid-cols-[4.5rem_minmax(0,1fr)_minmax(0,1.35fr)] md:items-start md:gap-8 md:py-9 md:text-start"
             >
-              <span className="font-display text-base font-bold text-gold">
+              <motion.span
+                variants={readingVariants(reduce, accentPop)}
+                className="font-display text-base font-bold text-gold"
+              >
                 0{index + 1}
-              </span>
-              <h3 className="font-display text-xl leading-relaxed text-charcoal md:text-2xl">
+              </motion.span>
+              <motion.h3
+                variants={readingVariants(reduce, fadeStart)}
+                className="font-display text-xl leading-relaxed text-charcoal md:text-2xl"
+              >
                 {item.title}
-              </h3>
-              <p className="body-copy">{item.body}</p>
+              </motion.h3>
+              <motion.p
+                variants={readingVariants(reduce, fadeUpSoft)}
+                className="body-copy"
+              >
+                {item.body}
+              </motion.p>
             </motion.li>
           ))}
         </motion.ol>

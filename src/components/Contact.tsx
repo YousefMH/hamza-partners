@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { Mail, MapPin, Phone, Clock } from 'lucide-react'
 import { services } from '@/data/services'
 import { siteConfig } from '@/data/siteConfig'
@@ -11,7 +11,15 @@ import {
 } from '@/lib/form'
 import { Button } from '@/components/ui/Button'
 import { SectionLabel, DoubleLine } from '@/components/Decorative/Ornaments'
-import { fadeUp, staggerContainer } from '@/lib/motion'
+import {
+  fadeUp,
+  fadeUpSoft,
+  readingStagger,
+  readingVariants,
+  staggerContainer,
+  staggerReading,
+  viewportReadingLoose,
+} from '@/lib/motion'
 import { cn } from '@/lib/cn'
 
 const initialValues: ContactFormValues = {
@@ -23,6 +31,7 @@ const initialValues: ContactFormValues = {
 }
 
 export function Contact() {
+  const reduce = useReducedMotion()
   const [values, setValues] = useState<ContactFormValues>(initialValues)
   const [errors, setErrors] = useState<ContactFormErrors>({})
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
@@ -74,27 +83,27 @@ export function Contact() {
       <div className="container-editorial">
         <motion.div
           className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16"
-          variants={staggerContainer}
-          initial="hidden"
+          variants={readingStagger(reduce, staggerContainer)}
+          initial={reduce ? false : 'hidden'}
           whileInView="visible"
-          viewport={{ once: true, margin: '-8% 0px' }}
+          viewport={viewportReadingLoose}
         >
           <div>
-            <motion.div variants={fadeUp}>
+            <motion.div variants={readingVariants(reduce, fadeUp)}>
               <SectionLabel>تواصل</SectionLabel>
             </motion.div>
-            <motion.h2 id="contact-heading" variants={fadeUp} className="section-title">
+            <motion.h2 id="contact-heading" variants={readingVariants(reduce, fadeUp)} className="section-title">
               تواصل معنا
             </motion.h2>
-            <motion.div variants={fadeUp} className="section-rule">
+            <motion.div variants={readingVariants(reduce, fadeUp)} className="section-rule">
               <DoubleLine />
             </motion.div>
-            <motion.p variants={fadeUp} className="lede">
+            <motion.p variants={readingVariants(reduce, fadeUpSoft)} className="lede">
               أرسل طلبك وسنتواصل معك لمناقشة احتياجاتك القانونية. بيانات التواصل أدناه توضيحية
               وقابلة للاستبدال.
             </motion.p>
 
-            <motion.ul variants={fadeUp} className="mt-8 space-y-4 text-base md:mt-10 md:space-y-5">
+            <motion.ul variants={readingVariants(reduce, fadeUpSoft)} className="mt-8 space-y-4 text-base md:mt-10 md:space-y-5">
               <li className="flex items-start gap-3">
                 <Phone className="mt-0.5 size-4 text-gold" strokeWidth={1.5} aria-hidden="true" />
                 <div>
@@ -146,7 +155,7 @@ export function Contact() {
               </li>
             </motion.ul>
 
-            <motion.div variants={fadeUp} className="mt-8 aspect-[16/10] overflow-hidden border border-border bg-ivory md:mt-10">
+            <motion.div variants={readingVariants(reduce, fadeUp)} className="mt-8 aspect-[16/10] overflow-hidden border border-border bg-ivory md:mt-10">
               <iframe
                 title="موقع المكتب على الخريطة"
                 src={siteConfig.contact.mapEmbedUrl}
@@ -158,13 +167,13 @@ export function Contact() {
           </div>
 
           <motion.form
-            variants={fadeUp}
+            variants={readingStagger(reduce, staggerReading)}
             onSubmit={onSubmit}
             noValidate
             className="border border-border bg-ivory p-6 md:p-8"
             aria-describedby="contact-form-status"
           >
-            <div className="grid gap-5">
+            <motion.div variants={readingVariants(reduce, fadeUpSoft)} className="grid gap-5">
               <div>
                 <label htmlFor="fullName" className="mb-2 block text-base text-charcoal">
                   الاسم الكامل
@@ -279,7 +288,7 @@ export function Contact() {
                 )}
                 {status === 'error' && <p className="text-red-700">{serverMessage}</p>}
               </div>
-            </div>
+            </motion.div>
           </motion.form>
         </motion.div>
       </div>
