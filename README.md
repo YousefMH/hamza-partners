@@ -33,10 +33,10 @@ The app runs at [http://127.0.0.1:4321](http://127.0.0.1:4321) by default.
 All firm copy that should be easy to replace lives under `src/data/`:
 
 - `siteConfig.ts` — firm name, contact, nav, CTAs, hero images
-- `services.ts` — 15 practice areas (featured: حوكمة الشركات والاندماجات والاستحواذات)
+- `services.ts` — 15 practice areas
 - `team.ts` — placeholder lawyer profiles
 - `industries.ts` — sectors served
-- `experience.ts` — anonymized experience themes
+- `clients.ts` — client marks for the logo marquee
 - `articles.ts` — insight cards
 - `content.ts` — why-us points, trust indicators, stats
 
