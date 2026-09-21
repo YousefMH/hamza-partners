@@ -167,17 +167,6 @@ export function TypewriterText({
     }
   }, [reduce, index, safeEntries])
 
-  const fullLength = active.label.length || 1
-  const progress = text.length / fullLength
-  const underlineScale =
-    phase === 'deleting'
-      ? Math.max(progress, 0.06)
-      : phase === 'typing'
-        ? Math.max(progress, 0.1)
-        : text.length > 0
-          ? 1
-          : 0.08
-
   const displayText = reduce ? active.label : text
   const canLink = Boolean(active.href) && displayText.length > 0
 
@@ -185,7 +174,7 @@ export function TypewriterText({
     <span
       className={cn(
         'font-[inherit] leading-[inherit] text-gold-champagne whitespace-pre-wrap',
-        canLink && 'underline-offset-4 transition-colors hover:text-gold',
+        canLink && 'transition-colors hover:text-gold',
       )}
       aria-hidden="true"
     >
@@ -203,18 +192,30 @@ export function TypewriterText({
       </span>
 
       <span className="col-start-1 row-start-1 inline-flex max-w-full flex-wrap items-baseline gap-x-1">
-        {canLink && active.href ? (
-          <Link
-            to={active.href}
-            className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
-            aria-label={`${ariaLabelPrefix}: ${active.label} — فتح صفحة الخدمة`}
-            onClick={() => onNavigate?.(active, index)}
-          >
-            {labelNode}
-          </Link>
-        ) : (
-          labelNode
-        )}
+        {/*
+          Underline lives on a shrink-to-fit wrapper around the visible word only,
+          so its width tracks each service label — not the longest reserved word.
+        */}
+        <span className="relative inline-block max-w-full">
+          {canLink && active.href ? (
+            <Link
+              to={active.href}
+              className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+              aria-label={`${ariaLabelPrefix}: ${active.label} — فتح صفحة الخدمة`}
+              onClick={() => onNavigate?.(active, index)}
+            >
+              {labelNode}
+            </Link>
+          ) : (
+            labelNode
+          )}
+          {displayText.length > 0 && (
+            <span
+              className="pointer-events-none absolute inset-x-0 -bottom-1 h-px bg-gold/50"
+              aria-hidden="true"
+            />
+          )}
+        </span>
         {!reduce && (
           <span
             className="typewriter-cursor inline-block h-[0.95em] w-px shrink-0 translate-y-[0.08em] bg-gold-champagne"
@@ -222,12 +223,6 @@ export function TypewriterText({
           />
         )}
       </span>
-
-      <span
-        className="pointer-events-none absolute inset-x-0 -bottom-1 h-px origin-right bg-gold/50 transition-transform duration-300 ease-out"
-        style={{ transform: `scaleX(${underlineScale})` }}
-        aria-hidden="true"
-      />
 
       <span className="sr-only" aria-live="polite">
         {phase === 'pausing' || reduce ? `${ariaLabelPrefix}: ${active.label}` : ''}
