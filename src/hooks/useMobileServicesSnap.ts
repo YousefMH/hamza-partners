@@ -17,6 +17,11 @@ function fillOf(rect: DOMRect, vh: number): number {
  * Arm mandatory snap from just above the services intro through intermediate
  * service cards, so “مجالات عملنا” is a real full-screen stop and is not
  * skipped between the header and the first card.
+ *
+ * Uses exit hysteresis: once the last card (or anything past it) is reached,
+ * snap stays off until the visitor scrolls clearly back onto an earlier card.
+ * Without that latch, fill dropping below a threshold mid-exit re-arms snap
+ * and the browser pulls back to the last service panel (“reverse scroll”).
  */
 export function useMobileServicesSnap() {
   useEffect(() => {
@@ -25,6 +30,7 @@ export function useMobileServicesSnap() {
     const reduceQuery = window.matchMedia(REDUCE_MOTION)
 
     let frame = 0
+    let releasedPastServices = false
 
     const clear = () => {
       html.classList.remove(SNAP_CLASS)
@@ -32,6 +38,7 @@ export function useMobileServicesSnap() {
 
     const measure = () => {
       if (!mobileQuery.matches || reduceQuery.matches) {
+        releasedPastServices = false
         clear()
         return
       }
@@ -39,6 +46,7 @@ export function useMobileServicesSnap() {
       const panels = document.querySelectorAll<HTMLElement>('.services-page-panel')
       const intro = document.querySelector<HTMLElement>('.services-intro-panel')
       if (panels.length === 0 || !intro) {
+        releasedPastServices = false
         clear()
         return
       }
@@ -49,6 +57,7 @@ export function useMobileServicesSnap() {
       const last = panels[lastIndex]
       const introTop = documentTop(intro)
       const lastTop = documentTop(last)
+      const lastRect = last.getBoundingClientRect()
 
       let bestIndex = -1
       let bestFill = 0
@@ -60,12 +69,23 @@ export function useMobileServicesSnap() {
         }
       }
 
-      const onLastCard = bestIndex === lastIndex && bestFill > 0.4
-      // Arm early so a fling from the hero still settles on the intro screen
-      const inCorridor = y >= introTop - vh * 0.55 && y < lastTop + vh * 0.08
-      const shouldSnap = inCorridor && !onLastCard
+      const aboveCorridor = y < introTop - vh * 0.55
+      const settledOnLast = bestIndex === lastIndex && bestFill >= 0.45
+      const scrolledPastLast =
+        y >= lastTop + vh * 0.1 || lastRect.bottom < vh * 0.55
+      const backOnEarlierCard =
+        bestIndex >= 0 && bestIndex < lastIndex && bestFill >= 0.45
 
-      html.classList.toggle(SNAP_CLASS, shouldSnap)
+      if (aboveCorridor) {
+        releasedPastServices = false
+      } else if (settledOnLast || scrolledPastLast) {
+        releasedPastServices = true
+      } else if (backOnEarlierCard) {
+        releasedPastServices = false
+      }
+
+      const inCorridor = !aboveCorridor && !releasedPastServices
+      html.classList.toggle(SNAP_CLASS, inCorridor)
     }
 
     const onScrollOrResize = () => {

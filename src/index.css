@@ -457,7 +457,23 @@
         linear-gradient(180deg, #f8f7f3 0%, #f3f1ea 100%);
     }
 
+    /*
+      Last card stays a snap target so arrival from the previous card still
+      settles, but stop is normal so exit momentum can leave the corridor.
+      Snap type itself is latched off once this card is reached (see hook).
+    */
     .services-page-panel--last {
+      scroll-snap-stop: normal;
+    }
+
+    /*
+      After snap is released, strip leftover snap alignment so light scrolls
+      in Featured / Why Us cannot be magnetized back to service panels if the
+      html snap class flickers for a frame.
+    */
+    html:not(.services-snap-on) .services-intro-panel,
+    html:not(.services-snap-on) .services-page-panel {
+      scroll-snap-align: none;
       scroll-snap-stop: normal;
     }
 
