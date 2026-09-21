@@ -316,3 +316,27 @@ export const featuredService = services.find((s) => s.featured)!
 export function getServiceBySlug(slug: string): Service | undefined {
   return services.find((s) => s.slug === slug)
 }
+
+/**
+ * Short premium labels for the Hero typewriter — faithful shortenings of
+ * the firm’s practice areas, not invented services.
+ */
+export const heroTypewriterServices = [
+  'صياغة الاتفاقيات',
+  'التحكيم وتسوية المنازعات',
+  'حوكمة الشركات',
+  'الاندماجات والاستحواذات',
+  'خدمات الشركات',
+  'الجرائم المالية',
+  'إعادة الهيكلة والإفلاس',
+  'التقاضي والمنازعات',
+  'الاستشارات الضريبية',
+  'الملكية الفكرية',
+  'الخدمات المصرفية والتمويل',
+  'أسواق المال',
+  'الضيافة والسياحة',
+  'العقارات',
+  'الرعاية الصحية',
+  'الجرائم الإلكترونية',
+] as const
+

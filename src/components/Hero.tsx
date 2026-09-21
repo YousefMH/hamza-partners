@@ -1,8 +1,10 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { siteConfig } from '@/data/siteConfig'
 import { trustIndicators } from '@/data/content'
+import { heroTypewriterServices } from '@/data/services'
 import { appUrl } from '@/lib/paths'
 import { Button } from '@/components/ui/Button'
+import { TypewriterText } from '@/components/ui/TypewriterText'
 import {
   fadeUp,
   fadeUpSoft,
@@ -50,20 +52,40 @@ export function Hero() {
               {siteConfig.heroHeadline}
             </motion.p>
 
-            <motion.h1
-              id="hero-heading"
+            <motion.p
               variants={readingVariants(reduce, fadeUp)}
-              className="font-display text-[clamp(2.5rem,9vw,3.5rem)] font-extrabold leading-[1.2] text-ivory md:text-[clamp(3rem,5.2vw,4.35rem)] md:leading-[1.15]"
+              className="font-display text-[clamp(2.15rem,7.5vw,3.1rem)] font-extrabold leading-[1.2] text-ivory md:text-[clamp(2.65rem,4.6vw,3.85rem)] md:leading-[1.15]"
             >
               {siteConfig.firmNameAr}
+            </motion.p>
+
+            <motion.h1
+              id="hero-heading"
+              variants={readingVariants(reduce, fadeUpSoft)}
+              className="mt-4 font-display text-[clamp(1.2rem,3.8vw,1.55rem)] font-bold leading-[1.55] text-ivory/92 md:mt-5 md:text-[clamp(1.35rem,2.1vw,1.75rem)] md:leading-[1.5]"
+            >
+              حلول قانونية متكاملة للأعمال والاستثمار
             </motion.h1>
 
-            <motion.p
+            <motion.div
               variants={readingVariants(reduce, fadeUpSoft)}
-              className="mx-auto mt-5 max-w-xs text-[1.08rem] leading-[1.8] text-ivory/90 md:mx-0 md:mt-6 md:max-w-lg md:text-[1.2rem] md:leading-[1.85]"
+              className="mx-auto mt-6 max-w-sm md:mx-0 md:mt-7 md:max-w-xl"
             >
-              {siteConfig.heroHeadlineAccent}
-            </motion.p>
+              <p className="font-display text-[1.05rem] leading-[1.75] text-ivory/88 md:text-[1.15rem] md:leading-[1.8]">
+                نقدم حلولًا قانونية متخصصة في
+              </p>
+              <div className="mt-2.5 flex justify-center md:justify-start">
+                <TypewriterText
+                  words={heroTypewriterServices}
+                  typingSpeed={75}
+                  deletingSpeed={45}
+                  pauseDuration={2100}
+                  startDelay={700}
+                  loop
+                  className="min-h-[1.7em] font-display text-[clamp(1.25rem,4.2vw,1.65rem)] font-bold leading-[1.7] md:text-[clamp(1.4rem,2.2vw,1.85rem)]"
+                />
+              </div>
+            </motion.div>
 
             <motion.div
               variants={readingVariants(reduce, fadeUp)}
