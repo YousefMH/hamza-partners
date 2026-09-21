@@ -214,6 +214,38 @@
     border-radius: 0.55rem;
   }
 
+  /*
+    Clients logo marquee — seamless horizontal strip.
+    Track is duplicated in markup; translate by -50% for a clean loop.
+  */
+  @keyframes clients-marquee {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  .clients-marquee-track {
+    animation: clients-marquee 42s linear infinite;
+    will-change: transform;
+  }
+
+  .clients-marquee:hover .clients-marquee-track {
+    animation-play-state: paused;
+  }
+
+  .clients-marquee-track--static {
+    animation: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .clients-marquee-track {
+      animation: none;
+    }
+  }
+
   .typewriter-cursor {
     animation: typewriter-caret 1.15s steps(1, end) infinite;
   }

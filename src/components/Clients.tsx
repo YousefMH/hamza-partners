@@ -1,0 +1,107 @@
+import { motion, useReducedMotion } from 'framer-motion'
+import { clients, type Client } from '@/data/clients'
+import { SectionLabel, DoubleLine } from '@/components/Decorative/Ornaments'
+import {
+  fadeUp,
+  fadeUpSoft,
+  readingStagger,
+  readingVariants,
+  staggerContainer,
+  viewportReading,
+} from '@/lib/motion'
+import { cn } from '@/lib/cn'
+
+function ClientLogo({ client }: { client: Client }) {
+  return (
+    <div
+      className={cn(
+        'flex shrink-0 items-center gap-3.5 px-2',
+        'text-charcoal/70 transition-colors duration-300 hover:text-charcoal',
+      )}
+    >
+      <span
+        className="flex size-11 items-center justify-center border border-charcoal/15 bg-white font-display text-base font-bold text-gold-dark md:size-12 md:text-lg"
+        aria-hidden="true"
+      >
+        {client.mark}
+      </span>
+      <span className="whitespace-nowrap font-display text-[1.05rem] font-bold tracking-wide md:text-[1.15rem]">
+        {client.name}
+      </span>
+    </div>
+  )
+}
+
+/**
+ * Full-bleed client logo marquee — sits directly after Featured Service.
+ * Uses duplicated tracks + CSS animation; pauses when reduced motion is on.
+ */
+export function Clients() {
+  const reduce = useReducedMotion()
+  const loop = [...clients, ...clients]
+
+  return (
+    <section
+      id="clients"
+      className="overflow-hidden bg-white py-12 md:py-14"
+      aria-labelledby="clients-heading"
+    >
+      <div className="container-editorial">
+        <motion.div
+          className="mx-auto max-w-2xl text-center md:mx-0 md:max-w-none md:text-start"
+          variants={readingStagger(reduce, staggerContainer)}
+          initial={reduce ? false : 'hidden'}
+          whileInView="visible"
+          viewport={viewportReading}
+        >
+          <motion.div variants={readingVariants(reduce, fadeUp)}>
+            <SectionLabel>عملاؤنا</SectionLabel>
+          </motion.div>
+          <motion.h2
+            id="clients-heading"
+            variants={readingVariants(reduce, fadeUp)}
+            className="section-title"
+          >
+            يثق بنا قادة الأعمال
+          </motion.h2>
+          <motion.div variants={readingVariants(reduce, fadeUp)} className="section-rule">
+            <DoubleLine />
+          </motion.div>
+          <motion.p variants={readingVariants(reduce, fadeUpSoft)} className="lede">
+            شركات ومؤسسات من قطاعات متعددة تختار استشارتنا القانونية.
+          </motion.p>
+        </motion.div>
+      </div>
+
+      <div
+        className="clients-marquee relative mt-10 md:mt-12"
+        aria-label="شريط شعارات العملاء"
+      >
+        <div className="clients-marquee-fade pointer-events-none absolute inset-y-0 start-0 z-10 w-10 bg-gradient-to-l from-transparent to-white md:w-16" />
+        <div className="clients-marquee-fade pointer-events-none absolute inset-y-0 end-0 z-10 w-10 bg-gradient-to-r from-transparent to-white md:w-16" />
+
+        <div
+          dir="ltr"
+          className="overflow-hidden border-y border-border/80 bg-ivory/60 py-7 md:py-9"
+        >
+          <ul
+            className={cn(
+              'clients-marquee-track flex w-max items-center gap-10 md:gap-14',
+              reduce && 'clients-marquee-track--static',
+            )}
+          >
+            {loop.map((client, index) => (
+              <li
+                key={`${client.id}-${index}`}
+                className="list-none"
+                aria-hidden={index >= clients.length ? true : undefined}
+              >
+                <ClientLogo client={client} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  )
+}
