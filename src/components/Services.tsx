@@ -165,7 +165,7 @@ function MobileServiceCard({
               })
             }}
           >
-            {getServiceConsultLabel(service)}
+            {service.shortTitle}
           </a>
           <div className="flex gap-2">
             <Link
