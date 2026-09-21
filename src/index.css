@@ -266,14 +266,15 @@
 
   /*
     Mobile services: one swipe = one full-screen service.
-    Snap each panel to the TOP of the viewport so the page literally fills
-    with that service; flex centers the copy inside the panel.
-    Use overflow-x: clip (not hidden) on html — hidden breaks scroll-snap
-    in Chromium/WebKit when snap-type is also on html.
+    Snap panels start-aligned so the page fills with that service.
+    - scroll-behavior:auto while snap is on (smooth + mandatory = end lag)
+    - last panel uses snap-stop:normal so exit into the next section is fluid
+    - overflow-x:clip (not hidden) so html stays the Y scroller for snap
   */
   @media (max-width: 1023px) {
     html {
       overflow-x: clip;
+      scroll-behavior: auto;
       scroll-snap-type: y mandatory;
       scroll-padding-top: 0;
     }
@@ -283,7 +284,6 @@
       scroll-snap-stop: always;
     }
 
-    /* Intro is short — don't force a full-screen stop before the first service */
     .services-intro {
       scroll-snap-align: none;
       scroll-snap-stop: normal;
@@ -297,22 +297,42 @@
       max-height: 100dvh;
       scroll-snap-align: start;
       scroll-snap-stop: always;
-      padding-top: 4.75rem;
-      padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+      padding-top: 4.5rem;
+      padding-bottom: max(2.75rem, calc(env(safe-area-inset-bottom) + 1.5rem));
       overflow: hidden;
+      content-visibility: auto;
+      contain-intrinsic-size: auto 100dvh;
+    }
+
+    /* Softer lock on the last service so leaving snap zone does not stutter */
+    .services-page-panel--last {
+      scroll-snap-stop: normal;
+    }
+
+    /* Next home section after services — clean handoff out of snap */
+    .services-snap-exit {
+      scroll-snap-align: start;
+      scroll-snap-stop: normal;
+    }
+
+    .services-mobile-card {
+      text-align: start;
     }
 
     .service-scroll-cue {
-      animation: service-cue-pulse 1.8s ease-in-out infinite;
+      animation: service-cue-pulse 2.4s ease-in-out infinite;
+      will-change: opacity, transform;
     }
 
     @media (prefers-reduced-motion: reduce) {
       html {
         scroll-snap-type: none;
+        scroll-behavior: auto;
       }
 
       .hero-section,
-      .services-page-panel {
+      .services-page-panel,
+      .services-snap-exit {
         scroll-snap-align: none;
         scroll-snap-stop: normal;
       }
@@ -322,10 +342,12 @@
         max-height: none;
         padding-block: 2.75rem;
         overflow: visible;
+        content-visibility: visible;
       }
 
       .service-scroll-cue {
         animation: none;
+        will-change: auto;
       }
     }
   }
@@ -333,12 +355,12 @@
   @keyframes service-cue-pulse {
     0%,
     100% {
-      opacity: 0.25;
-      transform: scaleY(0.85);
+      opacity: 0.2;
+      transform: translateY(0) scaleY(0.9);
     }
     50% {
-      opacity: 1;
-      transform: scaleY(1);
+      opacity: 0.85;
+      transform: translateY(4px) scaleY(1);
     }
   }
 

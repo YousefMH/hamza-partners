@@ -19,79 +19,112 @@ import { cn } from '@/lib/cn'
 
 function ServiceCardContent({
   service,
-  index,
-  total,
-  mobile,
 }: {
   service: (typeof services)[number]
-  index: number
-  total: number
-  mobile?: boolean
 }) {
   return (
     <>
-      <div
-        className={cn(
-          'mb-1 flex w-full items-center justify-between gap-6',
-          mobile && 'mx-auto mb-0 max-w-sm',
-        )}
-      >
-        <span
-          className={cn(
-            'font-display font-bold tracking-wide text-gold',
-            mobile ? 'text-lg' : 'text-base',
-          )}
-        >
+      <div className="mb-1 flex w-full items-center justify-between gap-6">
+        <span className="font-display text-base font-bold tracking-wide text-gold">
           {service.number}
         </span>
-        {mobile ? (
-          <span className="font-display text-sm text-muted tabular-nums">
-            {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
-          </span>
-        ) : (
-          <ServiceIcon
-            name={service.icon}
-            className="size-5 shrink-0 text-muted transition-colors group-hover:text-gold"
-          />
-        )}
+        <ServiceIcon
+          name={service.icon}
+          className="size-5 shrink-0 text-muted transition-colors group-hover:text-gold"
+        />
       </div>
 
-      {mobile && (
-        <div className="mx-auto flex justify-center" aria-hidden="true">
-          <ServiceIcon name={service.icon} className="size-8 text-gold-dark" />
-        </div>
-      )}
-
-      <h3
-        className={cn(
-          'font-display text-charcoal',
-          mobile
-            ? 'mx-auto max-w-sm text-[clamp(1.45rem,5.5vw,1.85rem)] leading-[1.45]'
-            : 'text-lg leading-[1.65] md:text-xl',
-        )}
-      >
+      <h3 className="font-display text-lg leading-[1.65] text-charcoal md:text-xl">
         {service.title}
       </h3>
 
-      <p
-        className={cn(
-          'body-copy text-base',
-          mobile && 'mx-auto max-w-sm text-[1.05rem] leading-[1.85]',
-        )}
-      >
-        {service.shortDescription}
-      </p>
+      <p className="body-copy text-base">{service.shortDescription}</p>
 
-      <span
-        className={cn(
-          'mt-auto inline-flex items-center gap-3 pt-2 text-base font-bold text-gold-dark transition-colors group-hover:text-charcoal',
-          mobile ? 'justify-center pt-4' : 'justify-center lg:justify-start',
-        )}
-      >
+      <span className="mt-auto inline-flex items-center justify-center gap-3 pt-2 text-base font-bold text-gold-dark transition-colors group-hover:text-charcoal lg:justify-start">
         {siteConfig.cta.discoverMore}
         <ArrowLeft size={16} strokeWidth={1.5} aria-hidden="true" />
       </span>
     </>
+  )
+}
+
+function MobileServicePanel({
+  service,
+  index,
+  total,
+}: {
+  service: (typeof services)[number]
+  index: number
+  total: number
+}) {
+  const isLast = index === total - 1
+
+  return (
+    <article
+      role="listitem"
+      className={cn(
+        'services-page-panel relative flex flex-col justify-center px-5',
+        isLast && 'services-page-panel--last',
+        index % 2 === 0 ? 'bg-ivory' : 'bg-[#f5f3ed]',
+      )}
+    >
+      <Link
+        to={`/services/${service.slug}`}
+        className="group services-mobile-card mx-auto flex w-full max-w-[22rem] flex-col"
+      >
+        <div className="mb-6 flex items-center justify-between gap-3">
+          <span className="font-display text-sm font-bold tabular-nums tracking-wide text-gold-dark">
+            {service.number}
+          </span>
+          <span className="text-[0.7rem] font-bold tabular-nums tracking-wide text-muted/80">
+            {String(index + 1).padStart(2, '0')}
+            <span className="mx-1 text-border">/</span>
+            {String(total).padStart(2, '0')}
+          </span>
+        </div>
+
+        <div
+          className="mb-5 flex size-14 items-center justify-center rounded-full border border-gold/35 bg-white/70 text-gold-dark"
+          aria-hidden="true"
+        >
+          <ServiceIcon name={service.icon} className="size-6" />
+        </div>
+
+        <h3 className="font-display text-[clamp(1.35rem,5.2vw,1.7rem)] leading-[1.5] text-charcoal text-balance">
+          {service.title}
+        </h3>
+
+        <span
+          className="my-4 block h-px w-10 bg-gradient-to-l from-gold to-transparent"
+          aria-hidden="true"
+        />
+
+        <p className="text-[1.02rem] leading-[1.95] text-muted text-pretty">
+          {service.shortDescription}
+        </p>
+
+        <span className="mt-7 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-sm border border-charcoal/15 bg-white/80 px-4 text-[0.95rem] font-bold text-charcoal transition-colors group-hover:border-gold group-hover:text-gold-dark">
+          {siteConfig.cta.discoverMore}
+          <ArrowLeft size={15} strokeWidth={1.75} aria-hidden="true" />
+        </span>
+      </Link>
+
+      {!isLast ? (
+        <span
+          className="pointer-events-none absolute inset-x-0 bottom-[max(0.85rem,env(safe-area-inset-bottom))] flex justify-center"
+          aria-hidden="true"
+        >
+          <span className="service-scroll-cue h-7 w-px bg-gradient-to-b from-gold/80 to-transparent" />
+        </span>
+      ) : (
+        <span
+          className="pointer-events-none absolute inset-x-0 bottom-[max(0.85rem,env(safe-area-inset-bottom))] text-center text-[0.65rem] font-bold tracking-wide text-muted/70"
+          aria-hidden="true"
+        >
+          مرّر لمتابعة الصفحة
+        </span>
+      )}
+    </article>
   )
 }
 
@@ -125,43 +158,22 @@ export function Services() {
           <motion.p variants={readingVariants(reduce, fadeUpSoft)} className="lede">
             خبرات قانونية متخصصة تغطي احتياجات الأعمال والاستثمار والتقاضي.
           </motion.p>
-          <p className="mt-4 text-sm text-muted lg:hidden">مرّر — كل خدمة تملأ الشاشة بالكامل</p>
+          <p className="mt-4 text-sm text-muted lg:hidden">مرّر — كل خدمة على شاشة كاملة</p>
         </motion.div>
       </div>
 
       {/*
-        Mobile: each service is exactly one viewport tall in document flow.
-        Page scroll snaps start-aligned so the whole screen fills with that
-        service; content is flex-centered inside the panel.
+        Mobile: one viewport per service in document flow.
+        Last panel uses softer snap-stop so leaving into the next section stays smooth.
       */}
       <div className="hidden max-lg:block" role="list" aria-label="قائمة مجالات العمل">
         {services.map((service, index) => (
-          <article
+          <MobileServicePanel
             key={service.id}
-            role="listitem"
-            className={cn(
-              'services-page-panel relative flex flex-col items-center justify-center gap-5 px-6 text-center',
-              index % 2 === 0 ? 'bg-ivory' : 'bg-[#f3f1ea]',
-            )}
-          >
-            <Link
-              to={`/services/${service.slug}`}
-              className="group mx-auto flex w-full max-w-md flex-col items-center justify-center gap-5"
-            >
-              <ServiceCardContent service={service} index={index} total={total} mobile />
-            </Link>
-            {index < total - 1 && (
-              <span
-                className="pointer-events-none absolute inset-x-0 bottom-[max(1rem,env(safe-area-inset-bottom))] flex flex-col items-center gap-1"
-                aria-hidden="true"
-              >
-                <span className="text-[0.65rem] font-bold tracking-wide text-gold-dark/70">
-                  مرّر للخدمة التالية
-                </span>
-                <span className="service-scroll-cue h-6 w-px bg-gradient-to-b from-gold to-transparent" />
-              </span>
-            )}
-          </article>
+            service={service}
+            index={index}
+            total={total}
+          />
         ))}
       </div>
 
@@ -173,7 +185,7 @@ export function Services() {
         whileInView="visible"
         viewport={viewportReadingLoose}
       >
-        {services.map((service, index) => (
+        {services.map((service) => (
           <motion.li
             key={service.id}
             variants={readingVariants(reduce, fadeUp)}
@@ -183,7 +195,7 @@ export function Services() {
               to={`/services/${service.slug}`}
               className="flex h-full flex-col gap-5 p-8 text-start transition-colors duration-300 hover:bg-ivory"
             >
-              <ServiceCardContent service={service} index={index} total={total} />
+              <ServiceCardContent service={service} />
             </Link>
           </motion.li>
         ))}
