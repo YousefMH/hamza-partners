@@ -7,6 +7,7 @@ import { SectionLabel, DoubleLine } from '@/components/Decorative/Ornaments'
 import { ServiceIcon } from '@/components/ui/ServiceIcon'
 import { useMobileServicesSnap } from '@/hooks/useMobileServicesSnap'
 import {
+  easeOut,
   fadeUp,
   fadeUpSoft,
   readingStagger,
@@ -49,6 +50,12 @@ function ServiceCardContent({
   )
 }
 
+const mobileCardViewport = {
+  once: false,
+  amount: 0.4,
+  margin: '0px 0px -8% 0px',
+} as const
+
 function MobileServicePanel({
   service,
   index,
@@ -58,57 +65,65 @@ function MobileServicePanel({
   index: number
   total: number
 }) {
+  const reduce = useReducedMotion()
   const isLast = index === total - 1
 
   return (
     <article
       role="listitem"
       className={cn(
-        'services-page-panel relative flex flex-col justify-center px-5',
+        'services-page-panel relative flex flex-col items-center justify-center px-5',
         isLast && 'services-page-panel--last',
-        index % 2 === 0 ? 'bg-ivory' : 'bg-[#f5f3ed]',
       )}
     >
-      <Link
-        to={`/services/${service.slug}`}
-        className="group services-mobile-card mx-auto flex w-full max-w-[22rem] flex-col"
+      <motion.div
+        className="services-mobile-shell w-full max-w-[22.5rem]"
+        initial={reduce ? false : { opacity: 0, y: 42 }}
+        whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+        viewport={mobileCardViewport}
+        transition={{ duration: 0.55, ease: easeOut }}
       >
-        <div className="mb-6 flex items-center justify-between gap-3">
-          <span className="font-display text-sm font-bold tabular-nums tracking-wide text-gold-dark">
-            {service.number}
-          </span>
-          <span className="text-[0.7rem] font-bold tabular-nums tracking-wide text-muted/80">
-            {String(index + 1).padStart(2, '0')}
-            <span className="mx-1 text-border">/</span>
-            {String(total).padStart(2, '0')}
-          </span>
-        </div>
-
-        <div
-          className="mb-5 flex size-14 items-center justify-center rounded-full border border-gold/35 bg-white/70 text-gold-dark"
-          aria-hidden="true"
+        <Link
+          to={`/services/${service.slug}`}
+          className="group services-mobile-card flex w-full flex-col"
         >
-          <ServiceIcon name={service.icon} className="size-6" />
-        </div>
+          <div className="mb-5 flex items-center justify-between gap-3">
+            <span className="font-display text-sm font-bold tabular-nums tracking-wide text-gold-dark">
+              {service.number}
+            </span>
+            <span className="text-[0.7rem] font-bold tabular-nums tracking-wide text-muted/75">
+              {String(index + 1).padStart(2, '0')}
+              <span className="mx-1 text-border">/</span>
+              {String(total).padStart(2, '0')}
+            </span>
+          </div>
 
-        <h3 className="font-display text-[clamp(1.35rem,5.2vw,1.7rem)] leading-[1.5] text-charcoal text-balance">
-          {service.title}
-        </h3>
+          <div
+            className="mb-5 flex size-14 items-center justify-center rounded-full border border-gold/30 bg-ivory text-gold-dark transition-colors group-hover:border-gold group-hover:bg-white"
+            aria-hidden="true"
+          >
+            <ServiceIcon name={service.icon} className="size-6" />
+          </div>
 
-        <span
-          className="my-4 block h-px w-10 bg-gradient-to-l from-gold to-transparent"
-          aria-hidden="true"
-        />
+          <h3 className="font-display text-[clamp(1.3rem,5vw,1.65rem)] leading-[1.5] text-charcoal text-balance">
+            {service.title}
+          </h3>
 
-        <p className="text-[1.02rem] leading-[1.95] text-muted text-pretty">
-          {service.shortDescription}
-        </p>
+          <span
+            className="my-4 block h-px w-10 bg-gradient-to-l from-gold to-transparent"
+            aria-hidden="true"
+          />
 
-        <span className="mt-7 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-sm border border-charcoal/15 bg-white/80 px-4 text-[0.95rem] font-bold text-charcoal transition-colors group-hover:border-gold group-hover:text-gold-dark">
-          {siteConfig.cta.discoverMore}
-          <ArrowLeft size={15} strokeWidth={1.75} aria-hidden="true" />
-        </span>
-      </Link>
+          <p className="text-[1.02rem] leading-[1.9] text-muted text-pretty">
+            {service.shortDescription}
+          </p>
+
+          <span className="mt-7 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-sm border border-charcoal/12 bg-ivory px-4 text-[0.95rem] font-bold text-charcoal transition-colors group-hover:border-gold group-hover:bg-white group-hover:text-gold-dark">
+            {siteConfig.cta.discoverMore}
+            <ArrowLeft size={15} strokeWidth={1.75} aria-hidden="true" />
+          </span>
+        </Link>
+      </motion.div>
 
       {!isLast ? (
         <span
@@ -160,14 +175,10 @@ export function Services() {
           <motion.p variants={readingVariants(reduce, fadeUpSoft)} className="lede">
             خبرات قانونية متخصصة تغطي احتياجات الأعمال والاستثمار والتقاضي.
           </motion.p>
-          <p className="mt-4 text-sm text-muted lg:hidden">مرّر — كل خدمة على شاشة كاملة</p>
+          <p className="mt-4 text-sm text-muted lg:hidden">مرّر — كل خدمة تظهر في بطاقتها</p>
         </motion.div>
       </div>
 
-      {/*
-        Mobile: one viewport per service in document flow.
-        Last panel uses softer snap-stop so leaving into the next section stays smooth.
-      */}
       <div className="hidden max-lg:block" role="list" aria-label="قائمة مجالات العمل">
         {services.map((service, index) => (
           <MobileServicePanel
@@ -179,7 +190,6 @@ export function Services() {
         ))}
       </div>
 
-      {/* Desktop editorial grid */}
       <motion.ul
         className="container-editorial section-body hidden grid-cols-2 border-t border-border lg:grid xl:grid-cols-3"
         variants={readingStagger(reduce, staggerList)}
