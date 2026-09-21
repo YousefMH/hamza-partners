@@ -20,7 +20,7 @@ export function FeaturedService() {
 
   return (
     <section
-      className="services-snap-exit relative overflow-hidden bg-warm-gray text-ivory"
+      className="relative overflow-hidden bg-warm-gray text-ivory"
       aria-labelledby="featured-heading"
     >
       <div className="absolute inset-0">

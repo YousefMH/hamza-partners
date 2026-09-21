@@ -5,6 +5,7 @@ import { services } from '@/data/services'
 import { siteConfig } from '@/data/siteConfig'
 import { SectionLabel, DoubleLine } from '@/components/Decorative/Ornaments'
 import { ServiceIcon } from '@/components/ui/ServiceIcon'
+import { useMobileServicesSnap } from '@/hooks/useMobileServicesSnap'
 import {
   fadeUp,
   fadeUpSoft,
@@ -131,6 +132,7 @@ function MobileServicePanel({
 export function Services() {
   const reduce = useReducedMotion()
   const total = services.length
+  useMobileServicesSnap()
 
   return (
     <section id="services" className="bg-ivory lg:bg-white lg:section-pad" aria-labelledby="services-heading">

@@ -265,23 +265,25 @@
   }
 
   /*
-    Mobile services: one swipe = one full-screen service.
-    Snap panels start-aligned so the page fills with that service.
-    - scroll-behavior:auto while snap is on (smooth + mandatory = end lag)
-    - last panel uses snap-stop:normal so exit into the next section is fluid
-    - overflow-x:clip (not hidden) so html stays the Y scroller for snap
+    Mobile services snap is gated by html.services-snap-on (see
+    useMobileServicesSnap). Keeping mandatory snap on for the whole page
+    makes light scrolls reverse toward leftover snap points after services.
   */
   @media (max-width: 1023px) {
     html {
       overflow-x: clip;
       scroll-behavior: auto;
-      scroll-snap-type: y mandatory;
+      scroll-snap-type: none;
       scroll-padding-top: 0;
     }
 
+    html.services-snap-on {
+      scroll-snap-type: y mandatory;
+    }
+
     .hero-section {
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
+      scroll-snap-align: none;
+      scroll-snap-stop: normal;
     }
 
     .services-intro {
@@ -300,18 +302,9 @@
       padding-top: 4.5rem;
       padding-bottom: max(2.75rem, calc(env(safe-area-inset-bottom) + 1.5rem));
       overflow: hidden;
-      content-visibility: auto;
-      contain-intrinsic-size: auto 100dvh;
     }
 
-    /* Softer lock on the last service so leaving snap zone does not stutter */
     .services-page-panel--last {
-      scroll-snap-stop: normal;
-    }
-
-    /* Next home section after services — clean handoff out of snap */
-    .services-snap-exit {
-      scroll-snap-align: start;
       scroll-snap-stop: normal;
     }
 
@@ -325,24 +318,19 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      html {
+      html,
+      html.services-snap-on {
         scroll-snap-type: none;
         scroll-behavior: auto;
       }
 
-      .hero-section,
-      .services-page-panel,
-      .services-snap-exit {
+      .services-page-panel {
         scroll-snap-align: none;
         scroll-snap-stop: normal;
-      }
-
-      .services-page-panel {
         height: auto;
         max-height: none;
         padding-block: 2.75rem;
         overflow: visible;
-        content-visibility: visible;
       }
 
       .service-scroll-cue {
