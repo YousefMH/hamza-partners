@@ -3,6 +3,8 @@ import { useEffect } from 'react'
 const MOBILE_MAX = '(max-width: 1023px)'
 const REDUCE_MOTION = '(prefers-reduced-motion: reduce)'
 const SNAP_CLASS = 'services-snap-on'
+/** Ignore sub-pixel / rubber-band jitter when inferring scroll direction. */
+const DIRECTION_EPSILON_PX = 2
 
 function documentTop(el: HTMLElement): number {
   return el.getBoundingClientRect().top + window.scrollY
@@ -18,10 +20,13 @@ function fillOf(rect: DOMRect, vh: number): number {
  * service cards, so “مجالات عملنا” is a real full-screen stop and is not
  * skipped between the header and the first card.
  *
- * Uses exit hysteresis: once the last card (or anything past it) is reached,
- * snap stays off until the visitor scrolls clearly back onto an earlier card.
- * Without that latch, fill dropping below a threshold mid-exit re-arms snap
- * and the browser pulls back to the last service panel (“reverse scroll”).
+ * Exit latch: once the last card (or anything past it) is reached, snap stays
+ * off. It does NOT re-arm merely because an earlier card fills the viewport —
+ * that caused a yank/glitch when scrolling up from the page footer through the
+ * corridor. Snap re-arms only when:
+ * - the visitor returns clearly above the corridor (Hero), or
+ * - they reverse and scroll down again onto an earlier card (intentional
+ *   second pass through services).
  */
 export function useMobileServicesSnap() {
   useEffect(() => {
@@ -31,6 +36,8 @@ export function useMobileServicesSnap() {
 
     let frame = 0
     let releasedPastServices = false
+    let lastY = window.scrollY
+    let scrollingDown = true
 
     const clear = () => {
       html.classList.remove(SNAP_CLASS)
@@ -53,6 +60,12 @@ export function useMobileServicesSnap() {
 
       const vh = window.innerHeight
       const y = window.scrollY
+      const delta = y - lastY
+      if (Math.abs(delta) > DIRECTION_EPSILON_PX) {
+        scrollingDown = delta > 0
+        lastY = y
+      }
+
       const lastIndex = panels.length - 1
       const last = panels[lastIndex]
       const introTop = documentTop(intro)
@@ -73,14 +86,17 @@ export function useMobileServicesSnap() {
       const settledOnLast = bestIndex === lastIndex && bestFill >= 0.45
       const scrolledPastLast =
         y >= lastTop + vh * 0.1 || lastRect.bottom < vh * 0.55
-      const backOnEarlierCard =
-        bestIndex >= 0 && bestIndex < lastIndex && bestFill >= 0.45
+      const browsingDownEarlierCard =
+        scrollingDown &&
+        bestIndex >= 0 &&
+        bestIndex < lastIndex &&
+        bestFill >= 0.5
 
       if (aboveCorridor) {
         releasedPastServices = false
       } else if (settledOnLast || scrolledPastLast) {
         releasedPastServices = true
-      } else if (backOnEarlierCard) {
+      } else if (releasedPastServices && browsingDownEarlierCard) {
         releasedPastServices = false
       }
 
