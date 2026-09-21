@@ -1,7 +1,6 @@
 import { Header } from '@/components/Header'
 import { Hero } from '@/components/Hero'
 import { Services } from '@/components/Services'
-import { FeaturedService } from '@/components/FeaturedService'
 import { Clients } from '@/components/Clients'
 import { WhyUs } from '@/components/WhyUs'
 import { Industries } from '@/components/Industries'
@@ -26,9 +25,7 @@ export function HomePage() {
         <Hero />
         <SectionDivider surface="charcoal" />
         <Services />
-        <SectionDivider surface="white" />
-        <FeaturedService />
-        <SectionDivider surface="charcoal" />
+        <SectionDivider surface="ivory" />
         <Clients />
         <SectionDivider surface="white" />
         <WhyUs />

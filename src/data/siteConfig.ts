@@ -29,8 +29,6 @@ export const siteConfig = {
   },
   heroImage:
     'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=80',
-  featuredImage:
-    'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2000&q=80',
   nav: [
     { label: 'الرئيسية', href: '/#home' },
     { label: 'مجالات العمل', href: '/#services' },

@@ -328,8 +328,6 @@ export const services: Service[] = [
   },
 ]
 
-export const featuredService = services.find((s) => s.featured)!
-
 export function getServiceBySlug(slug: string): Service | undefined {
   return services.find((s) => s.slug === slug)
 }

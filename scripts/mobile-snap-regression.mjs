@@ -18,7 +18,7 @@ async function metrics(page) {
   return page.evaluate(() => {
     const html = document.documentElement
     const nested = document.querySelector('.services-x-scroller')
-    const featured = document.querySelector('#featured-heading')?.closest('section')
+    const nextSection = document.querySelector('#clients')
     const services = document.querySelector('#services')
     const cards = document.querySelectorAll('[data-service-card-mobile]')
     const firstCard = cards[0]
@@ -35,7 +35,7 @@ async function metrics(page) {
       midCardTop: midCard?.getBoundingClientRect().top ?? null,
       lastCardTop: lastCard?.getBoundingClientRect().top ?? null,
       servicesBottom: services?.getBoundingClientRect().bottom ?? null,
-      featuredTop: featured?.getBoundingClientRect().top ?? null,
+      nextTop: nextSection?.getBoundingClientRect().top ?? null,
       bodyOverflowY: getComputedStyle(document.body).overflowY,
       htmlOverflowY: getComputedStyle(html).overflowY,
     }
@@ -77,22 +77,21 @@ async function main() {
   const yAtServices = m.y
   console.log('At services:', m)
 
-  // Leave early (before last card) into Featured — must not trap
+  // Leave early (before last card) into Clients — must not trap
   await page.evaluate(() => {
-    const featured = document.querySelector('#featured-heading')
-    featured?.scrollIntoView({ block: 'start', behavior: 'instant' })
+    document.querySelector('#clients')?.scrollIntoView({ block: 'start', behavior: 'instant' })
   })
   await settle(page, 500)
   m = await metrics(page)
-  console.log('Leave early → Featured:', m)
+  console.log('Leave early → Clients:', m)
   if (m.snapType && m.snapType !== 'none') {
     failures.push('Snap reappeared after leave-early')
   }
-  if ((m.featuredTop ?? 999) > 120) {
-    failures.push(`Featured not near top after leave-early (top=${m.featuredTop})`)
+  if ((m.nextTop ?? 999) > 120) {
+    failures.push(`Clients not near top after leave-early (top=${m.nextTop})`)
   }
 
-  // Scroll to last card, then continue to Featured
+  // Scroll to last card, then continue to Clients
   await page.evaluate(() => {
     const cards = document.querySelectorAll('[data-service-card-mobile]')
     cards[cards.length - 1]?.scrollIntoView({ block: 'center', behavior: 'instant' })
@@ -101,17 +100,16 @@ async function main() {
   const yAtLast = (await metrics(page)).y
 
   await page.evaluate(() => {
-    const featured = document.querySelector('#featured-heading')
-    featured?.scrollIntoView({ block: 'start', behavior: 'instant' })
+    document.querySelector('#clients')?.scrollIntoView({ block: 'start', behavior: 'instant' })
   })
   await settle(page, 500)
   m = await metrics(page)
-  console.log('Exit last card → Featured:', m)
-  if ((m.featuredTop ?? 999) > 120) {
-    failures.push(`Featured not near top after last-card exit (top=${m.featuredTop})`)
+  console.log('Exit last card → Clients:', m)
+  if ((m.nextTop ?? 999) > 120) {
+    failures.push(`Clients not near top after last-card exit (top=${m.nextTop})`)
   }
-  if (m.y <= yAtLast - 20 && (m.featuredTop ?? 999) > 80) {
-    failures.push('Page did not advance past last card into Featured')
+  if (m.y <= yAtLast - 20 && (m.nextTop ?? 999) > 80) {
+    failures.push('Page did not advance past last card into Clients')
   }
 
   // Reverse upward through services — monotonic free scroll, no yank
