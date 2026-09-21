@@ -81,7 +81,7 @@ export function FeaturedService() {
             </Button>
             <Link
               to={`/services/${featuredService.slug}`}
-              className="inline-flex items-center justify-center border border-ivory/30 px-8 py-3.5 font-display text-sm text-ivory transition-colors hover:border-gold-champagne hover:text-gold-champagne"
+              className="btn-radius inline-flex items-center justify-center border border-ivory/30 px-8 py-3.5 font-display text-sm text-ivory transition-colors hover:border-gold-champagne hover:text-gold-champagne"
             >
               {siteConfig.cta.discoverMore}
             </Link>

@@ -118,7 +118,7 @@ function MobileServicePanel({
             {service.shortDescription}
           </p>
 
-          <span className="mt-7 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-sm border border-charcoal/12 bg-ivory px-4 text-[0.95rem] font-bold text-charcoal transition-colors group-hover:border-gold group-hover:bg-white group-hover:text-gold-dark">
+          <span className="btn-radius mt-7 inline-flex min-h-11 w-full items-center justify-center gap-2 border border-charcoal/12 bg-ivory px-4 text-[0.95rem] font-bold text-charcoal transition-colors group-hover:border-gold group-hover:bg-white group-hover:text-gold-dark">
             {siteConfig.cta.discoverMore}
             <ArrowLeft size={15} strokeWidth={1.75} aria-hidden="true" />
           </span>

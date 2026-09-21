@@ -23,13 +23,12 @@ type ButtonAsLink = SharedProps &
 type ButtonProps = ButtonAsButton | ButtonAsLink
 
 const variants = {
-  primary:
-    'bg-charcoal text-ivory hover:bg-warm-gray border border-charcoal',
+  primary: 'btn-wood-dark text-ivory border',
   secondary:
-    'bg-transparent text-charcoal border border-charcoal/25 hover:border-gold hover:text-gold-dark',
-  ghost: 'bg-transparent text-ivory border border-ivory/35 hover:border-gold-champagne hover:text-gold-champagne',
-  inverse:
-    'bg-gold text-charcoal border border-gold hover:bg-gold-champagne',
+    'btn-radius bg-transparent text-charcoal border border-charcoal/25 hover:border-gold hover:text-gold-dark',
+  ghost:
+    'btn-radius bg-transparent text-ivory border border-ivory/35 hover:border-gold-champagne hover:text-gold-champagne',
+  inverse: 'btn-wood text-charcoal border',
 }
 
 export function Button({
@@ -41,7 +40,7 @@ export function Button({
 }: ButtonProps) {
   const reduce = useReducedMotion()
   const classes = cn(
-    'inline-flex items-center justify-center gap-2 font-display text-base font-bold transition-colors duration-300',
+    'inline-flex items-center justify-center gap-2 font-display text-base font-bold transition-[filter,background-color,border-color,color,box-shadow] duration-300',
     size === 'lg' ? 'px-8 py-3.5' : 'px-6 py-2.5',
     variants[variant],
     className,

@@ -206,8 +206,7 @@ export function Header({ forceSolid = false }: HeaderProps) {
                 href={appUrl('/#contact')}
                 onClick={() => activateSection('/#contact')}
                 className={cn(
-                  'inline-flex h-9 max-w-[9.5rem] items-center justify-center whitespace-nowrap rounded-sm px-2.5 font-display text-[0.8125rem] font-bold transition-colors sm:h-10 sm:max-w-none sm:px-4 sm:text-sm lg:hidden',
-                  'border border-gold bg-gold text-charcoal hover:bg-gold-champagne',
+                  'btn-wood inline-flex h-9 max-w-[9.5rem] items-center justify-center whitespace-nowrap border px-2.5 font-display text-[0.8125rem] font-bold text-charcoal transition-[filter,background-color] duration-300 sm:h-10 sm:max-w-none sm:px-4 sm:text-sm lg:hidden',
                 )}
               >
                 {siteConfig.cta.book}
@@ -230,8 +229,8 @@ export function Header({ forceSolid = false }: HeaderProps) {
               className={cn(
                 'inline-flex size-9 shrink-0 items-center justify-center rounded-sm transition-colors sm:size-10 lg:hidden',
                 solidChrome
-                  ? 'border border-charcoal/12 bg-white text-charcoal hover:border-gold'
-                  : 'border border-ivory/25 bg-charcoal/30 text-ivory hover:border-gold-champagne',
+                  ? 'btn-radius border border-charcoal/12 bg-white text-charcoal hover:border-gold'
+                  : 'btn-radius border border-ivory/25 bg-charcoal/30 text-ivory hover:border-gold-champagne',
               )}
               aria-expanded={open}
               aria-controls="mobile-nav"
