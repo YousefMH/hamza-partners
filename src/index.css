@@ -437,7 +437,12 @@
       padding-top: 4.5rem;
       padding-bottom: max(2.5rem, calc(env(safe-area-inset-bottom) + 1.25rem));
       scroll-snap-align: start;
-      scroll-snap-stop: always;
+      /*
+        normal (not always): still snaps when arriving from Hero on the way
+        down, but does not hard-trap the visitor when scrolling back up.
+        Downward card stops keep always via .services-page-panel.
+      */
+      scroll-snap-stop: normal;
       overflow: hidden;
     }
 
