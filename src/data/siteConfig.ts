@@ -31,10 +31,10 @@ export const siteConfig = {
     'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=80',
   nav: [
     { label: 'الرئيسية', href: '/#home' },
-    { label: 'مجالات العمل', href: '/#services' },
-    { label: 'فريق العمل', href: '/#team' },
-    { label: 'المقالات', href: '/#articles' },
-    { label: 'تواصل معنا', href: '/#contact' },
+    { label: 'خدماتنا', href: '/#services' },
+    { label: 'الفريق', href: '/#team' },
+    { label: 'الرؤى', href: '/#articles' },
+    { label: 'تواصل', href: '/#contact' },
   ],
   cta: {
     book: 'احجز استشارة',
@@ -42,7 +42,7 @@ export const siteConfig = {
     contact: 'تواصل معنا',
     whatsapp: 'تواصل عبر واتساب',
     whatsappShort: 'واتساب',
-    discoverServices: 'اكتشف مجالات عملنا',
+    discoverServices: 'اكتشف خدماتنا',
     discoverMore: 'اكتشف المزيد',
     viewProfile: 'عرض الملف',
     readArticle: 'اقرأ المقال',
