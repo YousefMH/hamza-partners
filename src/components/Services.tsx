@@ -294,7 +294,7 @@ export function Services() {
   return (
     <section
       id="services"
-      className="bg-ivory section-pad lg:bg-white"
+      className="bg-ivory section-pad pt-[clamp(4.75rem,9vw,7.5rem)] lg:bg-white"
       aria-labelledby="services-heading"
     >
       <div className="container-editorial">

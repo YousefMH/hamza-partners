@@ -24,6 +24,7 @@ export function HomePage() {
       <Header />
       <main className="pb-[4.5rem] lg:pb-0">
         <Hero />
+        <SectionDivider surface="charcoal" />
         <Services />
         <SectionDivider surface="white" />
         <FeaturedService />
