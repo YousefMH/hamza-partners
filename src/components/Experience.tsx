@@ -26,7 +26,7 @@ export function Experience() {
           viewport={viewportReading}
         >
           <motion.div variants={readingVariants(reduce, fadeUp)}>
-            <SectionLabel>المحفظة</SectionLabel>
+            <SectionLabel>نماذج أعمال</SectionLabel>
           </motion.div>
           <motion.h2
             id="experience-heading"
