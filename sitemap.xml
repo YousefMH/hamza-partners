@@ -1,82 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://hamza-partners.example/</loc>
+    <loc>https://yousefmh.github.io/hamza-partners/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://hamza-partners.example/services/corporate-governance-ma</loc>
+    <loc>https://yousefmh.github.io/hamza-partners/services/company-formation-gafi/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://hamza-partners.example/services/investment-agreements</loc>
+    <loc>https://yousefmh.github.io/hamza-partners/services/commercial-agency-franchise/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yousefmh.github.io/hamza-partners/services/shareholders-governance/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yousefmh.github.io/hamza-partners/services/mergers-acquisitions/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yousefmh.github.io/hamza-partners/services/joint-ventures/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yousefmh.github.io/hamza-partners/services/foreign-branches-rep-offices/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yousefmh.github.io/hamza-partners/services/restructuring-liquidation/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yousefmh.github.io/hamza-partners/services/commercial-civil-litigation/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yousefmh.github.io/hamza-partners/services/commercial-arbitration/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yousefmh.github.io/hamza-partners/services/intellectual-property/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yousefmh.github.io/hamza-partners/services/banking-finance/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yousefmh.github.io/hamza-partners/services/capital-markets/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yousefmh.github.io/hamza-partners/services/tax-compliance/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yousefmh.github.io/hamza-partners/services/employment-social-insurance/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yousefmh.github.io/hamza-partners/services/real-estate/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yousefmh.github.io/hamza-partners/team/partner-corporate/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://hamza-partners.example/services/mediation-arbitration</loc>
+    <loc>https://yousefmh.github.io/hamza-partners/team/partner-ma-disputes/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://hamza-partners.example/services/industrial-commercial-projects</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://hamza-partners.example/services/financial-corporate-crime</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://hamza-partners.example/services/restructuring-insolvency</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://hamza-partners.example/services/litigation-disputes</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://hamza-partners.example/services/tax-advisory</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://hamza-partners.example/services/intellectual-property</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://hamza-partners.example/services/banking-finance</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://hamza-partners.example/services/capital-markets</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://hamza-partners.example/services/hospitality-tourism</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://hamza-partners.example/services/real-estate</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://hamza-partners.example/services/healthcare</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://hamza-partners.example/services/cybercrime</loc>
+    <loc>https://yousefmh.github.io/hamza-partners/team/counsel-finance-markets/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

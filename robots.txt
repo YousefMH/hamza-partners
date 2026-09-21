@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://hamza-partners.example/sitemap.xml
+Sitemap: https://yousefmh.github.io/hamza-partners/sitemap.xml
