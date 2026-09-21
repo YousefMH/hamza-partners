@@ -151,9 +151,9 @@ export function Services() {
 
   return (
     <section id="services" className="bg-ivory lg:bg-white lg:section-pad" aria-labelledby="services-heading">
-      <div className="services-intro container-editorial section-pad pb-4 lg:pb-0">
+      <div className="services-intro services-intro-panel container-editorial lg:section-pad lg:pb-0">
         <motion.div
-          className="max-w-2xl"
+          className="services-intro-copy mx-auto flex w-full max-w-2xl flex-col items-center justify-center text-center lg:mx-0 lg:items-start lg:text-start"
           variants={readingStagger(reduce, staggerContainer)}
           initial={reduce ? false : 'hidden'}
           whileInView="visible"
@@ -175,7 +175,11 @@ export function Services() {
           <motion.p variants={readingVariants(reduce, fadeUpSoft)} className="lede">
             خبرات قانونية متخصصة تغطي احتياجات الأعمال والاستثمار والتقاضي.
           </motion.p>
-          <p className="mt-4 text-sm text-muted lg:hidden">مرّر — كل خدمة تظهر في بطاقتها</p>
+          <p className="mt-5 text-sm text-muted lg:hidden">مرّر لعرض كل خدمة في بطاقتها</p>
+          <span
+            className="service-scroll-cue mt-8 hidden h-8 w-px bg-gradient-to-b from-gold/80 to-transparent lg:!hidden max-lg:block"
+            aria-hidden="true"
+          />
         </motion.div>
       </div>
 

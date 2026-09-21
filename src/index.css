@@ -286,9 +286,24 @@
       scroll-snap-stop: normal;
     }
 
-    .services-intro {
-      scroll-snap-align: none;
-      scroll-snap-stop: normal;
+    /*
+      Full-screen intro stop so “مجالات عملنا” is never skipped between
+      the header and the first service card.
+    */
+    .services-intro-panel {
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100svh;
+      height: 100dvh;
+      max-height: 100svh;
+      max-height: 100dvh;
+      padding-top: 4.5rem;
+      padding-bottom: max(2.5rem, calc(env(safe-area-inset-bottom) + 1.25rem));
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      overflow: hidden;
     }
 
     .services-page-panel {
@@ -337,6 +352,7 @@
         scroll-behavior: auto;
       }
 
+      .services-intro-panel,
       .services-page-panel {
         scroll-snap-align: none;
         scroll-snap-stop: normal;
