@@ -33,7 +33,6 @@ export const siteConfig = {
     { label: 'الرئيسية', href: '/#home' },
     { label: 'مجالات العمل', href: '/#services' },
     { label: 'فريق العمل', href: '/#team' },
-    { label: 'الخبرات', href: '/#experience' },
     { label: 'المقالات', href: '/#articles' },
     { label: 'تواصل معنا', href: '/#contact' },
   ],
