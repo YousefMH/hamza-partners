@@ -260,37 +260,51 @@
   }
 
   /*
-    Mobile / tablet services: one full-viewport panel per practice area.
-    Document scroll snaps so each swipe lands on the next service.
+    Mobile services: isolated snap scroller — never set scroll-snap on <html>,
+    which breaks page scroll and leaves blank panels.
   */
-  @media (max-width: 1023px) {
-    html {
-      scroll-snap-type: y proximity;
+  .services-mobile-scroller {
+    height: 100svh;
+    height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .services-mobile-panel {
+    box-sizing: border-box;
+    min-height: 100%;
+    height: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .service-scroll-cue {
+    animation: service-cue-pulse 1.8s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .services-mobile-scroller {
+      scroll-snap-type: none;
     }
 
-    .service-snap-panel {
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
-      scroll-margin-top: 0;
+    .services-mobile-panel {
+      scroll-snap-align: none;
+      scroll-snap-stop: normal;
+      min-height: auto;
+      height: auto;
+      padding-block: 2.5rem;
+    }
+
+    .services-mobile-scroller {
+      height: auto;
+      max-height: none;
     }
 
     .service-scroll-cue {
-      animation: service-cue-pulse 1.8s ease-in-out infinite;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-snap-type: none;
-      }
-
-      .service-snap-panel {
-        scroll-snap-align: none;
-        scroll-snap-stop: normal;
-      }
-
-      .service-scroll-cue {
-        animation: none;
-      }
+      animation: none;
     }
   }
 
