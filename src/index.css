@@ -258,4 +258,35 @@
   section[id] {
     scroll-margin-top: 5.25rem;
   }
+
+  /*
+    Short tablet / landscape viewports: keep the hero content inside the
+    first screen without relying on desktop-scale vertical rhythm.
+  */
+  @media (min-width: 768px) and (max-width: 1023px) and (max-height: 900px) {
+    .hero-section {
+      min-height: 100svh;
+    }
+
+    .hero-section .hero-copy h1 {
+      font-size: clamp(1.65rem, 3.2vw + 0.6rem, 2.35rem);
+    }
+
+    .hero-section .container-editorial {
+      padding-top: 1.25rem;
+      padding-bottom: 3.5rem;
+      justify-content: center;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) and (max-height: 720px) {
+    .hero-section [data-hero-meander] svg {
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-section .container-editorial {
+      padding-top: 0.75rem;
+      padding-bottom: 2.75rem;
+    }
+  }
 }
