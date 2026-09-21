@@ -1,5 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import { Briefcase, Building2, Scale, ShieldCheck, type LucideIcon } from 'lucide-react'
 import { siteConfig } from '@/data/siteConfig'
+import { trustIndicators } from '@/data/content'
 import { appUrl } from '@/lib/paths'
 import { Button } from '@/components/ui/Button'
 import { Meander } from '@/components/Decorative/Ornaments'
@@ -9,7 +11,16 @@ import {
   readingStagger,
   readingVariants,
   staggerContainer,
+  staggerList,
 } from '@/lib/motion'
+import { cn } from '@/lib/cn'
+
+const trustIcons: Record<(typeof trustIndicators)[number]['icon'], LucideIcon> = {
+  scale: Scale,
+  briefcase: Briefcase,
+  'building-2': Building2,
+  'shield-check': ShieldCheck,
+}
 
 export function Hero() {
   const reduce = useReducedMotion()
@@ -24,14 +35,14 @@ export function Hero() {
         <motion.img
           src={siteConfig.heroImage}
           alt=""
-          className="h-full w-full object-cover opacity-45"
+          className="h-full w-full object-cover opacity-40"
           initial={reduce ? false : { scale: 1.04 }}
           animate={{ scale: 1 }}
           transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
         />
-        <div className="absolute inset-0 bg-gradient-to-l from-charcoal/95 via-charcoal/85 to-charcoal/55" />
-        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-transparent to-charcoal/45" />
-        <div className="marble-texture absolute inset-0 opacity-25 mix-blend-soft-light" />
+        <div className="absolute inset-0 bg-gradient-to-l from-charcoal/96 via-charcoal/88 to-charcoal/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/40 to-charcoal/50" />
+        <div className="marble-texture absolute inset-0 opacity-20 mix-blend-soft-light" />
       </div>
 
       <div className="relative z-10 flex min-h-[100svh] flex-1 flex-col">
@@ -39,7 +50,9 @@ export function Hero() {
           className="h-14 shrink-0 sm:h-14 md:h-16 lg:h-[4.5rem]"
           aria-hidden="true"
         />
-        <div className="container-editorial flex flex-1 flex-col items-center justify-center py-8 pb-16 sm:py-10 sm:pb-20 md:items-start md:py-10 md:pb-20 lg:py-12 lg:pb-24">
+
+        {/* Primary copy — grows to fill space above the trust band */}
+        <div className="hero-main container-editorial flex flex-1 flex-col items-center justify-center py-8 sm:py-10 md:items-start md:py-10 lg:py-12">
           <motion.div
             className="hero-copy w-full max-w-xl text-center md:max-w-2xl md:text-start lg:max-w-3xl"
             variants={readingStagger(reduce, staggerContainer)}
@@ -104,12 +117,46 @@ export function Hero() {
             </motion.div>
           </motion.div>
         </div>
-      </div>
 
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-14 bg-gradient-to-t from-ivory via-ivory/80 to-transparent sm:h-16 md:h-20 lg:h-24"
-        aria-hidden="true"
-      />
+        {/* Trust band — same charcoal language as the hero, not a separate card */}
+        <motion.div
+          className="hero-trust shrink-0 border-t border-gold-champagne/25 bg-gradient-to-t from-charcoal to-charcoal/40"
+          variants={readingStagger(reduce, staggerList)}
+          initial={reduce ? false : 'hidden'}
+          animate="visible"
+          aria-label="مرتكزات العمل"
+        >
+          <div className="container-editorial">
+            <ul className="grid grid-cols-2 lg:grid-cols-4">
+              {trustIndicators.map((item, index) => {
+                const Icon = trustIcons[item.icon]
+
+                return (
+                  <motion.li
+                    key={item.label}
+                    variants={readingVariants(reduce, fadeUpSoft)}
+                    className={cn(
+                      'flex flex-col items-center gap-2.5 px-3 py-5 text-center sm:gap-3 sm:px-4 sm:py-6 md:items-start md:px-5 md:py-7 md:text-start lg:px-6',
+                      index % 2 === 0 && 'border-e border-gold-champagne/15',
+                      index < 2 && 'border-b border-gold-champagne/15 lg:border-b-0',
+                      index < 3 && 'lg:border-e lg:border-gold-champagne/15',
+                    )}
+                  >
+                    <Icon
+                      className="size-4 text-gold-champagne sm:size-[1.125rem]"
+                      strokeWidth={1.4}
+                      aria-hidden="true"
+                    />
+                    <p className="font-display text-[0.8125rem] leading-snug text-ivory/90 sm:text-sm md:text-[0.9375rem] md:leading-relaxed">
+                      {item.label}
+                    </p>
+                  </motion.li>
+                )
+              })}
+            </ul>
+          </div>
+        </motion.div>
+      </div>
     </section>
   )
 }
