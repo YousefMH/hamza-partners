@@ -15,8 +15,8 @@ function ClientLogo({ client }: { client: Client }) {
   return (
     <div
       className={cn(
-        'flex h-16 w-[9.5rem] shrink-0 items-center justify-center px-3 md:h-[4.5rem] md:w-44',
-        'opacity-70 grayscale transition-[opacity,filter] duration-300',
+        'flex h-20 w-[11.5rem] shrink-0 items-center justify-center px-3 md:h-24 md:w-52',
+        'opacity-75 grayscale transition-[opacity,filter] duration-300',
         'hover:opacity-100 hover:grayscale-0',
       )}
     >
@@ -26,7 +26,7 @@ function ClientLogo({ client }: { client: Client }) {
         title={client.name}
         loading="lazy"
         decoding="async"
-        className="max-h-9 max-w-full object-contain md:max-h-10"
+        className="max-h-12 max-w-full object-contain md:max-h-14"
       />
     </div>
   )
@@ -82,11 +82,11 @@ export function Clients() {
 
         <div
           dir="ltr"
-          className="overflow-hidden border-y border-border/80 bg-ivory/60 py-6 md:py-8"
+          className="overflow-hidden border-y border-border/80 bg-ivory/60 py-8 md:py-10"
         >
           <ul
             className={cn(
-              'clients-marquee-track flex w-max items-center gap-6 md:gap-10',
+              'clients-marquee-track flex w-max items-center gap-8 md:gap-12',
               reduce && 'clients-marquee-track--static',
             )}
           >
