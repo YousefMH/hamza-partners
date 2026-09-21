@@ -107,7 +107,7 @@ export function Hero() {
       </div>
 
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-10 bg-gradient-to-t from-ivory to-transparent sm:h-12 md:h-14 lg:h-20"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-14 bg-gradient-to-t from-ivory via-ivory/80 to-transparent sm:h-16 md:h-20 lg:h-24"
         aria-hidden="true"
       />
     </section>

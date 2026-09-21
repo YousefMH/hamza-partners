@@ -1,6 +1,6 @@
 import { Header } from '@/components/Header'
 import { Hero } from '@/components/Hero'
-import { About } from '@/components/About'
+import { TrustStrip } from '@/components/TrustStrip'
 import { Services } from '@/components/Services'
 import { FeaturedService } from '@/components/FeaturedService'
 import { WhyUs } from '@/components/WhyUs'
@@ -23,8 +23,8 @@ export function HomePage() {
       <Header />
       <main>
         <Hero />
-        <About />
-        <SectionDivider surface="ivory" />
+        <TrustStrip />
+        <div className="h-8 bg-ivory sm:h-10 md:h-12" aria-hidden="true" />
         <Services />
         <SectionDivider surface="white" />
         <FeaturedService />
