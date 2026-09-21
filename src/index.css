@@ -260,6 +260,53 @@
   }
 
   /*
+    Mobile / tablet services: one full-viewport panel per practice area.
+    Document scroll snaps so each swipe lands on the next service.
+  */
+  @media (max-width: 1023px) {
+    html {
+      scroll-snap-type: y proximity;
+    }
+
+    .service-snap-panel {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      scroll-margin-top: 0;
+    }
+
+    .service-scroll-cue {
+      animation: service-cue-pulse 1.8s ease-in-out infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-snap-type: none;
+      }
+
+      .service-snap-panel {
+        scroll-snap-align: none;
+        scroll-snap-stop: normal;
+      }
+
+      .service-scroll-cue {
+        animation: none;
+      }
+    }
+  }
+
+  @keyframes service-cue-pulse {
+    0%,
+    100% {
+      opacity: 0.25;
+      transform: scaleY(0.85);
+    }
+    50% {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+  }
+
+  /*
     Short tablet / landscape viewports: keep the hero content inside the
     first screen without relying on desktop-scale vertical rhythm.
   */
