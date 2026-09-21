@@ -13,10 +13,13 @@ import { CTA } from '@/components/CTA'
 import { Contact } from '@/components/Contact'
 import { Footer } from '@/components/Footer'
 import { SectionDivider } from '@/components/Decorative/SectionDivider'
+import { SeoHead } from '@/components/SeoHead'
+import { homeSeo } from '@/lib/seo'
 
 export function HomePage() {
   return (
     <>
+      <SeoHead seo={homeSeo()} />
       <Header />
       <main>
         <Hero />

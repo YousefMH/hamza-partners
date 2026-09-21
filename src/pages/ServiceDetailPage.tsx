@@ -4,8 +4,10 @@ import { getServiceBySlug, services } from '@/data/services'
 import { siteConfig } from '@/data/siteConfig'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { SeoHead } from '@/components/SeoHead'
 import { Button } from '@/components/ui/Button'
 import { appUrl } from '@/lib/paths'
+import { notFoundSeo, serviceSeo } from '@/lib/seo'
 import { ServiceIcon } from '@/components/ui/ServiceIcon'
 import { DoubleLine, Meander, SectionLabel } from '@/components/Decorative/Ornaments'
 
@@ -16,6 +18,7 @@ export function ServiceDetailPage() {
   if (!service) {
     return (
       <>
+        <SeoHead seo={notFoundSeo()} />
         <Header forceSolid />
         <main className="container-editorial flex min-h-[70vh] flex-col items-center justify-center py-32 text-center">
           <h1 className="font-display text-3xl text-charcoal">الخدمة غير موجودة</h1>
@@ -35,6 +38,7 @@ export function ServiceDetailPage() {
 
   return (
     <>
+      <SeoHead seo={serviceSeo(service)} />
       <Header />
       <main>
         <section className="bg-charcoal pt-28 pb-16 text-ivory md:pt-36 md:pb-20">

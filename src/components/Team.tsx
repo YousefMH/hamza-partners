@@ -37,12 +37,13 @@ function useFineHover() {
 
 type PortraitProps = {
   src: string
+  alt: string
   index: number
   reduce: boolean | null
   fineHover: boolean
 }
 
-function TeamPortrait({ src, index, reduce, fineHover }: PortraitProps) {
+function TeamPortrait({ src, alt, index, reduce, fineHover }: PortraitProps) {
   const baseClass =
     'h-full w-full object-cover will-change-[filter,transform] transition-[filter,transform] duration-700 group-hover:scale-[1.03]'
 
@@ -51,7 +52,7 @@ function TeamPortrait({ src, index, reduce, fineHover }: PortraitProps) {
     return (
       <img
         src={src}
-        alt=""
+        alt={alt}
         loading="lazy"
         className={cn(
           baseClass,
@@ -65,7 +66,7 @@ function TeamPortrait({ src, index, reduce, fineHover }: PortraitProps) {
   return (
     <motion.img
       src={src}
-      alt=""
+      alt={alt}
       loading="lazy"
       className={baseClass}
       initial={{ filter: 'grayscale(1)' }}
@@ -120,6 +121,7 @@ export function Team() {
                 <div className="relative aspect-[3/4] overflow-hidden bg-border">
                   <TeamPortrait
                     src={member.image}
+                    alt={`${member.name} — ${member.position}`}
                     index={index}
                     reduce={reduce}
                     fineHover={fineHover}

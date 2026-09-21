@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "VITE_BASE_PATH=/ vite",
-    "build": "tsc -b && vite build && cp dist/index.html dist/404.html",
-    "build:local": "tsc -b && VITE_BASE_PATH=/ vite build && cp dist/index.html dist/404.html",
+    "build": "tsc -b && vite build && node scripts/seo-static.mjs",
+    "build:local": "tsc -b && VITE_BASE_PATH=/ vite build && node scripts/seo-static.mjs",
     "lint": "oxlint",
     "preview": "vite preview --port 4321"
   },
@@ -15,6 +15,7 @@
     "lucide-react": "^1.47.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
+    "react-helmet-async": "^3.0.0",
     "react-router-dom": "^7.18.4"
   },
   "devDependencies": {
