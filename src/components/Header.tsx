@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
@@ -12,13 +12,24 @@ type HeaderProps = {
   forceSolid?: boolean
 }
 
+function sectionIdFromHref(href: string): string {
+  const hash = href.includes('#') ? href.slice(href.indexOf('#') + 1) : ''
+  return hash || 'home'
+}
+
 export function Header({ forceSolid = false }: HeaderProps) {
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [activeId, setActiveId] = useState<string>('home')
   const reduce = useReducedMotion()
   const onHome = pathname === '/'
   const solidDesktop = forceSolid || !onHome || scrolled || open
+
+  const sectionIds = useMemo(
+    () => siteConfig.nav.map((item) => sectionIdFromHref(item.href)),
+    [],
+  )
 
   useEffect(() => {
     setOpen(false)
@@ -47,7 +58,70 @@ export function Header({ forceSolid = false }: HeaderProps) {
     return () => window.removeEventListener('keydown', onKey)
   }, [])
 
+  /** Keep the underline in sync with the visible section while scrolling the home page. */
+  useEffect(() => {
+    if (!onHome) {
+      setActiveId('')
+      return
+    }
+
+    const fromHash = hash.replace(/^#/, '')
+    if (fromHash && sectionIds.includes(fromHash)) {
+      setActiveId(fromHash)
+    }
+
+    const elements = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => Boolean(el))
+
+    if (elements.length === 0) return
+
+    const visibility = new Map<string, number>()
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          visibility.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0)
+        }
+
+        let bestId = 'home'
+        let bestRatio = -1
+        for (const id of sectionIds) {
+          const ratio = visibility.get(id) ?? 0
+          if (ratio > bestRatio) {
+            bestRatio = ratio
+            bestId = id
+          }
+        }
+
+        if (bestRatio > 0) {
+          setActiveId(bestId)
+          return
+        }
+
+        // Near the top of the page → home
+        if (window.scrollY < 80) {
+          setActiveId('home')
+        }
+      },
+      {
+        // Band under the fixed header where the “current” section should register
+        rootMargin: '-18% 0px -55% 0px',
+        threshold: [0, 0.1, 0.25, 0.4, 0.6],
+      },
+    )
+
+    for (const el of elements) observer.observe(el)
+    return () => observer.disconnect()
+  }, [onHome, hash, sectionIds])
+
   const closeMenu = () => setOpen(false)
+
+  const activateSection = (href: string) => {
+    const id = sectionIdFromHref(href)
+    setActiveId(id)
+    closeMenu()
+  }
 
   /** Locked bar height — open/closed chrome must never jump */
   const barRowClass =
@@ -66,8 +140,8 @@ export function Header({ forceSolid = false }: HeaderProps) {
       >
         <div className={barRowClass}>
           <a
-            href={appUrl("/#home")}
-            onClick={closeMenu}
+            href={appUrl('/#home')}
+            onClick={() => activateSection('/#home')}
             className="group shrink-0"
             aria-label={siteConfig.firmNameAr}
           >
@@ -97,25 +171,40 @@ export function Header({ forceSolid = false }: HeaderProps) {
             className="ms-auto hidden items-center gap-6 lg:flex lg:gap-7"
             aria-label="القائمة الرئيسية"
           >
-            {siteConfig.nav.map((item) => (
-              <a
-                key={item.href}
-                href={appUrl(item.href)}
-                className={cn(
-                  'relative whitespace-nowrap text-[0.95rem] transition-colors after:absolute after:inset-x-0 after:-bottom-1 after:h-px after:origin-right after:scale-x-0 after:bg-gold after:transition-transform after:duration-300 hover:after:origin-left hover:after:scale-x-100',
-                  solidDesktop
-                    ? 'text-charcoal/80 hover:text-charcoal'
-                    : 'text-ivory/90 hover:text-ivory',
-                )}
-              >
-                {item.label}
-              </a>
-            ))}
+            {siteConfig.nav.map((item) => {
+              const id = sectionIdFromHref(item.href)
+              const isActive = onHome && activeId === id
+
+              return (
+                <a
+                  key={item.href}
+                  href={appUrl(item.href)}
+                  onClick={() => activateSection(item.href)}
+                  aria-current={isActive ? 'true' : undefined}
+                  className={cn(
+                    'relative whitespace-nowrap text-[0.95rem] transition-colors after:absolute after:inset-x-0 after:-bottom-1 after:h-px after:bg-gold after:transition-transform after:duration-300',
+                    isActive
+                      ? 'after:origin-right after:scale-x-100'
+                      : 'after:origin-right after:scale-x-0 hover:after:origin-left hover:after:scale-x-100',
+                    solidDesktop
+                      ? isActive
+                        ? 'font-bold text-gold-dark'
+                        : 'text-charcoal/80 hover:text-charcoal'
+                      : isActive
+                        ? 'font-bold text-gold-champagne'
+                        : 'text-ivory/90 hover:text-ivory',
+                  )}
+                >
+                  {item.label}
+                </a>
+              )
+            })}
           </nav>
 
           <div className="ms-auto flex shrink-0 items-center gap-1.5 sm:gap-2.5 lg:ms-0">
             <a
-              href={appUrl("/#contact")}
+              href={appUrl('/#contact')}
+              onClick={() => activateSection('/#contact')}
               className={cn(
                 'inline-flex h-9 max-w-[9.5rem] items-center justify-center whitespace-nowrap rounded-sm px-2.5 font-display text-[0.8125rem] font-bold transition-colors sm:h-10 sm:max-w-none sm:px-4 sm:text-sm lg:hidden',
                 'border border-gold bg-gold text-charcoal hover:bg-gold-champagne',
@@ -126,9 +215,10 @@ export function Header({ forceSolid = false }: HeaderProps) {
 
             <span className="hidden lg:inline-flex">
               <Button
-                href={appUrl("/#contact")}
+                href={appUrl('/#contact')}
                 size="md"
                 variant={solidDesktop ? 'primary' : 'inverse'}
+                onClick={() => activateSection('/#contact')}
               >
                 {siteConfig.cta.book}
               </Button>
@@ -165,23 +255,39 @@ export function Header({ forceSolid = false }: HeaderProps) {
               className="container-editorial flex flex-1 flex-col overflow-y-auto overscroll-contain py-3"
               aria-label="قائمة الجوال"
             >
-              {siteConfig.nav.map((item, index) => (
-                <motion.a
-                  key={item.href}
-                  href={appUrl(item.href)}
-                  onClick={closeMenu}
-                  className="border-b border-border py-3.5 font-display text-lg font-bold text-charcoal transition-colors hover:text-gold-dark sm:py-4 sm:text-xl"
-                  initial={reduce ? false : { opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.03, duration: 0.25 }}
-                >
-                  {item.label}
-                </motion.a>
-              ))}
+              {siteConfig.nav.map((item, index) => {
+                const id = sectionIdFromHref(item.href)
+                const isActive = onHome && activeId === id
+
+                return (
+                  <motion.a
+                    key={item.href}
+                    href={appUrl(item.href)}
+                    onClick={() => activateSection(item.href)}
+                    aria-current={isActive ? 'true' : undefined}
+                    className={cn(
+                      'border-b py-3.5 font-display text-lg font-bold transition-colors sm:py-4 sm:text-xl',
+                      isActive
+                        ? 'border-gold text-gold-dark'
+                        : 'border-border text-charcoal hover:text-gold-dark',
+                    )}
+                    initial={reduce ? false : { opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.03, duration: 0.25 }}
+                  >
+                    {item.label}
+                  </motion.a>
+                )
+              })}
             </nav>
 
             <div className="container-editorial shrink-0 border-t border-border py-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
-              <Button href={appUrl("/#contact")} onClick={closeMenu} size="lg" className="w-full">
+              <Button
+                href={appUrl('/#contact')}
+                onClick={() => activateSection('/#contact')}
+                size="lg"
+                className="w-full"
+              >
                 {siteConfig.cta.book}
               </Button>
             </div>
