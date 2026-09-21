@@ -148,22 +148,30 @@ async function runMobile(page, width, failures) {
   await page.locator('button[aria-label="إغلاق القائمة"]').click()
   await settle(page, 200)
 
-  // Progress indicator
+  // Progress indicator + vertical mobile service cards (no nested scroller)
   await page.locator('#services').scrollIntoViewIfNeeded()
   await settle(page, 400)
   const progress = page.locator('text=/\\d{2}\\s*من\\s*\\d{2}/')
   assert((await progress.count()) > 0, `Mobile progress missing @${width}`, failures)
 
-  // Horizontal carousel present — swipe within scroller
   assert(
-    (await page.locator('.services-x-scroller [data-service-slide]').count()) > 0,
-    `Mobile horizontal slides missing @${width}`,
+    (await page.locator('[data-service-card-mobile]').count()) > 0,
+    `Mobile service cards missing @${width}`,
+    failures,
+  )
+  assert(
+    (await page.locator('.services-x-scroller').count()) === 0,
+    `Nested horizontal services scroller must be gone @${width}`,
     failures,
   )
   await page.evaluate(() => {
-    document.querySelector('.services-x-scroller')?.scrollBy({ left: -200, behavior: 'instant' })
+    const cards = document.querySelectorAll('[data-service-card-mobile]')
+    cards[Math.min(2, cards.length - 1)]?.scrollIntoView({
+      block: 'center',
+      behavior: 'instant',
+    })
   })
-  await settle(page, 400)
+  await settle(page, 500)
   const progressText = await progress.first().textContent()
   assert(Boolean(progressText?.match(/\d{2}/)), `Progress text invalid: ${progressText}`, failures)
 

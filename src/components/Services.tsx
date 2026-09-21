@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type RefObject } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowLeft } from 'lucide-react'
@@ -56,21 +56,18 @@ function ServiceCardContent({ service }: { service: Service }) {
 }
 
 /**
- * Robust active-index detection for RTL/LTR horizontal snap carousels.
- * Uses visible fill of each slide — never fragile scrollLeft === 0.
+ * Track which mobile service card is most visible in the *page* viewport.
+ * Uses the document viewport — never a nested scroller — so vertical page
+ * scroll remains the only scroll owner.
  */
-function useHorizontalSnapIndex(
-  scrollerRef: RefObject<HTMLDivElement | null>,
-  itemCount: number,
-) {
+function useVisibleServiceIndex(itemCount: number) {
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
-    const root = scrollerRef.current
-    if (!root || itemCount === 0) return
+    if (itemCount === 0) return
 
-    const slides = root.querySelectorAll<HTMLElement>('[data-service-slide]')
-    if (slides.length === 0) return
+    const cards = document.querySelectorAll<HTMLElement>('[data-service-card-mobile]')
+    if (cards.length === 0) return
 
     const visibility = new Map<Element, number>()
 
@@ -81,158 +78,159 @@ function useHorizontalSnapIndex(
         }
         let best = 0
         let bestRatio = -1
-        slides.forEach((slide, i) => {
-          const ratio = visibility.get(slide) ?? 0
+        cards.forEach((card, i) => {
+          const ratio = visibility.get(card) ?? 0
           if (ratio > bestRatio) {
             bestRatio = ratio
             best = i
           }
         })
-        if (bestRatio > 0.35) setIndex(best)
+        if (bestRatio > 0.25) setIndex(best)
       },
-      { root, threshold: [0.35, 0.5, 0.65, 0.8] },
+      { threshold: [0.25, 0.4, 0.55, 0.7], rootMargin: '-12% 0px -35% 0px' },
     )
 
-    slides.forEach((slide) => observer.observe(slide))
+    cards.forEach((card) => observer.observe(card))
     return () => observer.disconnect()
-  }, [scrollerRef, itemCount])
+  }, [itemCount])
 
   return index
 }
 
-function MobileServicesCarousel({ items }: { items: Service[] }) {
+function MobileServiceCard({
+  service,
+  index,
+  total,
+}: {
+  service: Service
+  index: number
+  total: number
+}) {
   const reduce = useReducedMotion()
-  const scrollerRef = useRef<HTMLDivElement>(null)
-  const activeIndex = useHorizontalSnapIndex(scrollerRef, items.length)
-  const total = items.length
+  const consult = contactHref(service.slug)
+  const whatsappHref = buildWhatsAppUrl({ service, source: 'service' })
 
-  useEffect(() => {
-    const root = scrollerRef.current
-    if (!root) return
-    root.scrollTo({ left: 0, behavior: 'instant' as ScrollBehavior })
-  }, [items])
+  return (
+    <article
+      role="listitem"
+      data-service-card-mobile
+      data-service-index={index}
+      className="px-5"
+    >
+      <motion.div
+        className="services-mobile-card mx-auto flex w-full max-w-[22.5rem] flex-col"
+        initial={reduce ? false : { opacity: 0, y: 16 }}
+        whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.35 }}
+        transition={{ duration: 0.4, ease: easeOut }}
+      >
+        <div className="mb-5 flex items-center justify-between gap-3">
+          <span className="font-display text-sm font-bold tracking-[0.12em] text-gold-dark">
+            {service.number}
+          </span>
+          <span className="text-[0.7rem] font-bold tabular-nums tracking-wide text-muted/70">
+            {String(index + 1).padStart(2, '0')}
+            <span className="mx-1 text-border">/</span>
+            {String(total).padStart(2, '0')}
+          </span>
+        </div>
+
+        <Link to={`/services/${service.slug}`} className="group flex flex-col">
+          <div
+            className="mb-5 flex size-12 items-center justify-center border border-gold/35 bg-ivory text-gold-dark transition-colors group-hover:border-gold group-hover:bg-white"
+            aria-hidden="true"
+          >
+            <ServiceIcon name={service.icon} className="size-5" />
+          </div>
+
+          <h3 className="font-display text-[clamp(1.25rem,4.6vw,1.55rem)] leading-[1.45] text-charcoal text-balance">
+            {service.title}
+          </h3>
+
+          <span
+            className="my-4 block h-px w-10 bg-gradient-to-l from-gold to-transparent"
+            aria-hidden="true"
+          />
+
+          <p className="text-[1.02rem] leading-[1.85] text-muted text-pretty">
+            {service.shortDescription}
+          </p>
+        </Link>
+
+        <div className="mt-7 flex flex-col gap-2.5">
+          <a
+            href={consult}
+            className="btn-wood inline-flex min-h-11 w-full items-center justify-center px-4 text-[0.95rem] font-bold text-charcoal"
+            onClick={() => {
+              trackEvent('service_consultation_click', {
+                service: service.slug,
+                source: 'service-mobile',
+              })
+              trackEvent('consultation_cta_click', {
+                source: 'service',
+                service: service.slug,
+              })
+            }}
+          >
+            {getServiceConsultLabel(service)}
+          </a>
+          <div className="flex gap-2">
+            <Link
+              to={`/services/${service.slug}`}
+              className="btn-radius inline-flex min-h-11 flex-1 items-center justify-center gap-1 border border-charcoal/12 bg-ivory px-3 text-[0.9rem] font-bold text-charcoal"
+            >
+              {siteConfig.cta.discoverMore}
+              <ArrowLeft size={14} strokeWidth={1.75} aria-hidden="true" />
+            </Link>
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-radius inline-flex min-h-11 flex-1 items-center justify-center border border-charcoal/12 bg-white px-3 text-[0.9rem] font-bold text-gold-dark"
+              onClick={() =>
+                trackEvent('whatsapp_click', {
+                  source: 'service',
+                  service: service.slug,
+                })
+              }
+            >
+              {siteConfig.cta.whatsappShort}
+            </a>
+          </div>
+        </div>
+      </motion.div>
+    </article>
+  )
+}
+
+function MobileServicesList({ items }: { items: Service[] }) {
+  const total = items.length
+  const activeIndex = useVisibleServiceIndex(total)
 
   return (
     <div className="lg:hidden">
       <div
-        className="mb-4 flex items-center justify-between gap-3 px-5"
+        className="mb-5 flex items-center justify-between gap-3 px-5"
         aria-live="polite"
         aria-atomic="true"
       >
-        <p className="text-xs font-bold tracking-wide text-muted">
-          اسحب أفقياً لعرض الخدمات
-        </p>
+        <p className="text-xs font-bold tracking-wide text-muted">مرّر لعرض الخدمات</p>
         <span className="font-display text-xs font-bold tabular-nums tracking-wide text-gold-dark">
-          {String(activeIndex + 1).padStart(2, '0')}
+          {String(Math.min(activeIndex + 1, total) || 1).padStart(2, '0')}
           <span className="mx-1 text-muted/45">من</span>
           {String(total).padStart(2, '0')}
         </span>
       </div>
 
-      <div
-        ref={scrollerRef}
-        className="services-x-scroller flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        role="list"
-        aria-label="قائمة مجالات العمل"
-        dir="rtl"
-      >
-        {items.map((service, index) => {
-          const consult = contactHref(service.slug)
-          const whatsappHref = buildWhatsAppUrl({ service, source: 'service' })
-
-          return (
-            <article
-              key={service.id}
-              role="listitem"
-              data-service-slide
-              data-service-index={index}
-              className="services-x-slide w-[min(100%,22.5rem)] shrink-0 snap-center"
-            >
-              <motion.div
-                className="services-mobile-card flex h-full min-h-[28rem] flex-col"
-                initial={reduce ? false : { opacity: 0, y: 18 }}
-                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.45, ease: easeOut }}
-              >
-                <div className="mb-5 flex items-center justify-between gap-3">
-                  <span className="font-display text-sm font-bold tracking-[0.12em] text-gold-dark">
-                    {service.number}
-                  </span>
-                  <span className="text-[0.7rem] font-bold tabular-nums tracking-wide text-muted/70">
-                    {String(index + 1).padStart(2, '0')}
-                    <span className="mx-1 text-border">/</span>
-                    {String(total).padStart(2, '0')}
-                  </span>
-                </div>
-
-                <Link to={`/services/${service.slug}`} className="group flex flex-1 flex-col">
-                  <div
-                    className="mb-5 flex size-12 items-center justify-center border border-gold/35 bg-ivory text-gold-dark transition-colors group-hover:border-gold group-hover:bg-white"
-                    aria-hidden="true"
-                  >
-                    <ServiceIcon name={service.icon} className="size-5" />
-                  </div>
-
-                  <h3 className="font-display text-[clamp(1.25rem,4.6vw,1.55rem)] leading-[1.45] text-charcoal text-balance">
-                    {service.title}
-                  </h3>
-
-                  <span
-                    className="my-4 block h-px w-10 bg-gradient-to-l from-gold to-transparent"
-                    aria-hidden="true"
-                  />
-
-                  <p className="text-[1.02rem] leading-[1.85] text-muted text-pretty">
-                    {service.shortDescription}
-                  </p>
-                </Link>
-
-                <div className="mt-7 flex flex-col gap-2.5">
-                  <a
-                    href={consult}
-                    className="btn-wood inline-flex min-h-11 w-full items-center justify-center px-4 text-[0.95rem] font-bold text-charcoal"
-                    onClick={() => {
-                      trackEvent('service_consultation_click', {
-                        service: service.slug,
-                        source: 'service-mobile',
-                      })
-                      trackEvent('consultation_cta_click', {
-                        source: 'service',
-                        service: service.slug,
-                      })
-                    }}
-                  >
-                    {getServiceConsultLabel(service)}
-                  </a>
-                  <div className="flex gap-2">
-                    <Link
-                      to={`/services/${service.slug}`}
-                      className="btn-radius inline-flex min-h-11 flex-1 items-center justify-center gap-1 border border-charcoal/12 bg-ivory px-3 text-[0.9rem] font-bold text-charcoal"
-                    >
-                      {siteConfig.cta.discoverMore}
-                      <ArrowLeft size={14} strokeWidth={1.75} aria-hidden="true" />
-                    </Link>
-                    <a
-                      href={whatsappHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-radius inline-flex min-h-11 flex-1 items-center justify-center border border-charcoal/12 bg-white px-3 text-[0.9rem] font-bold text-gold-dark"
-                      onClick={() =>
-                        trackEvent('whatsapp_click', {
-                          source: 'service',
-                          service: service.slug,
-                        })
-                      }
-                    >
-                      {siteConfig.cta.whatsappShort}
-                    </a>
-                  </div>
-                </div>
-              </motion.div>
-            </article>
-          )
-        })}
+      <div className="flex flex-col gap-5" role="list" aria-label="قائمة مجالات العمل">
+        {items.map((service, index) => (
+          <MobileServiceCard
+            key={service.id}
+            service={service}
+            index={index}
+            total={total}
+          />
+        ))}
       </div>
     </div>
   )
@@ -338,7 +336,7 @@ export function Services() {
       </div>
 
       <div className="mt-10 md:mt-12">
-        <MobileServicesCarousel items={filtered} />
+        <MobileServicesList items={filtered} />
       </div>
 
       <AnimatePresence mode="wait">

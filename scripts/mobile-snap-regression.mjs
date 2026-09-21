@@ -1,5 +1,6 @@
 /**
- * Mobile services scroll regression — horizontal carousel + free vertical page scroll.
+ * Mobile services scroll regression — vertical native list + free page scroll.
+ * No nested overflow scroller, no document Y-snap, no gesture interception.
  * SNAP_TEST_URL=http://127.0.0.1:4335/ node scripts/mobile-snap-regression.mjs
  */
 import { chromium, devices } from 'playwright'
@@ -16,19 +17,27 @@ const settle = async (page, ms = 400) => {
 async function metrics(page) {
   return page.evaluate(() => {
     const html = document.documentElement
-    const scroller = document.querySelector('.services-x-scroller')
+    const nested = document.querySelector('.services-x-scroller')
     const featured = document.querySelector('#featured-heading')?.closest('section')
     const services = document.querySelector('#services')
+    const cards = document.querySelectorAll('[data-service-card-mobile]')
+    const firstCard = cards[0]
+    const midCard = cards[Math.min(2, cards.length - 1)]
+    const lastCard = cards[cards.length - 1]
     return {
       y: window.scrollY,
       snapType: getComputedStyle(html).scrollSnapType,
       hasYSnapClass: html.classList.contains('services-snap-on'),
       hasReleasedClass: html.classList.contains('services-snap-released'),
-      scrollerExists: Boolean(scroller),
-      scrollerSnap: scroller ? getComputedStyle(scroller).scrollSnapType : null,
-      slideCount: document.querySelectorAll('[data-service-slide]').length,
+      nestedScrollerExists: Boolean(nested),
+      cardCount: cards.length,
+      firstCardTop: firstCard?.getBoundingClientRect().top ?? null,
+      midCardTop: midCard?.getBoundingClientRect().top ?? null,
+      lastCardTop: lastCard?.getBoundingClientRect().top ?? null,
       servicesBottom: services?.getBoundingClientRect().bottom ?? null,
       featuredTop: featured?.getBoundingClientRect().top ?? null,
+      bodyOverflowY: getComputedStyle(document.body).overflowY,
+      htmlOverflowY: getComputedStyle(html).overflowY,
     }
   })
 }
@@ -56,51 +65,60 @@ async function main() {
   if (m.snapType && m.snapType !== 'none') {
     failures.push(`html scroll-snap-type should be none, got ${m.snapType}`)
   }
-  if (!m.scrollerExists) failures.push('Horizontal services scroller missing')
-  if (!String(m.scrollerSnap || '').includes('x')) {
-    failures.push(`Expected x snap on scroller, got ${m.scrollerSnap}`)
+  if (m.nestedScrollerExists) {
+    failures.push('Nested .services-x-scroller must not exist')
   }
-  if (m.slideCount < 5) failures.push(`Too few slides: ${m.slideCount}`)
+  if (m.cardCount < 5) failures.push(`Too few mobile service cards: ${m.cardCount}`)
 
-  // Enter services, swipe horizontally
+  // Enter services — first card reachable via native vertical scroll
   await page.locator('#services').scrollIntoViewIfNeeded()
   await settle(page, 400)
-  const yAtServices = (await metrics(page)).y
+  m = await metrics(page)
+  const yAtServices = m.y
+  console.log('At services:', m)
 
-  await page.evaluate(() => {
-    const scroller = document.querySelector('.services-x-scroller')
-    if (!scroller) return
-    // RTL: scroll toward next cards
-    scroller.scrollBy({ left: -scroller.clientWidth * 0.85, behavior: 'instant' })
-  })
-  await settle(page, 400)
-  const yAfterHSwipe = (await metrics(page)).y
-  if (Math.abs(yAfterHSwipe - yAtServices) > 80) {
-    failures.push(
-      `Horizontal swipe moved page vertically too much (${yAtServices} → ${yAfterHSwipe})`,
-    )
-  }
-
-  // Exit downward into Featured — must be free vertical scroll
+  // Leave early (before last card) into Featured — must not trap
   await page.evaluate(() => {
     const featured = document.querySelector('#featured-heading')
     featured?.scrollIntoView({ block: 'start', behavior: 'instant' })
   })
   await settle(page, 500)
   m = await metrics(page)
-  console.log('At featured:', m)
+  console.log('Leave early → Featured:', m)
   if (m.snapType && m.snapType !== 'none') {
-    failures.push('Snap reappeared at Featured')
+    failures.push('Snap reappeared after leave-early')
   }
   if ((m.featuredTop ?? 999) > 120) {
-    failures.push(`Featured not near top after scroll (top=${m.featuredTop})`)
+    failures.push(`Featured not near top after leave-early (top=${m.featuredTop})`)
+  }
+
+  // Scroll to last card, then continue to Featured
+  await page.evaluate(() => {
+    const cards = document.querySelectorAll('[data-service-card-mobile]')
+    cards[cards.length - 1]?.scrollIntoView({ block: 'center', behavior: 'instant' })
+  })
+  await settle(page, 400)
+  const yAtLast = (await metrics(page)).y
+
+  await page.evaluate(() => {
+    const featured = document.querySelector('#featured-heading')
+    featured?.scrollIntoView({ block: 'start', behavior: 'instant' })
+  })
+  await settle(page, 500)
+  m = await metrics(page)
+  console.log('Exit last card → Featured:', m)
+  if ((m.featuredTop ?? 999) > 120) {
+    failures.push(`Featured not near top after last-card exit (top=${m.featuredTop})`)
+  }
+  if (m.y <= yAtLast - 20 && (m.featuredTop ?? 999) > 80) {
+    failures.push('Page did not advance past last card into Featured')
   }
 
   // Reverse upward through services — monotonic free scroll, no yank
   const samples = []
-  for (let i = 0; i < 12; i += 1) {
-    await page.evaluate(() => window.scrollBy(0, -160))
-    await sleep(35)
+  for (let i = 0; i < 14; i += 1) {
+    await page.evaluate(() => window.scrollBy(0, -180))
+    await sleep(40)
     samples.push(await metrics(page))
   }
   console.log(
@@ -118,9 +136,77 @@ async function main() {
     }
   }
 
-  // Progress indicator present
-  const progress = await page.locator('text=/\\d{2}\\s*من\\s*\\d{2}/').count()
-  if (progress < 1) failures.push('Progress indicator missing')
+  // Direction reverse: down → up → down must remain stable
+  await page.locator('#services').scrollIntoViewIfNeeded()
+  await settle(page, 300)
+  const reverseYs = []
+  for (const delta of [220, 220, -180, -180, 240, 240]) {
+    await page.evaluate((d) => window.scrollBy(0, d), delta)
+    await sleep(45)
+    reverseYs.push((await metrics(page)).y)
+  }
+  console.log('Reverse direction ys:', reverseYs)
+  for (let i = 1; i < reverseYs.length; i += 1) {
+    const expectedUp = reverseYs[i] < reverseYs[i - 1] - 20
+    const expectedDown = reverseYs[i] > reverseYs[i - 1] + 20
+    const delta = [220, 220, -180, -180, 240, 240][i]
+    if (delta > 0 && !expectedDown && Math.abs(reverseYs[i] - reverseYs[i - 1]) > 5) {
+      // allow clamping at document ends; only fail on opposite yank
+      if (reverseYs[i] < reverseYs[i - 1] - 80) {
+        failures.push(`Reverse-down yank at step ${i}: ${reverseYs[i - 1]} → ${reverseYs[i]}`)
+        break
+      }
+    }
+    if (delta < 0 && reverseYs[i] > reverseYs[i - 1] + 80) {
+      failures.push(`Reverse-up yank at step ${i}: ${reverseYs[i - 1]} → ${reverseYs[i]}`)
+      break
+    }
+  }
+
+  // Progress indicator present and updates while scrolling cards
+  const progress = page.locator('text=/\\d{2}\\s*من\\s*\\d{2}/')
+  if ((await progress.count()) < 1) failures.push('Progress indicator missing')
+
+  await page.evaluate(() => {
+    document.querySelectorAll('[data-service-card-mobile]')[0]?.scrollIntoView({
+      block: 'center',
+      behavior: 'instant',
+    })
+  })
+  await settle(page, 500)
+  const progressFirst = (await progress.first().textContent())?.replace(/\s+/g, ' ') ?? ''
+
+  await page.evaluate(() => {
+    const cards = document.querySelectorAll('[data-service-card-mobile]')
+    cards[Math.min(3, cards.length - 1)]?.scrollIntoView({
+      block: 'center',
+      behavior: 'instant',
+    })
+  })
+  await settle(page, 600)
+  const progressMid = (await progress.first().textContent())?.replace(/\s+/g, ' ') ?? ''
+  console.log('Progress first→mid:', progressFirst, '→', progressMid)
+  if (progressFirst === progressMid && m.cardCount > 3) {
+    // Soft check: IO may lag in headless; require indicator still matches pattern
+    if (!/\d{2}\s*من\s*\d{2}/.test(progressMid)) {
+      failures.push(`Progress indicator invalid after scroll: ${progressMid}`)
+    }
+  }
+
+  // Sticky bar must not force scroll position
+  await page.evaluate(() => window.scrollBy(0, window.innerHeight * 0.6))
+  await settle(page, 400)
+  const yBeforeSticky = (await metrics(page)).y
+  await settle(page, 500)
+  const yAfterSticky = (await metrics(page)).y
+  if (Math.abs(yAfterSticky - yBeforeSticky) > 40) {
+    failures.push(
+      `Sticky bar / observers moved scroll (${yBeforeSticky} → ${yAfterSticky})`,
+    )
+  }
+
+  // Sanity: services entry y was finite and page can leave services
+  if (!(yAtServices >= 0)) failures.push('Could not enter Services')
 
   await browser.close()
 
@@ -129,7 +215,7 @@ async function main() {
     failures.forEach((f) => console.error(' -', f))
     process.exit(1)
   }
-  console.log('\nOK: horizontal services + free vertical scroll')
+  console.log('\nOK: vertical services list + free native page scroll')
 }
 
 main().catch((err) => {

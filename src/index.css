@@ -400,26 +400,15 @@
   }
 
   /*
-    Mobile services: horizontal snap carousel only.
-    Document-level Y snap is intentionally gone — vertical page scroll
-    stays fully native so exiting into Featured never fights the browser.
+    Mobile services use a normal vertical card list (document scroll only).
+    Nested overflow-x carousels compute overflow-y:auto in CSS and fight
+    vertical page gestures — do not reintroduce document or nested snap.
   */
   @media (max-width: 1023px) {
     html {
       overflow-x: clip;
       scroll-behavior: auto;
       scroll-snap-type: none;
-    }
-
-    .services-x-scroller {
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      touch-action: pan-x pan-y;
-    }
-
-    .services-x-slide {
-      scroll-snap-align: center;
-      scroll-snap-stop: always;
     }
 
     .services-mobile-card {
@@ -430,16 +419,6 @@
       background: linear-gradient(180deg, #ffffff 0%, #fbfaf7 100%);
       padding: 1.55rem 1.4rem 1.45rem;
       box-shadow: 0 12px 32px rgba(21, 21, 21, 0.05);
-    }
-
-    .services-mobile-card:active {
-      transform: translateY(1px);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .services-x-scroller {
-        scroll-snap-type: x proximity;
-      }
     }
   }
 
