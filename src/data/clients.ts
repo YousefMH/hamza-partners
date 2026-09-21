@@ -1,22 +1,34 @@
+import { appUrl } from '@/lib/paths'
+
 /**
- * Client marks for the homepage marquee.
- * PLACEHOLDER — replace `mark` / `name` with real client logos when available.
+ * Client logos for the homepage marquee.
+ *
+ * IMPORTANT: Replace these with the firm’s verified client marks before
+ * presenting the site as an official client roster. The brands below are
+ * real logo marks used for layout; confirm legal clearance for each.
  */
 export type Client = {
   id: string
-  /** Short monogram shown in the mark tile */
-  mark: string
-  /** Display name beside the mark */
   name: string
+  /** Path under `public/` (resolved with Vite base via appUrl) */
+  logo: string
 }
 
 export const clients: Client[] = [
-  { id: '1', mark: 'ن', name: 'مجموعة النيل' },
-  { id: '2', mark: 'أ', name: 'أفق للاستثمار' },
-  { id: '3', mark: 'ع', name: 'دار العمران' },
-  { id: '4', mark: 'ق', name: 'قنوات للتجارة' },
-  { id: '5', mark: 'و', name: 'واحة الطاقة' },
-  { id: '6', mark: 'س', name: 'سماء للاتصالات' },
-  { id: '7', mark: 'ج', name: 'جسر المالية' },
-  { id: '8', mark: 'ر', name: 'ريادة للصناعة' },
+  { id: 'microsoft', name: 'Microsoft', logo: 'clients/microsoft.svg' },
+  { id: 'amazon', name: 'Amazon', logo: 'clients/amazon.svg' },
+  { id: 'google', name: 'Google', logo: 'clients/google.svg' },
+  { id: 'ibm', name: 'IBM', logo: 'clients/ibm.svg' },
+  { id: 'siemens', name: 'Siemens', logo: 'clients/siemens.svg' },
+  { id: 'samsung', name: 'Samsung', logo: 'clients/samsung.svg' },
+  { id: 'vodafone', name: 'Vodafone', logo: 'clients/vodafone.svg' },
+  { id: 'orange', name: 'Orange', logo: 'clients/orange.svg' },
+  { id: 'hsbc', name: 'HSBC', logo: 'clients/hsbc.svg' },
+  { id: 'mastercard', name: 'Mastercard', logo: 'clients/mastercard.svg' },
+  { id: 'unilever', name: 'Unilever', logo: 'clients/unilever.svg' },
+  { id: 'adobe', name: 'Adobe', logo: 'clients/adobe.svg' },
 ]
+
+export function clientLogoUrl(logo: string): string {
+  return appUrl(`/${logo}`)
+}

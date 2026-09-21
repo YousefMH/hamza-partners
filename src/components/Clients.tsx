@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { clients, type Client } from '@/data/clients'
+import { clientLogoUrl, clients, type Client } from '@/data/clients'
 import { SectionLabel, DoubleLine } from '@/components/Decorative/Ornaments'
 import {
   fadeUp,
@@ -15,26 +15,26 @@ function ClientLogo({ client }: { client: Client }) {
   return (
     <div
       className={cn(
-        'flex shrink-0 items-center gap-3.5 px-2',
-        'text-charcoal/70 transition-colors duration-300 hover:text-charcoal',
+        'flex h-16 w-[9.5rem] shrink-0 items-center justify-center px-3 md:h-[4.5rem] md:w-44',
+        'opacity-70 grayscale transition-[opacity,filter] duration-300',
+        'hover:opacity-100 hover:grayscale-0',
       )}
     >
-      <span
-        className="flex size-11 items-center justify-center border border-charcoal/15 bg-white font-display text-base font-bold text-gold-dark md:size-12 md:text-lg"
-        aria-hidden="true"
-      >
-        {client.mark}
-      </span>
-      <span className="whitespace-nowrap font-display text-[1.05rem] font-bold tracking-wide md:text-[1.15rem]">
-        {client.name}
-      </span>
+      <img
+        src={clientLogoUrl(client.logo)}
+        alt={client.name}
+        title={client.name}
+        loading="lazy"
+        decoding="async"
+        className="max-h-9 max-w-full object-contain md:max-h-10"
+      />
     </div>
   )
 }
 
 /**
- * Full-bleed client logo marquee — sits directly after Featured Service.
- * Uses duplicated tracks + CSS animation; pauses when reduced motion is on.
+ * Full-bleed client logo marquee after Services.
+ * Duplicated track + CSS animation; pauses when reduced motion is on.
  */
 export function Clients() {
   const reduce = useReducedMotion()
@@ -82,11 +82,11 @@ export function Clients() {
 
         <div
           dir="ltr"
-          className="overflow-hidden border-y border-border/80 bg-ivory/60 py-7 md:py-9"
+          className="overflow-hidden border-y border-border/80 bg-ivory/60 py-6 md:py-8"
         >
           <ul
             className={cn(
-              'clients-marquee-track flex w-max items-center gap-10 md:gap-14',
+              'clients-marquee-track flex w-max items-center gap-6 md:gap-10',
               reduce && 'clients-marquee-track--static',
             )}
           >
