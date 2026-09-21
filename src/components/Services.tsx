@@ -100,11 +100,9 @@ function useVisibleServiceIndex(itemCount: number) {
 function MobileServiceCard({
   service,
   index,
-  total,
 }: {
   service: Service
   index: number
-  total: number
 }) {
   const reduce = useReducedMotion()
   const consult = contactHref(service.slug)
@@ -124,14 +122,9 @@ function MobileServiceCard({
         viewport={{ once: true, amount: 0.35 }}
         transition={{ duration: 0.4, ease: easeOut }}
       >
-        <div className="mb-5 flex items-center justify-between gap-3">
+        <div className="mb-5">
           <span className="font-display text-sm font-bold tracking-[0.12em] text-gold-dark">
             {service.number}
-          </span>
-          <span className="text-[0.7rem] font-bold tabular-nums tracking-wide text-muted/70">
-            {String(index + 1).padStart(2, '0')}
-            <span className="mx-1 text-border">/</span>
-            {String(total).padStart(2, '0')}
           </span>
         </div>
 
@@ -228,7 +221,6 @@ function MobileServicesList({ items }: { items: Service[] }) {
             key={service.id}
             service={service}
             index={index}
-            total={total}
           />
         ))}
       </div>
