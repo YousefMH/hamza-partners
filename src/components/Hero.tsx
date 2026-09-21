@@ -17,6 +17,7 @@ import {
 
 const typewriterEntries = heroTypewriterEntries.map((entry) => ({
   label: entry.label,
+  slug: entry.slug,
   href: `/services/${entry.slug}`,
 }))
 
@@ -91,10 +92,9 @@ export function Hero() {
                   loop
                   className="min-h-[1.7em] font-display text-[clamp(1.25rem,4.2vw,1.65rem)] font-bold leading-[1.7] md:text-[clamp(1.4rem,2.2vw,1.85rem)]"
                   onNavigate={(entry) => {
-                    const slug = entry.href?.split('/').pop()
                     trackEvent('consultation_cta_click', {
                       source: 'hero-typewriter',
-                      service: slug,
+                      service: entry.slug,
                     })
                   }}
                 />
