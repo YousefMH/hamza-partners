@@ -215,7 +215,7 @@ function MobileServicesList({ items }: { items: Service[] }) {
         </span>
       </div>
 
-      <div className="flex flex-col gap-5" role="list" aria-label="قائمة مجالات العمل">
+      <div className="flex flex-col gap-5" role="list" aria-label="قائمة خدماتنا">
         {items.map((service, index) => (
           <MobileServiceCard
             key={service.id}
@@ -247,7 +247,7 @@ function CategoryFilters({
     <div
       className="flex flex-wrap justify-center gap-2 lg:justify-start"
       role="group"
-      aria-label="تصفية مجالات العمل"
+      aria-label="تصفية الخدمات"
     >
       {options.map((option) => {
         const isActive = active === option.id
@@ -306,14 +306,14 @@ export function Services() {
           viewport={viewportReading}
         >
           <motion.div variants={readingVariants(reduce, fadeUp)}>
-            <SectionLabel>مجالات العمل</SectionLabel>
+            <SectionLabel>خدماتنا</SectionLabel>
           </motion.div>
           <motion.h2
             id="services-heading"
             variants={readingVariants(reduce, fadeUp)}
             className="section-title"
           >
-            مجالات عملنا
+            خدماتنا
           </motion.h2>
           <motion.div variants={readingVariants(reduce, fadeUp)} className="section-rule">
             <DoubleLine />

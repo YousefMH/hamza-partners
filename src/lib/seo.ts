@@ -146,7 +146,7 @@ export function serviceSeo(service: Service): PageSeo {
             {
               '@type': 'ListItem',
               position: 2,
-              name: 'مجالات العمل',
+              name: 'خدماتنا',
               item: `${SITE_ORIGIN}/#services`,
             },
             {
@@ -201,7 +201,7 @@ export function lawyerSeo(member: TeamMember): PageSeo {
             {
               '@type': 'ListItem',
               position: 2,
-              name: 'فريق العمل',
+              name: 'الفريق',
               item: `${SITE_ORIGIN}/#team`,
             },
             {

@@ -98,7 +98,7 @@ export function Team() {
             <SectionLabel>الفريق</SectionLabel>
           </motion.div>
           <motion.h2 id="team-heading" variants={readingVariants(reduce, fadeUp)} className="section-title">
-            محامونا
+            الفريق
           </motion.h2>
           <motion.div variants={readingVariants(reduce, fadeUp)} className="section-rule">
             <DoubleLine />

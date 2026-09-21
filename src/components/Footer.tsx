@@ -75,7 +75,7 @@ export function Footer() {
 
           <div className="col-span-2 lg:col-span-1">
             <p className="mb-3 font-display text-sm font-bold text-gold-champagne sm:mb-4 sm:text-base">
-              مجالات العمل
+              خدماتنا
             </p>
             <ul className="grid grid-cols-1 gap-y-2 text-sm text-ivory/85 sm:space-y-2.5 sm:text-base md:grid-cols-2 md:gap-x-6 lg:grid-cols-1">
               {services.slice(0, 6).map((service) => (

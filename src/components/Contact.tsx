@@ -115,7 +115,7 @@ export function Contact() {
               <SectionLabel>تواصل</SectionLabel>
             </motion.div>
             <motion.h2 id="contact-heading" variants={readingVariants(reduce, fadeUp)} className="section-title">
-              تواصل معنا
+              تواصل
             </motion.h2>
             <motion.div variants={readingVariants(reduce, fadeUp)} className="section-rule">
               <DoubleLine />

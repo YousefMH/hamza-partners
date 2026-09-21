@@ -31,7 +31,7 @@ export function LawyerProfilePage() {
           <h1 className="font-display text-3xl text-charcoal">الملف غير موجود</h1>
           <p className="mt-4 text-muted">تعذر العثور على ملف المحامي المطلوب.</p>
           <a href={appUrl("/#team")} className="mt-8 text-gold-dark hover:text-charcoal">
-            العودة إلى فريق العمل
+            العودة إلى الفريق
           </a>
         </main>
         <Footer />
@@ -52,7 +52,7 @@ export function LawyerProfilePage() {
               className="mb-8 inline-flex items-center gap-2 text-base text-ivory/85 transition-colors hover:text-gold-champagne"
             >
               <ArrowRight size={16} strokeWidth={1.5} aria-hidden="true" />
-              فريق العمل
+              الفريق
             </a>
             <Meander className="mb-8 w-full max-w-xs" tone="champagne" />
             <p className="text-sm text-ivory/65">ملف شخصي توضيحي — بيانات قابلة للاستبدال</p>

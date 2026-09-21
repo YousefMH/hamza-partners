@@ -36,14 +36,14 @@ export function Articles() {
           viewport={viewportReading}
         >
           <motion.div variants={readingVariants(reduce, fadeUp)}>
-            <SectionLabel>المعرفة</SectionLabel>
+            <SectionLabel>الرؤى</SectionLabel>
           </motion.div>
           <motion.h2
             id="articles-heading"
             variants={readingVariants(reduce, fadeUp)}
             className="section-title"
           >
-            المقالات والرؤى القانونية
+            الرؤى
           </motion.h2>
           <motion.div variants={readingVariants(reduce, fadeUp)} className="section-rule">
             <DoubleLine />

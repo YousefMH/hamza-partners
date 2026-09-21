@@ -60,7 +60,7 @@ export function ServiceDetailPage() {
               className="mb-8 inline-flex items-center justify-center gap-2 text-base text-ivory/85 transition-colors hover:text-gold-champagne md:justify-start"
             >
               <ArrowRight size={16} strokeWidth={1.5} aria-hidden="true" />
-              مجالات العمل
+              خدماتنا
             </a>
 
             <div className="flex justify-center md:justify-start">
@@ -160,7 +160,7 @@ export function ServiceDetailPage() {
                   size="lg"
                   className="w-full sm:w-auto"
                 >
-                  كل مجالات العمل
+                  كل خدماتنا
                 </Button>
               </div>
             </div>
