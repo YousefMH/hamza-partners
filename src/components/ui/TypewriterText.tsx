@@ -182,7 +182,7 @@ export function TypewriterText({
         {longestWord}
       </span>
 
-      <span className="col-start-1 row-start-1 inline-flex max-w-full flex-wrap items-baseline">
+      <span className="col-start-1 row-start-1 w-fit max-w-full justify-self-start">
         <Link
           key={active.slug}
           to={active.href}
@@ -190,28 +190,29 @@ export function TypewriterText({
           data-typewriter-link="true"
           title={active.label}
           className={cn(
-            'relative inline-block max-w-full cursor-pointer font-[inherit] leading-[inherit]',
+            'inline-flex w-fit max-w-full cursor-pointer items-baseline font-[inherit] leading-[inherit]',
             'text-gold-champagne transition-colors hover:text-gold',
             'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold',
           )}
           aria-label={`${ariaLabelPrefix}: ${active.label} — فتح صفحة الخدمة`}
           onClick={() => onNavigate?.(active, index)}
         >
-          <span className="whitespace-pre-wrap" aria-hidden="true">
+          {/* Underline only on the glyphs — never the cursor or reserved grid width */}
+          <span className="relative inline-block max-w-full whitespace-pre-wrap" aria-hidden="true">
             {displayText}
-            {!reduce && (
+            {displayText.length > 0 ? (
               <span
-                className="typewriter-cursor ms-1 inline-block h-[0.95em] w-px shrink-0 translate-y-[0.08em] bg-gold-champagne align-baseline"
+                className="pointer-events-none absolute inset-x-0 -bottom-1 h-px bg-gold/50"
                 aria-hidden="true"
               />
-            )}
+            ) : null}
           </span>
-          {displayText.length > 0 && (
+          {!reduce ? (
             <span
-              className="pointer-events-none absolute inset-x-0 -bottom-1 h-px bg-gold/50"
+              className="typewriter-cursor ms-1 inline-block h-[0.95em] w-px shrink-0 translate-y-[0.08em] bg-gold-champagne"
               aria-hidden="true"
             />
-          )}
+          ) : null}
         </Link>
       </span>
 
