@@ -1,8 +1,10 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { siteConfig } from '@/data/siteConfig'
 import { trustIndicators } from '@/data/content'
-import { heroTypewriterServices } from '@/data/services'
+import { heroTypewriterEntries } from '@/data/services'
 import { appUrl } from '@/lib/paths'
+import { contactHref } from '@/lib/navigation'
+import { trackEvent } from '@/lib/analytics'
 import { Button } from '@/components/ui/Button'
 import { TypewriterText } from '@/components/ui/TypewriterText'
 import {
@@ -12,6 +14,11 @@ import {
   readingVariants,
   staggerContainer,
 } from '@/lib/motion'
+
+const typewriterEntries = heroTypewriterEntries.map((entry) => ({
+  label: entry.label,
+  href: `/services/${entry.slug}`,
+}))
 
 export function Hero() {
   const reduce = useReducedMotion()
@@ -76,13 +83,20 @@ export function Hero() {
               </p>
               <div className="mt-2.5 flex justify-center md:justify-start">
                 <TypewriterText
-                  words={heroTypewriterServices}
+                  entries={typewriterEntries}
                   typingSpeed={75}
                   deletingSpeed={45}
                   pauseDuration={2100}
                   startDelay={700}
                   loop
                   className="min-h-[1.7em] font-display text-[clamp(1.25rem,4.2vw,1.65rem)] font-bold leading-[1.7] md:text-[clamp(1.4rem,2.2vw,1.85rem)]"
+                  onNavigate={(entry) => {
+                    const slug = entry.href?.split('/').pop()
+                    trackEvent('consultation_cta_click', {
+                      source: 'hero-typewriter',
+                      service: slug,
+                    })
+                  }}
                 />
               </div>
             </motion.div>
@@ -92,10 +106,13 @@ export function Hero() {
               className="mt-9 flex flex-col items-stretch gap-3.5 sm:mt-10 sm:flex-row sm:items-center sm:justify-center md:justify-start"
             >
               <Button
-                href={appUrl('/#contact')}
+                href={contactHref()}
                 variant="inverse"
                 size="lg"
                 className="w-full sm:w-auto"
+                onClick={() =>
+                  trackEvent('consultation_cta_click', { source: 'hero' })
+                }
               >
                 {siteConfig.cta.book}
               </Button>

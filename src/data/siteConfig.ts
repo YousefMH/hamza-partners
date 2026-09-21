@@ -43,11 +43,14 @@ export const siteConfig = {
     book: 'احجز استشارة',
     bookFull: 'احجز استشارتك',
     contact: 'تواصل معنا',
+    whatsapp: 'تواصل عبر واتساب',
+    whatsappShort: 'واتساب',
     discoverServices: 'اكتشف مجالات عملنا',
     discoverMore: 'اكتشف المزيد',
     viewProfile: 'عرض الملف',
     readArticle: 'اقرأ المقال',
     submit: 'إرسال الطلب',
+    filterAll: 'الكل',
   },
 } as const
 

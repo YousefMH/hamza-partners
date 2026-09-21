@@ -1,12 +1,16 @@
+import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ArrowRight, Check } from 'lucide-react'
-import { getServiceBySlug, services } from '@/data/services'
+import { getServiceBySlug, getServiceConsultLabel, services } from '@/data/services'
 import { siteConfig } from '@/data/siteConfig'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { SeoHead } from '@/components/SeoHead'
 import { Button } from '@/components/ui/Button'
 import { appUrl } from '@/lib/paths'
+import { contactHref } from '@/lib/navigation'
+import { trackEvent } from '@/lib/analytics'
+import { buildWhatsAppUrl } from '@/lib/whatsapp'
 import { notFoundSeo, serviceSeo } from '@/lib/seo'
 import { ServiceIcon } from '@/components/ui/ServiceIcon'
 import { DoubleLine, Meander, SectionLabel } from '@/components/Decorative/Ornaments'
@@ -14,6 +18,11 @@ import { DoubleLine, Meander, SectionLabel } from '@/components/Decorative/Ornam
 export function ServiceDetailPage() {
   const { slug } = useParams<{ slug: string }>()
   const service = slug ? getServiceBySlug(slug) : undefined
+
+  useEffect(() => {
+    if (!service) return
+    trackEvent('service_view', { service: service.slug })
+  }, [service])
 
   if (!service) {
     return (
@@ -35,6 +44,9 @@ export function ServiceDetailPage() {
   const related = services
     .filter((s) => s.category === service.category && s.id !== service.id)
     .slice(0, 3)
+
+  const consultHref = contactHref(service.slug)
+  const whatsappHref = buildWhatsAppUrl({ service, source: 'service-detail' })
 
   return (
     <>
@@ -109,8 +121,38 @@ export function ServiceDetailPage() {
               </div>
 
               <div className="mt-12 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:justify-center md:justify-start">
-                <Button href={appUrl('/#contact')} size="lg" className="w-full sm:w-auto">
-                  {siteConfig.cta.book}
+                <Button
+                  href={consultHref}
+                  size="lg"
+                  className="w-full sm:w-auto"
+                  onClick={() => {
+                    trackEvent('service_consultation_click', {
+                      service: service.slug,
+                      source: 'service-detail',
+                    })
+                    trackEvent('consultation_cta_click', {
+                      source: 'service-detail',
+                      service: service.slug,
+                    })
+                  }}
+                >
+                  {getServiceConsultLabel(service)}
+                </Button>
+                <Button
+                  href={whatsappHref}
+                  variant="secondary"
+                  size="lg"
+                  className="w-full sm:w-auto"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() =>
+                    trackEvent('whatsapp_click', {
+                      source: 'service-detail',
+                      service: service.slug,
+                    })
+                  }
+                >
+                  {siteConfig.cta.whatsappShort}
                 </Button>
                 <Button
                   href={appUrl('/#services')}
@@ -130,7 +172,21 @@ export function ServiceDetailPage() {
                   {service.shortDescription}
                 </p>
                 <div className="mt-6 border-t border-border pt-5">
-                  <Button href={appUrl('/#contact')} className="w-full" size="lg">
+                  <Button
+                    href={consultHref}
+                    className="w-full"
+                    size="lg"
+                    onClick={() => {
+                      trackEvent('service_consultation_click', {
+                        service: service.slug,
+                        source: 'service-detail-sidebar',
+                      })
+                      trackEvent('consultation_cta_click', {
+                        source: 'service-detail',
+                        service: service.slug,
+                      })
+                    }}
+                  >
                     {siteConfig.cta.contact}
                   </Button>
                 </div>

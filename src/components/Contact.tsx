@@ -1,7 +1,8 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
+import { useLocation } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Mail, MapPin, Phone, Clock } from 'lucide-react'
-import { services } from '@/data/services'
+import { getServiceBySlug, services } from '@/data/services'
 import { siteConfig } from '@/data/siteConfig'
 import {
   submitContactRequest,
@@ -9,6 +10,8 @@ import {
   type ContactFormErrors,
   type ContactFormValues,
 } from '@/lib/form'
+import { trackEvent } from '@/lib/analytics'
+import { buildWhatsAppUrl } from '@/lib/whatsapp'
 import { Button } from '@/components/ui/Button'
 import { SectionLabel, DoubleLine } from '@/components/Decorative/Ornaments'
 import {
@@ -32,10 +35,24 @@ const initialValues: ContactFormValues = {
 
 export function Contact() {
   const reduce = useReducedMotion()
+  const location = useLocation()
   const [values, setValues] = useState<ContactFormValues>(initialValues)
   const [errors, setErrors] = useState<ContactFormErrors>({})
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const [serverMessage, setServerMessage] = useState('')
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const slug = params.get('service')?.trim() ?? ''
+    if (!slug) {
+      return
+    }
+    const match = getServiceBySlug(slug)
+    setValues((prev) => ({
+      ...prev,
+      serviceType: match ? match.slug : '',
+    }))
+  }, [location.search, location.hash])
 
   const onChange = (
     field: keyof ContactFormValues,
@@ -78,6 +95,11 @@ export function Contact() {
   const fieldClass =
     'w-full border border-border bg-white px-4 py-3.5 text-base text-charcoal outline-none transition-colors placeholder:text-muted/70 focus:border-gold'
 
+  const whatsappHref = buildWhatsAppUrl({
+    service: getServiceBySlug(values.serviceType),
+    source: 'contact',
+  })
+
   return (
     <section id="contact" className="section-pad bg-white" aria-labelledby="contact-heading">
       <div className="container-editorial">
@@ -118,10 +140,16 @@ export function Contact() {
                 <div>
                   <p className="text-muted">واتساب</p>
                   <a
-                    href={siteConfig.contact.whatsappHref}
+                    href={whatsappHref}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-charcoal hover:text-gold-dark"
+                    onClick={() =>
+                      trackEvent('whatsapp_click', {
+                        source: 'contact',
+                        service: values.serviceType || undefined,
+                      })
+                    }
                   >
                     {siteConfig.contact.whatsapp}
                   </a>

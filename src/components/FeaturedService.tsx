@@ -1,10 +1,11 @@
-import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
-import { featuredService } from '@/data/services'
 import { siteConfig } from '@/data/siteConfig'
-import { appUrl } from '@/lib/paths'
+import { featuredService, getServiceConsultLabel } from '@/data/services'
+import { contactHref } from '@/lib/navigation'
+import { trackEvent } from '@/lib/analytics'
 import { Button } from '@/components/ui/Button'
 import { Meander, SectionLabel } from '@/components/Decorative/Ornaments'
+import { Link } from 'react-router-dom'
 import {
   clipReveal,
   fadeUp,
@@ -17,6 +18,7 @@ import {
 
 export function FeaturedService() {
   const reduce = useReducedMotion()
+  const consultLabel = getServiceConsultLabel(featuredService)
 
   return (
     <section
@@ -50,7 +52,10 @@ export function FeaturedService() {
               <span className="text-gold-champagne">الخدمة المميزة</span>
             </SectionLabel>
           </motion.div>
-          <motion.div variants={readingVariants(reduce, fadeUp)} className="flex justify-center md:justify-start">
+          <motion.div
+            variants={readingVariants(reduce, fadeUp)}
+            className="flex justify-center md:justify-start"
+          >
             <Meander className="mb-6 w-full max-w-sm" tone="champagne" />
           </motion.div>
           <motion.p
@@ -76,8 +81,22 @@ export function FeaturedService() {
             variants={readingVariants(reduce, fadeUp)}
             className="mt-8 flex flex-wrap justify-center gap-4 md:mt-10 md:justify-start"
           >
-            <Button href={appUrl('/#contact')} variant="inverse" size="lg">
-              {siteConfig.cta.book}
+            <Button
+              href={contactHref(featuredService.slug)}
+              variant="inverse"
+              size="lg"
+              onClick={() => {
+                trackEvent('service_consultation_click', {
+                  service: featuredService.slug,
+                  source: 'featured-service',
+                })
+                trackEvent('consultation_cta_click', {
+                  source: 'featured-service',
+                  service: featuredService.slug,
+                })
+              }}
+            >
+              {consultLabel}
             </Button>
             <Link
               to={`/services/${featuredService.slug}`}

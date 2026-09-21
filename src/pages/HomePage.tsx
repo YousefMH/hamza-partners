@@ -11,6 +11,7 @@ import { Articles } from '@/components/Articles'
 import { CTA } from '@/components/CTA'
 import { Contact } from '@/components/Contact'
 import { Footer } from '@/components/Footer'
+import { MobileStickyBar } from '@/components/MobileStickyBar'
 import { SectionDivider } from '@/components/Decorative/SectionDivider'
 import { SeoHead } from '@/components/SeoHead'
 import { homeSeo } from '@/lib/seo'
@@ -20,7 +21,7 @@ export function HomePage() {
     <>
       <SeoHead seo={homeSeo()} />
       <Header />
-      <main>
+      <main className="pb-[4.5rem] lg:pb-0">
         <Hero />
         <Services />
         <SectionDivider surface="white" />
@@ -43,6 +44,7 @@ export function HomePage() {
         <Contact />
       </main>
       <Footer />
+      <MobileStickyBar />
     </>
   )
 }

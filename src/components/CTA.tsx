@@ -1,6 +1,8 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { siteConfig } from '@/data/siteConfig'
-import { appUrl } from '@/lib/paths'
+import { contactHref } from '@/lib/navigation'
+import { trackEvent } from '@/lib/analytics'
+import { buildWhatsAppUrl } from '@/lib/whatsapp'
 import { Button } from '@/components/ui/Button'
 import { Meander } from '@/components/Decorative/Ornaments'
 import {
@@ -14,6 +16,7 @@ import {
 
 export function CTA() {
   const reduce = useReducedMotion()
+  const whatsappHref = buildWhatsAppUrl({ source: 'cta' })
 
   return (
     <section className="relative overflow-hidden bg-charcoal text-ivory" aria-labelledby="cta-heading">
@@ -45,11 +48,25 @@ export function CTA() {
             variants={readingVariants(reduce, fadeUp)}
             className="mt-8 flex flex-wrap justify-center gap-4 md:mt-10"
           >
-            <Button href={appUrl('/#contact')} variant="inverse" size="lg">
+            <Button
+              href={contactHref()}
+              variant="inverse"
+              size="lg"
+              onClick={() =>
+                trackEvent('consultation_cta_click', { source: 'cta' })
+              }
+            >
               {siteConfig.cta.bookFull}
             </Button>
-            <Button href={appUrl('/#contact')} variant="ghost" size="lg">
-              {siteConfig.cta.contact}
+            <Button
+              href={whatsappHref}
+              variant="ghost"
+              size="lg"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackEvent('whatsapp_click', { source: 'cta' })}
+            >
+              {siteConfig.cta.whatsapp}
             </Button>
           </motion.div>
         </motion.div>

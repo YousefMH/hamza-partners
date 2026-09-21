@@ -1,5 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { industries } from '@/data/industries'
+import { openServicesWithCategory } from '@/lib/navigation'
+import { trackEvent } from '@/lib/analytics'
 import { SectionLabel, DoubleLine } from '@/components/Decorative/Ornaments'
 import {
   fadeUp,
@@ -48,9 +50,19 @@ export function Industries() {
         >
           {industries.map((industry) => (
             <motion.li key={industry.id} variants={readingVariants(reduce, fadeUpSoft)}>
-              <span className="inline-block border border-border bg-ivory px-5 py-3.5 font-display text-base leading-relaxed text-charcoal transition-colors duration-300 hover:border-gold hover:text-gold-dark md:px-6 md:text-lg">
+              <button
+                type="button"
+                className="inline-block border border-border bg-ivory px-5 py-3.5 font-display text-base leading-relaxed text-charcoal transition-colors duration-300 hover:border-gold hover:text-gold-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold md:px-6 md:text-lg"
+                onClick={() => {
+                  trackEvent('consultation_cta_click', {
+                    source: 'industry',
+                    service: industry.category,
+                  })
+                  openServicesWithCategory(industry.category)
+                }}
+              >
                 {industry.name}
-              </span>
+              </button>
             </motion.li>
           ))}
         </motion.ul>

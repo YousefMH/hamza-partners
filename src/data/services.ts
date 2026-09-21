@@ -10,6 +10,8 @@ export interface Service {
   id: string
   number: string
   title: string
+  /** Short label for Hero typewriter + compact CTAs */
+  shortTitle: string
   shortDescription: string
   description: string
   highlights: string[]
@@ -40,6 +42,7 @@ export const services: Service[] = [
     ],
     icon: 'building-2',
     slug: 'company-formation-gafi',
+    shortTitle: 'تأسيس الشركات',
     featured: false,
     category: 'corporate',
   },
@@ -59,6 +62,7 @@ export const services: Service[] = [
     ],
     icon: 'file-pen',
     slug: 'commercial-agency-franchise',
+    shortTitle: 'صياغة الاتفاقيات',
     featured: false,
     category: 'corporate',
   },
@@ -78,6 +82,7 @@ export const services: Service[] = [
     ],
     icon: 'users',
     slug: 'shareholders-governance',
+    shortTitle: 'حوكمة الشركات',
     featured: false,
     category: 'corporate',
   },
@@ -97,6 +102,7 @@ export const services: Service[] = [
     ],
     icon: 'git-merge',
     slug: 'mergers-acquisitions',
+    shortTitle: 'الاندماجات والاستحواذات',
     featured: true,
     category: 'corporate',
   },
@@ -116,6 +122,7 @@ export const services: Service[] = [
     ],
     icon: 'handshake',
     slug: 'joint-ventures',
+    shortTitle: 'المشروعات المشتركة',
     featured: false,
     category: 'corporate',
   },
@@ -135,6 +142,7 @@ export const services: Service[] = [
     ],
     icon: 'globe',
     slug: 'foreign-branches-rep-offices',
+    shortTitle: 'فروع الشركات الأجنبية',
     featured: false,
     category: 'regulatory',
   },
@@ -154,6 +162,7 @@ export const services: Service[] = [
     ],
     icon: 'refresh-cw',
     slug: 'restructuring-liquidation',
+    shortTitle: 'إعادة الهيكلة والإفلاس',
     featured: false,
     category: 'corporate',
   },
@@ -173,6 +182,7 @@ export const services: Service[] = [
     ],
     icon: 'gavel',
     slug: 'commercial-civil-litigation',
+    shortTitle: 'التقاضي والمنازعات',
     featured: false,
     category: 'disputes',
   },
@@ -192,6 +202,7 @@ export const services: Service[] = [
     ],
     icon: 'scale',
     slug: 'commercial-arbitration',
+    shortTitle: 'التحكيم وتسوية المنازعات',
     featured: false,
     category: 'disputes',
   },
@@ -211,6 +222,7 @@ export const services: Service[] = [
     ],
     icon: 'copyright',
     slug: 'intellectual-property',
+    shortTitle: 'الملكية الفكرية',
     featured: false,
     category: 'regulatory',
   },
@@ -230,6 +242,7 @@ export const services: Service[] = [
     ],
     icon: 'landmark',
     slug: 'banking-finance',
+    shortTitle: 'الخدمات المصرفية والتمويل',
     featured: false,
     category: 'finance',
   },
@@ -249,6 +262,7 @@ export const services: Service[] = [
     ],
     icon: 'line-chart',
     slug: 'capital-markets',
+    shortTitle: 'أسواق المال',
     featured: false,
     category: 'finance',
   },
@@ -268,6 +282,7 @@ export const services: Service[] = [
     ],
     icon: 'receipt',
     slug: 'tax-compliance',
+    shortTitle: 'الاستشارات الضريبية',
     featured: false,
     category: 'finance',
   },
@@ -287,6 +302,7 @@ export const services: Service[] = [
     ],
     icon: 'briefcase',
     slug: 'employment-social-insurance',
+    shortTitle: 'قانون العمل',
     featured: false,
     category: 'employment',
   },
@@ -306,6 +322,7 @@ export const services: Service[] = [
     ],
     icon: 'building',
     slug: 'real-estate',
+    shortTitle: 'العقارات',
     featured: false,
     category: 'real-estate',
   },
@@ -317,26 +334,31 @@ export function getServiceBySlug(slug: string): Service | undefined {
   return services.find((s) => s.slug === slug)
 }
 
-/**
- * Short premium labels for the Hero typewriter — faithful shortenings of
- * the firm’s practice areas, not invented services.
- */
-export const heroTypewriterServices = [
-  'صياغة الاتفاقيات',
-  'التحكيم وتسوية المنازعات',
-  'حوكمة الشركات',
-  'الاندماجات والاستحواذات',
-  'خدمات الشركات',
-  'الجرائم المالية',
-  'إعادة الهيكلة والإفلاس',
-  'التقاضي والمنازعات',
-  'الاستشارات الضريبية',
-  'الملكية الفكرية',
-  'الخدمات المصرفية والتمويل',
-  'أسواق المال',
-  'الضيافة والسياحة',
-  'العقارات',
-  'الرعاية الصحية',
-  'الجرائم الإلكترونية',
-] as const
+export const serviceCategoryLabels: Record<ServiceCategory, string> = {
+  corporate: 'الشركات والاستثمار',
+  disputes: 'المنازعات',
+  finance: 'التمويل والأسواق',
+  regulatory: 'التنظيم والامتثال',
+  employment: 'العمل والتأمينات',
+  'real-estate': 'العقارات',
+}
+
+export const serviceCategoryOrder: ServiceCategory[] = [
+  'corporate',
+  'disputes',
+  'finance',
+  'regulatory',
+  'employment',
+  'real-estate',
+]
+
+/** Hero typewriter entries — always map to a real service slug. */
+export const heroTypewriterEntries = services.map((service) => ({
+  label: service.shortTitle,
+  slug: service.slug,
+}))
+
+export function getServiceConsultLabel(service: Service): string {
+  return `استشرنا بشأن ${service.shortTitle}`
+}
 

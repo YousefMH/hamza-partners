@@ -1,9 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
+import { Menu, MessageCircle, X } from 'lucide-react'
 import { siteConfig } from '@/data/siteConfig'
 import { appUrl } from '@/lib/paths'
+import { contactHref } from '@/lib/navigation'
+import { trackEvent } from '@/lib/analytics'
+import { buildWhatsAppUrl } from '@/lib/whatsapp'
 import { cn } from '@/lib/cn'
 import { Button } from '@/components/ui/Button'
 
@@ -123,6 +126,16 @@ export function Header({ forceSolid = false }: HeaderProps) {
     closeMenu()
   }
 
+  const whatsappHref = buildWhatsAppUrl({ source: open ? 'mobile-nav' : 'header' })
+  const bookHref = contactHref()
+
+  const whatsappIconClass = cn(
+    'inline-flex size-9 shrink-0 items-center justify-center rounded-sm transition-colors sm:size-10',
+    solidChrome
+      ? 'border border-charcoal/12 bg-white text-gold-dark hover:border-gold hover:text-charcoal'
+      : 'border border-ivory/25 bg-charcoal/30 text-gold-champagne hover:border-gold-champagne hover:text-ivory',
+  )
+
   /** Locked bar height — open/closed chrome must never jump */
   const barRowClass =
     'container-editorial flex h-14 w-full shrink-0 items-center gap-2 overflow-hidden sm:gap-3 md:h-16 lg:h-[4.5rem] lg:gap-6'
@@ -199,12 +212,26 @@ export function Header({ forceSolid = false }: HeaderProps) {
           </nav>
 
           <div className="ms-auto flex shrink-0 items-center gap-1.5 sm:gap-2.5 lg:ms-0">
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(whatsappIconClass, 'hidden sm:inline-flex')}
+              aria-label={siteConfig.cta.whatsapp}
+              onClick={() => trackEvent('whatsapp_click', { source: 'header' })}
+            >
+              <MessageCircle size={18} strokeWidth={1.6} aria-hidden="true" />
+            </a>
+
             {/* On the home hero, the primary CTA already lives in the section —
                 keep this compact header button only after scroll / off-home. */}
             {(scrolled || !onHome) && (
               <a
-                href={appUrl('/#contact')}
-                onClick={() => activateSection('/#contact')}
+                href={bookHref}
+                onClick={() => {
+                  activateSection('/#contact')
+                  trackEvent('consultation_cta_click', { source: 'header' })
+                }}
                 className={cn(
                   'btn-wood inline-flex h-9 max-w-[9.5rem] items-center justify-center whitespace-nowrap border px-2.5 font-display text-[0.8125rem] font-bold text-charcoal transition-[filter,background-color] duration-300 sm:h-10 sm:max-w-none sm:px-4 sm:text-sm lg:hidden',
                 )}
@@ -215,10 +242,13 @@ export function Header({ forceSolid = false }: HeaderProps) {
 
             <span className="hidden lg:inline-flex">
               <Button
-                href={appUrl('/#contact')}
+                href={bookHref}
                 size="md"
                 variant={solidChrome ? 'primary' : 'inverse'}
-                onClick={() => activateSection('/#contact')}
+                onClick={() => {
+                  activateSection('/#contact')
+                  trackEvent('consultation_cta_click', { source: 'header' })
+                }}
               >
                 {siteConfig.cta.book}
               </Button>
@@ -286,15 +316,31 @@ export function Header({ forceSolid = false }: HeaderProps) {
               })}
             </nav>
 
-            <div className="container-editorial shrink-0 border-t border-border py-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
+            <div className="container-editorial shrink-0 space-y-3 border-t border-border py-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
               <Button
-                href={appUrl('/#contact')}
-                onClick={() => activateSection('/#contact')}
+                href={bookHref}
+                onClick={() => {
+                  activateSection('/#contact')
+                  trackEvent('consultation_cta_click', { source: 'mobile-nav' })
+                }}
                 size="lg"
                 className="w-full"
               >
                 {siteConfig.cta.book}
               </Button>
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-radius inline-flex min-h-11 w-full items-center justify-center gap-2 border border-charcoal/15 bg-white font-display text-base font-bold text-charcoal transition-colors hover:border-gold hover:text-gold-dark"
+                onClick={() => {
+                  trackEvent('whatsapp_click', { source: 'mobile-nav' })
+                  closeMenu()
+                }}
+              >
+                <MessageCircle size={18} strokeWidth={1.6} aria-hidden="true" />
+                {siteConfig.cta.whatsapp}
+              </a>
             </div>
           </motion.div>
         )}
