@@ -101,7 +101,7 @@ export function Services() {
 
   return (
     <section id="services" className="bg-ivory lg:bg-white lg:section-pad" aria-labelledby="services-heading">
-      <div className="container-editorial section-pad pb-4 lg:pb-0">
+      <div className="services-intro container-editorial section-pad pb-4 lg:pb-0">
         <motion.div
           className="max-w-2xl"
           variants={readingStagger(reduce, staggerContainer)}
@@ -125,53 +125,44 @@ export function Services() {
           <motion.p variants={readingVariants(reduce, fadeUpSoft)} className="lede">
             خبرات قانونية متخصصة تغطي احتياجات الأعمال والاستثمار والتقاضي.
           </motion.p>
-          <p className="mt-4 text-sm text-muted lg:hidden">مرّر داخل القائمة لعرض كل خدمة بشاشة كاملة</p>
+          <p className="mt-4 text-sm text-muted lg:hidden">مرّر — كل خدمة تملأ الشاشة بالكامل</p>
         </motion.div>
       </div>
 
       {/*
-        Mobile: self-contained snap scroller (does NOT touch document scroll).
-        Panels stay fully opaque — no entrance fade that leaves blank white screens.
+        Mobile: each service is exactly one viewport tall in document flow.
+        Page scroll snaps start-aligned so the whole screen fills with that
+        service; content is flex-centered inside the panel.
       */}
-      <div className="hidden max-lg:block">
-        <div
-          className="services-mobile-scroller mx-auto max-w-lg border-y border-border"
-          role="region"
-          aria-label="قائمة مجالات العمل"
-        >
-          {services.map((service, index) => (
-            <article
-              key={service.id}
-              className={cn(
-                'services-mobile-panel relative flex flex-col justify-center gap-5 px-6 pb-12 pt-8 text-center',
-                index % 2 === 0 ? 'bg-ivory' : 'bg-[#f3f1ea]',
-              )}
+      <div className="hidden max-lg:block" role="list" aria-label="قائمة مجالات العمل">
+        {services.map((service, index) => (
+          <article
+            key={service.id}
+            role="listitem"
+            className={cn(
+              'services-page-panel relative flex flex-col items-center justify-center gap-5 px-6 text-center',
+              index % 2 === 0 ? 'bg-ivory' : 'bg-[#f3f1ea]',
+            )}
+          >
+            <Link
+              to={`/services/${service.slug}`}
+              className="group mx-auto flex w-full max-w-md flex-col items-center justify-center gap-5"
             >
-              <Link
-                to={`/services/${service.slug}`}
-                className="group flex h-full flex-col justify-center gap-5"
+              <ServiceCardContent service={service} index={index} total={total} mobile />
+            </Link>
+            {index < total - 1 && (
+              <span
+                className="pointer-events-none absolute inset-x-0 bottom-[max(1rem,env(safe-area-inset-bottom))] flex flex-col items-center gap-1"
+                aria-hidden="true"
               >
-                <ServiceCardContent
-                  service={service}
-                  index={index}
-                  total={total}
-                  mobile
-                />
-              </Link>
-              {index < total - 1 && (
-                <span
-                  className="pointer-events-none absolute inset-x-0 bottom-4 flex flex-col items-center gap-1"
-                  aria-hidden="true"
-                >
-                  <span className="text-[0.65rem] font-bold tracking-wide text-gold-dark/70">
-                    التالي
-                  </span>
-                  <span className="service-scroll-cue h-6 w-px bg-gradient-to-b from-gold to-transparent" />
+                <span className="text-[0.65rem] font-bold tracking-wide text-gold-dark/70">
+                  مرّر للخدمة التالية
                 </span>
-              )}
-            </article>
-          ))}
-        </div>
+                <span className="service-scroll-cue h-6 w-px bg-gradient-to-b from-gold to-transparent" />
+              </span>
+            )}
+          </article>
+        ))}
       </div>
 
       {/* Desktop editorial grid */}

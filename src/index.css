@@ -18,8 +18,11 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* hidden is more reliable than clip on older iOS Safari for killing the bottom X-scrollbar */
-    overflow-x: hidden;
+    /*
+      Prefer clip over hidden: overflow-x:hidden on the same element as
+      scroll-snap-type breaks mandatory snap in Chromium/WebKit.
+    */
+    overflow-x: clip;
     width: 100%;
     max-width: 100%;
   }
@@ -44,7 +47,9 @@
     min-width: 0;
     width: 100%;
     max-width: 100%;
-    overflow-x: hidden;
+    /* clip — not hidden — so body does not become the Y scroll container
+       (hidden on one axis forces the other to auto and steals document snap). */
+    overflow-x: clip;
     background: var(--color-ivory);
     color: var(--color-charcoal);
     font-family: var(--font-body);
@@ -62,7 +67,7 @@
     min-height: 100svh;
     width: 100%;
     max-width: 100%;
-    overflow-x: hidden;
+    overflow-x: clip;
     position: relative;
   }
 
@@ -260,51 +265,68 @@
   }
 
   /*
-    Mobile services: isolated snap scroller — never set scroll-snap on <html>,
-    which breaks page scroll and leaves blank panels.
+    Mobile services: one swipe = one full-screen service.
+    Snap each panel to the TOP of the viewport so the page literally fills
+    with that service; flex centers the copy inside the panel.
+    Use overflow-x: clip (not hidden) on html — hidden breaks scroll-snap
+    in Chromium/WebKit when snap-type is also on html.
   */
-  .services-mobile-scroller {
-    height: 100svh;
-    height: 100dvh;
-    overflow-x: hidden;
-    overflow-y: auto;
-    overscroll-behavior-y: contain;
-    scroll-snap-type: y mandatory;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .services-mobile-panel {
-    box-sizing: border-box;
-    min-height: 100%;
-    height: 100%;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-  }
-
-  .service-scroll-cue {
-    animation: service-cue-pulse 1.8s ease-in-out infinite;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .services-mobile-scroller {
-      scroll-snap-type: none;
+  @media (max-width: 1023px) {
+    html {
+      overflow-x: clip;
+      scroll-snap-type: y mandatory;
+      scroll-padding-top: 0;
     }
 
-    .services-mobile-panel {
+    .hero-section {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    /* Intro is short — don't force a full-screen stop before the first service */
+    .services-intro {
       scroll-snap-align: none;
       scroll-snap-stop: normal;
-      min-height: auto;
-      height: auto;
-      padding-block: 2.5rem;
     }
 
-    .services-mobile-scroller {
-      height: auto;
-      max-height: none;
+    .services-page-panel {
+      box-sizing: border-box;
+      height: 100svh;
+      height: 100dvh;
+      max-height: 100svh;
+      max-height: 100dvh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      padding-top: 4.75rem;
+      padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+      overflow: hidden;
     }
 
     .service-scroll-cue {
-      animation: none;
+      animation: service-cue-pulse 1.8s ease-in-out infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-snap-type: none;
+      }
+
+      .hero-section,
+      .services-page-panel {
+        scroll-snap-align: none;
+        scroll-snap-stop: normal;
+      }
+
+      .services-page-panel {
+        height: auto;
+        max-height: none;
+        padding-block: 2.75rem;
+        overflow: visible;
+      }
+
+      .service-scroll-cue {
+        animation: none;
+      }
     }
   }
 
