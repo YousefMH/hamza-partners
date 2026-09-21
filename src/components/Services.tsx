@@ -51,8 +51,8 @@ function ServiceCardContent({
 }
 
 const mobileCardViewport = {
-  once: false,
-  amount: 0.4,
+  once: true,
+  amount: 0.35,
   margin: '0px 0px -8% 0px',
 } as const
 

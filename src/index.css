@@ -416,8 +416,32 @@
       scroll-snap-type: y mandatory;
     }
 
+    /*
+      Hard latch after the last service: force snap fully off so reverse
+      travel through Featured → services cannot re-magnetize to panels.
+    */
+    html.services-snap-released,
+    html.services-snap-released.services-snap-on {
+      scroll-snap-type: none !important;
+    }
+
+    html.services-snap-released .services-intro-panel,
+    html.services-snap-released .services-page-panel {
+      scroll-snap-align: none !important;
+      scroll-snap-stop: normal !important;
+    }
+
     .hero-section {
       scroll-snap-align: none;
+      scroll-snap-stop: normal;
+    }
+
+    /*
+      While corridor snap is armed, Hero is a valid upward snap destination
+      so “مجالات عملنا” is not a dead-end (mandatory snap needs a target above).
+    */
+    html.services-snap-on .hero-section {
+      scroll-snap-align: start;
       scroll-snap-stop: normal;
     }
 
@@ -463,11 +487,12 @@
     }
 
     /*
-      Last card stays a snap target so arrival from the previous card still
-      settles, but stop is normal so exit momentum can leave the corridor.
-      Snap type itself is latched off once this card is reached (see hook).
+      Last card: strip snap alignment entirely so mandatory snap cannot
+      pin the page here with no downward target. The hook also latches
+      html.services-snap-released once this card is reached.
     */
     .services-page-panel--last {
+      scroll-snap-align: none;
       scroll-snap-stop: normal;
     }
 
@@ -503,7 +528,8 @@
 
     @media (prefers-reduced-motion: reduce) {
       html,
-      html.services-snap-on {
+      html.services-snap-on,
+      html.services-snap-released {
         scroll-snap-type: none;
         scroll-behavior: auto;
       }

@@ -2,32 +2,18 @@ import { useEffect } from 'react'
 
 const MOBILE_MAX = '(max-width: 1023px)'
 const REDUCE_MOTION = '(prefers-reduced-motion: reduce)'
-const SNAP_CLASS = 'services-snap-on'
-/** Ignore sub-pixel / rubber-band jitter when inferring scroll direction. */
-const DIRECTION_EPSILON_PX = 4
-
-function documentTop(el: HTMLElement): number {
-  return el.getBoundingClientRect().top + window.scrollY
-}
-
-function fillOf(rect: DOMRect, vh: number): number {
-  const visible = Math.min(rect.bottom, vh) - Math.max(rect.top, 0)
-  return visible / vh
-}
+const SNAP_ON = 'services-snap-on'
+const SNAP_RELEASED = 'services-snap-released'
 
 /**
- * Mobile services use document-level mandatory snap only while scrolling
- * *down* through the corridor.
+ * Document snap for the mobile services corridor.
  *
- * Critical: upward intent must clear the snap class *synchronously* on
- * wheel/touchmove (not only on scroll). Otherwise mandatory snap settles
- * back onto the intro / service panels before React/rAF can disarm it —
- * trapping the visitor on “مجالات عملنا”, or yanking downward when
- * returning from Featured.
- *
- * After the last card (or past it), snap stays latched off until the
- * visitor returns above the corridor, or intentionally scrolls down again
- * onto an earlier card.
+ * iOS-safe rules:
+ * - Snap may turn OFF at any time.
+ * - Snap must not turn ON during an active touch (mid-gesture
+ *   scroll-snap-type changes make reverse scroll lag / lock).
+ * - After the last service card, snap stays hard-off until the visitor
+ *   returns above the corridor (Hero). Reverse travel stays free.
  */
 export function useMobileServicesSnap() {
   useEffect(() => {
@@ -37,16 +23,37 @@ export function useMobileServicesSnap() {
 
     let frame = 0
     let releasedPastServices = false
-    let lastY = window.scrollY
-    let scrollIntent: 'up' | 'down' = 'down'
-    let touchLastY = 0
+    let pointerDown = false
 
-    const clear = () => {
-      html.classList.remove(SNAP_CLASS)
+    const setClasses = (snapOn: boolean, released: boolean) => {
+      html.classList.toggle(SNAP_ON, snapOn)
+      html.classList.toggle(SNAP_RELEASED, released)
     }
 
-    const applySnapClass = (on: boolean) => {
-      html.classList.toggle(SNAP_CLASS, on)
+    const clear = () => {
+      html.classList.remove(SNAP_ON, SNAP_RELEASED)
+    }
+
+    const introTopY = (intro: HTMLElement, y: number) =>
+      intro.getBoundingClientRect().top + y
+
+    const shouldReleaseAtLast = (last: HTMLElement, y: number, vh: number) => {
+      const lastRect = last.getBoundingClientRect()
+      const lastTop = lastRect.top + y
+      const following = document.querySelector<HTMLElement>('#services')
+        ?.nextElementSibling as HTMLElement | null | undefined
+      const followingTop = following?.getBoundingClientRect().top
+      /*
+        Mandatory snap cannot leave the last aligned panel unless snap is
+        turned off — there is no snap target below. Release as soon as the
+        last card is the primary view (or anything past it).
+      */
+      return (
+        lastRect.top <= vh * 0.25 ||
+        y >= lastTop - vh * 0.02 ||
+        lastRect.bottom < vh * 0.75 ||
+        (typeof followingTop === 'number' && followingTop < vh * 0.92)
+      )
     }
 
     const measure = () => {
@@ -56,9 +63,9 @@ export function useMobileServicesSnap() {
         return
       }
 
-      const panels = document.querySelectorAll<HTMLElement>('.services-page-panel')
       const intro = document.querySelector<HTMLElement>('.services-intro-panel')
-      if (panels.length === 0 || !intro) {
+      const last = document.querySelector<HTMLElement>('.services-page-panel--last')
+      if (!intro || !last) {
         releasedPastServices = false
         clear()
         return
@@ -66,55 +73,33 @@ export function useMobileServicesSnap() {
 
       const vh = window.innerHeight
       const y = window.scrollY
-      const delta = y - lastY
-      if (delta > DIRECTION_EPSILON_PX) {
-        scrollIntent = 'down'
-        lastY = y
-      } else if (delta < -DIRECTION_EPSILON_PX) {
-        scrollIntent = 'up'
-        lastY = y
-      }
-
-      const lastIndex = panels.length - 1
-      const last = panels[lastIndex]
-      const introTop = documentTop(intro)
-      const lastTop = documentTop(last)
-      const lastRect = last.getBoundingClientRect()
-
-      let bestIndex = -1
-      let bestFill = 0
-      for (let index = 0; index < panels.length; index += 1) {
-        const fill = fillOf(panels[index].getBoundingClientRect(), vh)
-        if (fill > bestFill) {
-          bestFill = fill
-          bestIndex = index
-        }
-      }
-
-      const aboveCorridor = y < introTop - vh * 0.35
-      const settledOnLast = bestIndex === lastIndex && bestFill >= 0.45
-      const scrolledPastLast =
-        y >= lastTop + vh * 0.08 || lastRect.bottom < vh * 0.6
-      const browsingDownEarlierCard =
-        scrollIntent === 'down' &&
-        bestIndex >= 0 &&
-        bestIndex < lastIndex &&
-        bestFill >= 0.55
+      const aboveCorridor = y < introTopY(intro, y) - vh * 0.3
 
       if (aboveCorridor) {
         releasedPastServices = false
-      } else if (settledOnLast || scrolledPastLast) {
+      } else if (shouldReleaseAtLast(last, y, vh)) {
         releasedPastServices = true
-      } else if (releasedPastServices && browsingDownEarlierCard) {
-        releasedPastServices = false
       }
 
-      const snapOn =
-        !aboveCorridor &&
-        !releasedPastServices &&
-        scrollIntent === 'down'
+      if (releasedPastServices) {
+        setClasses(false, true)
+        return
+      }
 
-      applySnapClass(snapOn)
+      if (aboveCorridor) {
+        setClasses(false, false)
+        return
+      }
+
+      // Inside corridor. Do not arm snap while a finger is down.
+      if (pointerDown) {
+        if (!html.classList.contains(SNAP_ON)) {
+          setClasses(false, false)
+        }
+        return
+      }
+
+      setClasses(true, false)
     }
 
     const scheduleMeasure = () => {
@@ -122,58 +107,64 @@ export function useMobileServicesSnap() {
       frame = requestAnimationFrame(measure)
     }
 
-    /** Disarm snap before the browser applies mandatory snap settlement. */
-    const setIntentAndSync = (intent: 'up' | 'down') => {
-      scrollIntent = intent
-      // Keep lastY current so measure() does not immediately overwrite this
-      // intent from a stale scroll delta (e.g. scrollIntoView then wheel).
-      lastY = window.scrollY
-      measure()
-    }
-
-    const onWheel = (event: WheelEvent) => {
-      if (!mobileQuery.matches || reduceQuery.matches) return
-      if (event.deltaY < -DIRECTION_EPSILON_PX) {
-        setIntentAndSync('up')
-      } else if (event.deltaY > DIRECTION_EPSILON_PX) {
-        setIntentAndSync('down')
+    const onScroll = () => {
+      if (releasedPastServices) {
+        const intro = document.querySelector<HTMLElement>('.services-intro-panel')
+        if (!intro) {
+          setClasses(false, true)
+          return
+        }
+        const y = window.scrollY
+        if (y < introTopY(intro, y) - window.innerHeight * 0.3) {
+          releasedPastServices = false
+          scheduleMeasure()
+        } else {
+          setClasses(false, true)
+        }
+        return
       }
+      scheduleMeasure()
     }
 
-    const onTouchStart = (event: TouchEvent) => {
-      if (event.touches.length === 0) return
-      touchLastY = event.touches[0].clientY
+    const onPointerDown = () => {
+      pointerDown = true
     }
 
-    const onTouchMove = (event: TouchEvent) => {
+    const onPointerUp = () => {
+      pointerDown = false
+      scheduleMeasure()
+    }
+
+    const onTouchMove = () => {
       if (!mobileQuery.matches || reduceQuery.matches) return
-      if (event.touches.length === 0) return
-      const clientY = event.touches[0].clientY
-      const fingerDelta = touchLastY - clientY
-      touchLastY = clientY
-      // Finger up → page scrolls down; finger down → page scrolls up.
-      if (fingerDelta > DIRECTION_EPSILON_PX) {
-        setIntentAndSync('down')
-      } else if (fingerDelta < -DIRECTION_EPSILON_PX) {
-        setIntentAndSync('up')
+      if (releasedPastServices) return
+      if (!html.classList.contains(SNAP_ON)) return
+
+      const last = document.querySelector<HTMLElement>('.services-page-panel--last')
+      if (!last) return
+      if (shouldReleaseAtLast(last, window.scrollY, window.innerHeight)) {
+        releasedPastServices = true
+        setClasses(false, true)
       }
     }
 
     measure()
-    window.addEventListener('scroll', scheduleMeasure, { passive: true })
+    window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', scheduleMeasure, { passive: true })
-    window.addEventListener('wheel', onWheel, { passive: true })
-    window.addEventListener('touchstart', onTouchStart, { passive: true })
+    window.addEventListener('touchstart', onPointerDown, { passive: true })
+    window.addEventListener('touchend', onPointerUp, { passive: true })
+    window.addEventListener('touchcancel', onPointerUp, { passive: true })
     window.addEventListener('touchmove', onTouchMove, { passive: true })
     mobileQuery.addEventListener('change', scheduleMeasure)
     reduceQuery.addEventListener('change', scheduleMeasure)
 
     return () => {
       cancelAnimationFrame(frame)
-      window.removeEventListener('scroll', scheduleMeasure)
+      window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', scheduleMeasure)
-      window.removeEventListener('wheel', onWheel)
-      window.removeEventListener('touchstart', onTouchStart)
+      window.removeEventListener('touchstart', onPointerDown)
+      window.removeEventListener('touchend', onPointerUp)
+      window.removeEventListener('touchcancel', onPointerUp)
       window.removeEventListener('touchmove', onTouchMove)
       mobileQuery.removeEventListener('change', scheduleMeasure)
       reduceQuery.removeEventListener('change', scheduleMeasure)
