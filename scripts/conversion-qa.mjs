@@ -154,18 +154,25 @@ async function runMobile(page, width, failures) {
   const progress = page.locator('text=/\\d{2}\\s*من\\s*\\d{2}/')
   assert((await progress.count()) > 0, `Mobile progress missing @${width}`, failures)
 
-  // Snap progress move
+  // Horizontal carousel present — swipe within scroller
+  assert(
+    (await page.locator('.services-x-scroller [data-service-slide]').count()) > 0,
+    `Mobile horizontal slides missing @${width}`,
+    failures,
+  )
   await page.evaluate(() => {
-    document.querySelector('.services-page-panel')?.scrollIntoView({ block: 'start' })
+    document.querySelector('.services-x-scroller')?.scrollBy({ left: -200, behavior: 'instant' })
   })
   await settle(page, 400)
-  await page.evaluate(() => window.scrollBy(0, window.innerHeight))
-  await settle(page, 500)
   const progressText = await progress.first().textContent()
   assert(Boolean(progressText?.match(/\d{2}/)), `Progress text invalid: ${progressText}`, failures)
 
   // Mobile consult CTA
-  assert((await page.locator('.services-mobile-card a[href*="?service="]').count()) > 0, `Mobile consult CTA missing @${width}`, failures)
+  assert(
+    (await page.locator('.services-mobile-card a[href*="?service="]').count()) > 0,
+    `Mobile consult CTA missing @${width}`,
+    failures,
+  )
 
   await checkOverflow(page, `mobile-${width}-end`, failures)
 }

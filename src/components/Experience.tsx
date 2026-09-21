@@ -54,21 +54,26 @@ export function Experience() {
             <motion.li
               key={item.id}
               variants={readingStagger(reduce, staggerReading)}
-              className="border-b border-border p-6 text-center transition-colors hover:bg-ivory md:odd:border-e md:p-8 md:text-start"
+              className="border-b border-border px-6 py-8 text-center transition-colors hover:bg-ivory md:odd:border-e md:px-8 md:py-10 md:text-start"
             >
               <motion.span
                 variants={readingVariants(reduce, accentPop)}
-                className="font-display text-base font-bold text-gold"
+                className="font-display text-[clamp(2rem,4vw,2.75rem)] font-extrabold leading-none tracking-tight text-gold/55"
+                aria-hidden="true"
               >
                 0{index + 1}
               </motion.span>
               <motion.h3
                 variants={readingVariants(reduce, fadeStart)}
-                className="mt-4 font-display text-2xl leading-relaxed text-charcoal"
+                className="mt-5 font-display text-xl leading-[1.45] text-charcoal md:text-2xl"
               >
                 {item.title}
               </motion.h3>
-              <motion.p variants={readingVariants(reduce, fadeUpSoft)} className="body-copy mt-3">
+              <span
+                className="mx-auto mt-4 block h-px w-10 bg-gold/70 md:mx-0"
+                aria-hidden="true"
+              />
+              <motion.p variants={readingVariants(reduce, fadeUpSoft)} className="body-copy mt-4">
                 {item.summary}
               </motion.p>
             </motion.li>

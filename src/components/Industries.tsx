@@ -52,7 +52,7 @@ export function Industries() {
             <motion.li key={industry.id} variants={readingVariants(reduce, fadeUpSoft)}>
               <button
                 type="button"
-                className="inline-block border border-border bg-ivory px-5 py-3.5 font-display text-base leading-relaxed text-charcoal transition-colors duration-300 hover:border-gold hover:text-gold-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold md:px-6 md:text-lg"
+                className="inline-block border border-border/90 bg-transparent px-5 py-3 font-display text-base leading-relaxed text-charcoal transition-colors duration-300 hover:border-gold hover:text-gold-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold md:px-6 md:py-3.5 md:text-lg"
                 onClick={() => {
                   trackEvent('consultation_cta_click', {
                     source: 'industry',

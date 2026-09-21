@@ -60,26 +60,26 @@ export function FeaturedService() {
           </motion.div>
           <motion.p
             variants={readingVariants(reduce, fadeUp)}
-            className="mb-3 font-display text-base font-bold text-gold"
+            className="mb-4 font-display text-sm font-bold tracking-[0.18em] text-gold md:mb-5"
           >
             {featuredService.number}
           </motion.p>
           <motion.h2
             id="featured-heading"
             variants={readingVariants(reduce, fadeUp)}
-            className="text-[clamp(1.75rem,3.8vw,3rem)] font-extrabold leading-[1.45] text-ivory"
+            className="text-[clamp(1.85rem,4vw,3.15rem)] font-extrabold leading-[1.4] tracking-tight text-ivory"
           >
             {featuredService.title}
           </motion.h2>
           <motion.p
             variants={readingVariants(reduce, fadeUpSoft)}
-            className="mt-6 max-w-2xl text-lg leading-[1.9] text-ivory/90 md:mt-7 md:text-xl"
+            className="mt-7 max-w-2xl text-lg leading-[1.9] text-ivory/90 md:mt-8 md:text-xl"
           >
             {featuredService.description}
           </motion.p>
           <motion.div
             variants={readingVariants(reduce, fadeUp)}
-            className="mt-8 flex flex-wrap justify-center gap-4 md:mt-10 md:justify-start"
+            className="mt-10 flex flex-wrap justify-center gap-4 md:mt-12 md:justify-start md:gap-5"
           >
             <Button
               href={contactHref(featuredService.slug)}

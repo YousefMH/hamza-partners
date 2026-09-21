@@ -125,25 +125,28 @@ export function Contact() {
               وقابلة للاستبدال.
             </motion.p>
 
-            <motion.ul variants={readingVariants(reduce, fadeUpSoft)} className="mt-8 space-y-4 text-base md:mt-10 md:space-y-5">
-              <li className="flex items-start gap-3">
-                <Phone className="mt-0.5 size-4 text-gold" strokeWidth={1.5} aria-hidden="true" />
-                <div>
-                  <p className="text-muted">الهاتف</p>
-                  <a href={siteConfig.contact.phoneHref} className="text-charcoal hover:text-gold-dark">
+            <motion.ul
+              variants={readingVariants(reduce, fadeUpSoft)}
+              className="mt-10 space-y-5 border-t border-border pt-8 text-base md:mt-12 md:space-y-6 md:pt-10"
+            >
+              <li className="flex items-start gap-3.5">
+                <Phone className="mt-1 size-4 shrink-0 text-gold" strokeWidth={1.5} aria-hidden="true" />
+                <div className="min-w-0 space-y-1">
+                  <p className="text-xs tracking-wide text-muted">الهاتف</p>
+                  <a href={siteConfig.contact.phoneHref} className="text-charcoal transition-colors hover:text-gold-dark">
                     {siteConfig.contact.phone}
                   </a>
                 </div>
               </li>
-              <li className="flex items-start gap-3">
-                <Phone className="mt-0.5 size-4 text-gold" strokeWidth={1.5} aria-hidden="true" />
-                <div>
-                  <p className="text-muted">واتساب</p>
+              <li className="flex items-start gap-3.5">
+                <Phone className="mt-1 size-4 shrink-0 text-gold" strokeWidth={1.5} aria-hidden="true" />
+                <div className="min-w-0 space-y-1">
+                  <p className="text-xs tracking-wide text-muted">واتساب</p>
                   <a
                     href={whatsappHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-charcoal hover:text-gold-dark"
+                    className="text-charcoal transition-colors hover:text-gold-dark"
                     onClick={() =>
                       trackEvent('whatsapp_click', {
                         source: 'contact',
@@ -155,35 +158,35 @@ export function Contact() {
                   </a>
                 </div>
               </li>
-              <li className="flex items-start gap-3">
-                <Mail className="mt-0.5 size-4 text-gold" strokeWidth={1.5} aria-hidden="true" />
-                <div>
-                  <p className="text-muted">البريد الإلكتروني</p>
+              <li className="flex items-start gap-3.5">
+                <Mail className="mt-1 size-4 shrink-0 text-gold" strokeWidth={1.5} aria-hidden="true" />
+                <div className="min-w-0 space-y-1">
+                  <p className="text-xs tracking-wide text-muted">البريد الإلكتروني</p>
                   <a
                     href={`mailto:${siteConfig.contact.email}`}
-                    className="text-charcoal hover:text-gold-dark"
+                    className="text-charcoal transition-colors hover:text-gold-dark"
                   >
                     {siteConfig.contact.email}
                   </a>
                 </div>
               </li>
-              <li className="flex items-start gap-3">
-                <MapPin className="mt-0.5 size-4 text-gold" strokeWidth={1.5} aria-hidden="true" />
-                <div>
-                  <p className="text-muted">العنوان</p>
-                  <p className="text-charcoal">{siteConfig.contact.address}</p>
+              <li className="flex items-start gap-3.5">
+                <MapPin className="mt-1 size-4 shrink-0 text-gold" strokeWidth={1.5} aria-hidden="true" />
+                <div className="min-w-0 space-y-1">
+                  <p className="text-xs tracking-wide text-muted">العنوان</p>
+                  <p className="leading-relaxed text-charcoal">{siteConfig.contact.address}</p>
                 </div>
               </li>
-              <li className="flex items-start gap-3">
-                <Clock className="mt-0.5 size-4 text-gold" strokeWidth={1.5} aria-hidden="true" />
-                <div>
-                  <p className="text-muted">ساعات العمل</p>
+              <li className="flex items-start gap-3.5">
+                <Clock className="mt-1 size-4 shrink-0 text-gold" strokeWidth={1.5} aria-hidden="true" />
+                <div className="min-w-0 space-y-1">
+                  <p className="text-xs tracking-wide text-muted">ساعات العمل</p>
                   <p className="text-charcoal">{siteConfig.contact.hours}</p>
                 </div>
               </li>
             </motion.ul>
 
-            <motion.div variants={readingVariants(reduce, fadeUp)} className="mt-8 aspect-[16/10] overflow-hidden border border-border bg-ivory md:mt-10">
+            <motion.div variants={readingVariants(reduce, fadeUp)} className="mt-10 aspect-[16/10] overflow-hidden border border-border bg-ivory md:mt-12">
               <iframe
                 title="موقع المكتب على الخريطة"
                 src={siteConfig.contact.mapEmbedUrl}
@@ -198,10 +201,10 @@ export function Contact() {
             variants={readingStagger(reduce, staggerReading)}
             onSubmit={onSubmit}
             noValidate
-            className="border border-border bg-ivory p-6 md:p-8"
+            className="border border-border bg-ivory p-7 md:p-10"
             aria-describedby="contact-form-status"
           >
-            <motion.div variants={readingVariants(reduce, fadeUpSoft)} className="grid gap-5">
+            <motion.div variants={readingVariants(reduce, fadeUpSoft)} className="grid gap-6">
               <div>
                 <label htmlFor="fullName" className="mb-2 block text-base text-charcoal">
                   الاسم الكامل

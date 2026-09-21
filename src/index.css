@@ -47,8 +47,7 @@
     min-width: 0;
     width: 100%;
     max-width: 100%;
-    /* clip — not hidden — so body does not become the Y scroll container
-       (hidden on one axis forces the other to auto and steals document snap). */
+    /* clip — not hidden — avoids body becoming an unintended Y scroller. */
     overflow-x: clip;
     background: var(--color-ivory);
     color: var(--color-charcoal);
@@ -265,7 +264,7 @@
   }
 
   .section-pad {
-    padding-block: clamp(3.5rem, 6.5vw, 5.75rem);
+    padding-block: clamp(3.75rem, 7vw, 6.25rem);
   }
 
   .container-editorial {
@@ -292,15 +291,16 @@
   /* Comfortable Arabic reading measure */
   .lede {
     max-width: 38rem;
-    margin-top: 1.5rem;
-    font-size: 1.125rem;
-    line-height: 1.9;
+    margin-top: 1.35rem;
+    font-size: 1.1rem;
+    line-height: 1.95;
     color: var(--color-muted);
   }
 
   .section-title {
-    font-size: clamp(1.75rem, 3.2vw, 2.65rem);
-    line-height: 1.45;
+    font-size: clamp(1.85rem, 3.4vw, 2.85rem);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
     color: var(--color-charcoal);
   }
 
@@ -400,166 +400,46 @@
   }
 
   /*
-    Mobile services snap is gated by html.services-snap-on (see
-    useMobileServicesSnap). Keeping mandatory snap on for the whole page
-    makes light scrolls reverse toward leftover snap points after services.
+    Mobile services: horizontal snap carousel only.
+    Document-level Y snap is intentionally gone — vertical page scroll
+    stays fully native so exiting into Featured never fights the browser.
   */
   @media (max-width: 1023px) {
     html {
       overflow-x: clip;
       scroll-behavior: auto;
       scroll-snap-type: none;
-      scroll-padding-top: 0;
     }
 
-    html.services-snap-on {
-      scroll-snap-type: y mandatory;
+    .services-x-scroller {
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-x pan-y;
     }
 
-    /*
-      Hard latch after the last service: force snap fully off so reverse
-      travel through Featured → services cannot re-magnetize to panels.
-    */
-    html.services-snap-released,
-    html.services-snap-released.services-snap-on {
-      scroll-snap-type: none !important;
-    }
-
-    html.services-snap-released .services-intro-panel,
-    html.services-snap-released .services-page-panel {
-      scroll-snap-align: none !important;
-      scroll-snap-stop: normal !important;
-    }
-
-    .hero-section {
-      scroll-snap-align: none;
-      scroll-snap-stop: normal;
-    }
-
-    /*
-      While corridor snap is armed, Hero is a valid upward snap destination
-      so “مجالات عملنا” is not a dead-end (mandatory snap needs a target above).
-    */
-    html.services-snap-on .hero-section {
-      scroll-snap-align: start;
-      scroll-snap-stop: normal;
-    }
-
-    /*
-      Full-screen intro stop so “مجالات عملنا” is never skipped between
-      the header and the first service card.
-    */
-    .services-intro-panel {
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100svh;
-      height: 100dvh;
-      max-height: 100svh;
-      max-height: 100dvh;
-      padding-top: 4.5rem;
-      padding-bottom: max(2.5rem, calc(env(safe-area-inset-bottom) + 1.25rem));
-      scroll-snap-align: start;
-      /*
-        normal (not always): still snaps when arriving from Hero on the way
-        down, but does not hard-trap the visitor when scrolling back up.
-        Downward card stops keep always via .services-page-panel.
-      */
-      scroll-snap-stop: normal;
-      overflow: hidden;
-    }
-
-    .services-page-panel {
-      box-sizing: border-box;
-      height: 100svh;
-      height: 100dvh;
-      max-height: 100svh;
-      max-height: 100dvh;
-      scroll-snap-align: start;
+    .services-x-slide {
+      scroll-snap-align: center;
       scroll-snap-stop: always;
-      padding-top: 4.5rem;
-      padding-bottom: max(2.75rem, calc(env(safe-area-inset-bottom) + 1.5rem));
-      overflow: hidden;
-      background:
-        radial-gradient(ellipse at 50% 18%, rgba(198, 161, 91, 0.08), transparent 42%),
-        linear-gradient(180deg, #f8f7f3 0%, #f3f1ea 100%);
-    }
-
-    /*
-      Last card: strip snap alignment entirely so mandatory snap cannot
-      pin the page here with no downward target. The hook also latches
-      html.services-snap-released once this card is reached.
-    */
-    .services-page-panel--last {
-      scroll-snap-align: none;
-      scroll-snap-stop: normal;
-    }
-
-    /*
-      After snap is released, strip leftover snap alignment so light scrolls
-      in Featured / Why Us cannot be magnetized back to service panels if the
-      html snap class flickers for a frame.
-    */
-    html:not(.services-snap-on) .services-intro-panel,
-    html:not(.services-snap-on) .services-page-panel {
-      scroll-snap-align: none;
-      scroll-snap-stop: normal;
     }
 
     .services-mobile-card {
       box-sizing: border-box;
       text-align: start;
-      border: 1px solid color-mix(in srgb, var(--color-border) 90%, var(--color-gold) 10%);
-      border-radius: 0.25rem;
-      background: #fff;
-      padding: 1.5rem 1.35rem 1.4rem;
-      box-shadow: 0 10px 28px rgba(21, 21, 21, 0.06);
+      border: 1px solid color-mix(in srgb, var(--color-border) 88%, var(--color-gold) 12%);
+      border-radius: 0.15rem;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfaf7 100%);
+      padding: 1.55rem 1.4rem 1.45rem;
+      box-shadow: 0 12px 32px rgba(21, 21, 21, 0.05);
     }
 
     .services-mobile-card:active {
       transform: translateY(1px);
     }
 
-    .service-scroll-cue {
-      animation: service-cue-pulse 2.4s ease-in-out infinite;
-      will-change: opacity, transform;
-    }
-
     @media (prefers-reduced-motion: reduce) {
-      html,
-      html.services-snap-on,
-      html.services-snap-released {
-        scroll-snap-type: none;
-        scroll-behavior: auto;
+      .services-x-scroller {
+        scroll-snap-type: x proximity;
       }
-
-      .services-intro-panel,
-      .services-page-panel {
-        scroll-snap-align: none;
-        scroll-snap-stop: normal;
-        height: auto;
-        max-height: none;
-        padding-block: 2.75rem;
-        overflow: visible;
-      }
-
-      .service-scroll-cue {
-        animation: none;
-        will-change: auto;
-      }
-    }
-  }
-
-  @keyframes service-cue-pulse {
-    0%,
-    100% {
-      opacity: 0.2;
-      transform: translateY(0) scaleY(0.9);
-    }
-    50% {
-      opacity: 0.85;
-      transform: translateY(4px) scaleY(1);
     }
   }
 

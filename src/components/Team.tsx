@@ -109,7 +109,7 @@ export function Team() {
         </motion.div>
 
         <motion.ul
-          className="section-body grid gap-8 md:grid-cols-3 md:gap-10"
+          className="section-body grid gap-10 md:grid-cols-3 md:gap-12"
           variants={readingStagger(reduce, staggerReading)}
           initial={reduce ? false : 'hidden'}
           whileInView="visible"
@@ -118,7 +118,7 @@ export function Team() {
           {team.map((member, index) => (
             <motion.li key={member.id} variants={readingVariants(reduce, fadeUp)} className="group">
               <Link to={`/team/${member.slug}`} className="block">
-                <div className="relative aspect-[3/4] overflow-hidden bg-border">
+                <div className="relative aspect-[3/4] overflow-hidden border border-border/60 bg-border transition-[border-color] duration-500 group-hover:border-gold/35">
                   <TeamPortrait
                     src={member.image}
                     alt={`${member.name} — ${member.position}`}
@@ -126,18 +126,18 @@ export function Team() {
                     reduce={reduce}
                     fineHover={fineHover}
                   />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-charcoal/50 to-transparent opacity-60" />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-charcoal/55 to-transparent opacity-55 transition-opacity duration-500 group-hover:opacity-40" />
                 </div>
               </Link>
-              <div className="mt-5 flex flex-col items-center gap-3 text-center md:flex-row md:items-start md:justify-between md:text-start">
+              <div className="mt-6 flex flex-col items-center gap-3 text-center md:flex-row md:items-start md:justify-between md:text-start">
                 <div className="min-w-0 flex-1">
                   <h3 className="font-display text-lg leading-relaxed text-charcoal sm:text-xl">
                     <Link to={`/team/${member.slug}`} className="transition-colors hover:text-gold-dark">
                       {member.name}
                     </Link>
                   </h3>
-                  <p className="mt-1.5 text-sm text-gold-dark sm:text-base">{member.position}</p>
-                  <p className="body-copy mt-2 text-sm sm:text-base">{member.expertise}</p>
+                  <p className="mt-2 text-sm tracking-wide text-gold-dark sm:text-base">{member.position}</p>
+                  <p className="body-copy mt-2.5 text-sm sm:text-base">{member.expertise}</p>
                 </div>
                 <a
                   href={member.linkedin}
@@ -149,10 +149,10 @@ export function Team() {
                   <LinkedInIcon className="size-[18px]" />
                 </a>
               </div>
-              <div className="mt-4 flex justify-center md:justify-start">
+              <div className="mt-5 flex justify-center md:justify-start">
                 <Link
                   to={`/team/${member.slug}`}
-                  className="inline-flex border-b border-gold/40 pb-0.5 text-base font-bold text-gold-dark transition-colors hover:border-gold hover:text-charcoal"
+                  className="inline-flex border-b border-gold/40 pb-0.5 text-sm font-bold tracking-wide text-gold-dark transition-colors hover:border-gold hover:text-charcoal sm:text-base"
                 >
                   {siteConfig.cta.viewProfile}
                 </Link>

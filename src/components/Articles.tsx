@@ -51,7 +51,7 @@ export function Articles() {
         </motion.div>
 
         <motion.ul
-          className="section-body grid gap-8 lg:grid-cols-3 lg:gap-10"
+          className="section-body grid gap-10 lg:grid-cols-3 lg:gap-12"
           variants={readingStagger(reduce, staggerReading)}
           initial={reduce ? false : 'hidden'}
           whileInView="visible"
@@ -59,19 +59,23 @@ export function Articles() {
         >
           {articles.map((article) => (
             <motion.li key={article.id} variants={readingVariants(reduce, fadeUp)}>
-              <article className="flex h-full flex-col border-t border-gold/50 pt-6 text-center md:text-start">
-                <p className="text-sm font-bold text-gold-dark">{article.category}</p>
-                <h3 className="mt-3 font-display text-xl leading-[1.6] text-charcoal">
-                  {article.title}
-                </h3>
-                <p className="body-copy mt-4 flex-1">{article.excerpt}</p>
-                <div className="mt-6 flex items-center justify-center gap-3 border-t border-border pt-4 md:justify-between">
+              <article className="flex h-full flex-col border-t border-gold/40 pt-7 text-center md:text-start">
+                <div className="flex flex-col items-center gap-2 md:items-start">
+                  <p className="text-xs font-bold tracking-[0.14em] text-gold-dark">
+                    {article.category}
+                  </p>
                   <time dateTime={article.date} className="text-sm text-muted">
                     {formatDate(article.date)}
                   </time>
+                </div>
+                <h3 className="mt-4 font-display text-xl leading-[1.55] text-charcoal md:mt-5">
+                  {article.title}
+                </h3>
+                <p className="body-copy mt-4 flex-1">{article.excerpt}</p>
+                <div className="mt-7 flex items-center justify-center border-t border-border pt-5 md:justify-start">
                   <a
                     href={article.href}
-                    className="text-base font-bold text-gold-dark transition-colors hover:text-charcoal"
+                    className="inline-flex border-b border-gold/40 pb-0.5 text-sm font-bold tracking-wide text-gold-dark transition-colors hover:border-gold hover:text-charcoal sm:text-base"
                   >
                     {siteConfig.cta.readArticle}
                   </a>

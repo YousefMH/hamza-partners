@@ -72,14 +72,14 @@ export function MobileStickyBar() {
     >
       <div
         className={cn(
-          'pointer-events-auto border-t border-gold/25 bg-ivory/95 shadow-[0_-8px_24px_rgba(21,21,21,0.08)] backdrop-blur-md',
-          'px-3 pt-2.5 pb-[max(0.65rem,env(safe-area-inset-bottom))]',
+          'pointer-events-auto border-t border-charcoal/10 bg-ivory/97 shadow-[0_-6px_20px_rgba(21,21,21,0.06)] backdrop-blur-md',
+          'px-3 pt-2 pb-[max(0.55rem,env(safe-area-inset-bottom))]',
         )}
       >
-        <div className="mx-auto flex max-w-lg gap-2">
+        <div className="mx-auto flex max-w-lg gap-1.5">
           <a
             href={consultHref}
-            className="btn-wood inline-flex min-h-11 flex-1 items-center justify-center px-3 font-display text-sm font-bold text-charcoal"
+            className="btn-wood inline-flex min-h-10 flex-1 items-center justify-center px-2.5 font-display text-[0.8125rem] font-bold tracking-wide text-charcoal"
             tabIndex={visible ? 0 : -1}
             onClick={() =>
               trackEvent('consultation_cta_click', { source: 'mobile-sticky' })
@@ -91,12 +91,12 @@ export function MobileStickyBar() {
             href={whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-radius inline-flex min-h-11 flex-1 items-center justify-center gap-1.5 border border-charcoal/15 bg-white px-3 font-display text-sm font-bold text-charcoal transition-colors hover:border-gold hover:text-gold-dark"
+            className="btn-radius inline-flex min-h-10 flex-1 items-center justify-center gap-1.5 border border-charcoal/12 bg-white px-2.5 font-display text-[0.8125rem] font-bold tracking-wide text-charcoal transition-colors hover:border-gold/60 hover:text-gold-dark"
             tabIndex={visible ? 0 : -1}
             aria-label={siteConfig.cta.whatsapp}
             onClick={() => trackEvent('whatsapp_click', { source: 'mobile-sticky' })}
           >
-            <MessageCircle size={16} strokeWidth={1.6} aria-hidden="true" />
+            <MessageCircle size={15} strokeWidth={1.6} aria-hidden="true" />
             {siteConfig.cta.whatsappShort}
           </a>
         </div>

@@ -39,8 +39,8 @@ export function Hero() {
           animate={{ scale: 1 }}
           transition={{ duration: 1.55, ease: [0.22, 1, 0.36, 1] }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/55 to-charcoal/35" />
-        <div className="absolute inset-0 bg-gradient-to-l from-charcoal/75 via-charcoal/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/60 to-charcoal/40" />
+        <div className="absolute inset-0 bg-gradient-to-l from-charcoal/80 via-charcoal/25 to-transparent" />
       </div>
 
       <div className="relative z-10 flex min-h-[100svh] flex-1 flex-col">
@@ -55,14 +55,14 @@ export function Hero() {
           >
             <motion.p
               variants={readingVariants(reduce, fadeUp)}
-              className="mb-4 font-display text-sm font-bold tracking-wide text-gold-champagne md:mb-5 md:text-[0.95rem]"
+              className="mb-5 font-display text-sm font-bold tracking-[0.08em] text-gold-champagne md:mb-6 md:text-[0.95rem]"
             >
               {siteConfig.heroHeadline}
             </motion.p>
 
             <motion.p
               variants={readingVariants(reduce, fadeUp)}
-              className="font-display text-[clamp(2.15rem,7.5vw,3.1rem)] font-extrabold leading-[1.2] text-ivory md:text-[clamp(2.65rem,4.6vw,3.85rem)] md:leading-[1.15]"
+              className="font-display text-[clamp(2.25rem,7.8vw,3.25rem)] font-extrabold leading-[1.15] text-ivory md:text-[clamp(2.75rem,4.8vw,4rem)] md:leading-[1.12]"
             >
               {siteConfig.firmNameAr}
             </motion.p>
@@ -70,19 +70,19 @@ export function Hero() {
             <motion.h1
               id="hero-heading"
               variants={readingVariants(reduce, fadeUpSoft)}
-              className="mt-4 font-display text-[clamp(1.2rem,3.8vw,1.55rem)] font-bold leading-[1.55] text-ivory/92 md:mt-5 md:text-[clamp(1.35rem,2.1vw,1.75rem)] md:leading-[1.5]"
+              className="mt-5 font-display text-[clamp(1.15rem,3.6vw,1.5rem)] font-bold leading-[1.55] text-ivory/90 md:mt-6 md:text-[clamp(1.3rem,2vw,1.7rem)] md:leading-[1.5]"
             >
               حلول قانونية متكاملة للأعمال والاستثمار
             </motion.h1>
 
             <motion.div
               variants={readingVariants(reduce, fadeUpSoft)}
-              className="mx-auto mt-6 max-w-sm md:mx-0 md:mt-7 md:max-w-xl"
+              className="mx-auto mt-7 max-w-sm md:mx-0 md:mt-8 md:max-w-xl"
             >
-              <p className="font-display text-[1.05rem] leading-[1.75] text-ivory/88 md:text-[1.15rem] md:leading-[1.8]">
+              <p className="font-display text-[1.02rem] leading-[1.75] text-ivory/82 md:text-[1.12rem] md:leading-[1.8]">
                 نقدم حلولًا قانونية متخصصة في
               </p>
-              <div className="mt-2.5 flex justify-center md:justify-start">
+              <div className="mt-3 flex justify-center md:justify-start">
                 <TypewriterText
                   entries={typewriterEntries}
                   typingSpeed={75}
@@ -90,7 +90,7 @@ export function Hero() {
                   pauseDuration={2100}
                   startDelay={700}
                   loop
-                  className="min-h-[1.7em] font-display text-[clamp(1.25rem,4.2vw,1.65rem)] font-bold leading-[1.7] md:text-[clamp(1.4rem,2.2vw,1.85rem)]"
+                  className="min-h-[1.75em] font-display text-[clamp(1.3rem,4.4vw,1.7rem)] font-bold leading-[1.65] md:text-[clamp(1.45rem,2.3vw,1.9rem)]"
                   onNavigate={(entry) => {
                     trackEvent('consultation_cta_click', {
                       source: 'hero-typewriter',
@@ -103,7 +103,7 @@ export function Hero() {
 
             <motion.div
               variants={readingVariants(reduce, fadeUp)}
-              className="mt-9 flex flex-col items-stretch gap-3.5 sm:mt-10 sm:flex-row sm:items-center sm:justify-center md:justify-start"
+              className="mt-10 flex flex-col items-stretch gap-3.5 sm:mt-11 sm:flex-row sm:items-center sm:justify-center md:justify-start"
             >
               <Button
                 href={contactHref()}
